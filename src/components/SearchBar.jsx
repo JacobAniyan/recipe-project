@@ -1,8 +1,8 @@
 const SearchBar = () => {
   return (
     <form>
-      <input type="text" placeholder="What's in the pot?" />
-      <button type="submit">What's Cooking?</button>
+      <input type="text" placeholder="Type your ingredient(s) here" />
+      <button type="submit">Submit</button>
     </form>
   );
 };
