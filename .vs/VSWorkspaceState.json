@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\assets"
   ],
-  "SelectedNode": "\\C:\\Users\\anaresh2\\Source\\Repos\\recipe-project",
+  "SelectedNode": "\\package.json",
   "PreviewInSolutionExplorer": false
 }

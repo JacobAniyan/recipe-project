@@ -1,0 +1,23 @@
+﻿import './App.css'
+import { Router, Routes, Route } from 'react-router-dom'
+import Header from './components/Header'
+import Homepage from './pages/Homepage'
+
+function App() {
+  return (
+    <Router>
+      <div className="app">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/recipe" element={<div>All Recipes Page</div>} />
+          <Route path="/recipe/:id" element={<div>Individual Recipe Page</div>} />
+          <Route path="/results" element={<div>Search Results Page</div>} />
+          <Route path="/favourites" element={<div>Favourites Page</div>} />
+        </Routes>
+      </div>
+    </Router>
+  )
+}
+
+export default App
