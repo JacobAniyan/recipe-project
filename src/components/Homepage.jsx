@@ -1,11 +1,11 @@
-import React from 'react';
-import SearchBar from './SearchBar';
+import React from "react";
+import SearchBar from "./SearchBar";
 
 const Homepage = () => {
   return (
     <div>
-        <h1>Welcome to Recipe Generator</h1>
-        <SearchBar />
+      <h1>Welcome to Recipe Generator</h1>
+      <SearchBar />
     </div>
   );
 };
