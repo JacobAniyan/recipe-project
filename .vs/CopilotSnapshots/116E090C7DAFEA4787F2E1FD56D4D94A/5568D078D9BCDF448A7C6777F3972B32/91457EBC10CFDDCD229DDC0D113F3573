@@ -13,16 +13,16 @@
 
 ## Overview
 
-Recipe Generator is a full-stack web application that transforms your available ingredients into delicious recipe possibilities. Simply input what you have in your kitchen, and receive personalised recipe recommendations from our curated database. For an enhanced experience, leverage our AI-powered feature to generate custom recipes tailored specifically to your ingredients and their quantities.
+Recipe Generator is a full-stack web application that transforms your available ingredients into delicious recipe possibilities. Simply input what you have in your kitchen, and receive personalized recipe recommendations from our curated database. For an enhanced experience, leverage our AI-powered feature to generate custom recipes tailored specifically to your ingredients and their quantities.
 
 ### Key Features
 
 - **Smart Recipe Matching**: Enter your available ingredients and discover recipes you can make right now
-- **Favourites Management**: Save your favourite recipes for quick access later
+- **Favorites Management**: Save your favorite recipes for quick access later
 - **Advanced Filtering**: Sort recipes by preparation time, difficulty level, or date added
 - **AI Recipe Generation**: Get custom recipes generated specifically for your ingredients and quantities (Stretch Goal)
 - **Accessibility First**: Fully compatible with screen readers for an inclusive experience
-- **Desktop Optimised**: Designed for comfortable desktop browsing and cooking
+- **Desktop Optimized**: Designed for comfortable desktop browsing and cooking
 
 ---
 
@@ -32,7 +32,7 @@ Recipe Generator is a full-stack web application that transforms your available 
 
 - ✅ Users can input ingredients and receive matching recipes from the database
 - ✅ Recipe data persisted in SQL Server database
-- ✅ Save and retrieve favourite recipes
+- ✅ Save and retrieve favorite recipes
 - ✅ Desktop-responsive user interface
 - ✅ Detailed recipe view (ingredients, instructions, cooking time, difficulty)
 - ✅ Add/remove ingredients from user's available list
@@ -40,7 +40,7 @@ Recipe Generator is a full-stack web application that transforms your available 
 
 ### Stretch Goals
 
-- AI-powered interface for customised recipe generation
+- AI-powered chat interface for customized recipe generation
 - Ingredient quantity considerations for more precise recipe suggestions
 
 ---
@@ -54,10 +54,10 @@ As a user, I want to...
 - Add and remove ingredients from my available ingredients list
 - Retrieve matching recipes based on my available ingredients
 - Filter recipes by date, preparation time, and difficulty level
-- Add and remove recipes from my favourites
-- View all my favourited recipes in one place
+- Add and remove recipes from my favorites
+- View all my favorited recipes in one place
 - Navigate and read recipes comfortably using a screen reader
-- Generate customised recipes using AI based on my specific ingredients and quantities
+- Generate customized recipes using AI based on my specific ingredients and quantities
 
 ---
 
@@ -65,7 +65,7 @@ As a user, I want to...
 
 ### Frontend
 
-- **React** with Vite for fast development and optimised builds
+- **React** with Vite for fast development and optimized builds
 - **CSS** for styling and responsive design
 
 ### Backend
@@ -83,7 +83,7 @@ As a user, I want to...
 | Risk | Mitigation Strategy |
 |------|---------------------|
 | Team's foundational CSS knowledge | Focus on simple, clean styling; use CSS frameworks if needed |
-| Basic React functionality experience | Prioritise core features; incremental learning approach |
+| Basic React functionality experience | Prioritize core features; incremental learning approach |
 
 ### Backend Risks
 | Risk | Mitigation Strategy |
@@ -131,4 +131,5 @@ dotnet ef database update
 # Run the application
 dotnet run
 ```
+
 ------
