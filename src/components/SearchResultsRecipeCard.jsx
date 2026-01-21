@@ -1,15 +1,10 @@
 import React from "react";
+import FavouriteButton from "./FavouriteButton";
 
 const SearchResultsRecipeCard = ({
   recipes,
-  onfavouriteClick,
   onCardClick,
 }) => {
-  const handleFavouriteClick = (event) => {
-    event.stopPropagation(); //avoids propagating to card's onClick when favouriting
-    onfavouriteClick(recipes.RecipeId);
-  };
-
   return (
     <div
       className="search-results-recipe-card"
@@ -38,15 +33,10 @@ const SearchResultsRecipeCard = ({
       </div>
 
       <div className="recipecard-actions">
-        <button
-          className="favourite-button"
-          onClick={handleFavouriteClick}
-          aria-label={
-            recipes.IsFavourite ? "Remove from favourites" : "Add to favourites"
-          }
-        >
-          {recipes.IsFavourite ? "❤️" : "🤍"} Save to Favourites
-        </button>
+        <FavouriteButton
+          recipeId={recipes.RecipeId}
+          isFavourite={recipes.IsFavourite}
+        />
       </div>
     </div>
   );
