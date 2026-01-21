@@ -1,21 +1,28 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 function ReceipeDetailPage() {
   const { id } = useParams();
 
   const [recipe, setRecipe] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchRecipeDetail();
   }, [id]);
 
   const fetchRecipeDetail = async () => {
+    setIsLoading(true);
     try {
-      //GET api and convert to json file
+      const response = await fetch(`/api/recipe/${id}`);
+      setIsLoading(false);
     } catch {}
   };
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="page-container">
       {" "}
