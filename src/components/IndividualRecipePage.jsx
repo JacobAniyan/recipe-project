@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
-import Header from "./Header";
-import Navbar from "./Navbar";
 import FavouriteButton from "./FavouriteButton";
 
-function ReceipeDetailPage() {
+function IndividualRecipePage() {
   const { id } = useParams();
 
   const [recipe, setRecipe] = useState(null);
@@ -42,58 +40,53 @@ function ReceipeDetailPage() {
     <div className="page-container">
       {" "}
       {/*change necessary keys*/}
-      <Header />
-      <div className="main-layout">
-        <Navbar />
+      <main className="recipe-detail-content">
+        <div className="recipe-header">
+          <img
+            src={recipe.imageUrl}
+            alt={recipe.name}
+            className="recipe-image"
+          />
+          <FavouriteButton
+            recipeId={recipe.RecipeId || id}
+            isFavourite={recipe.IsFavourite}
+          />
+        </div>
 
-        <main className="recipe-detail-content">
-          <div className="recipe-header">
-            <img
-              src={recipe.imageUrl}
-              alt={recipe.name}
-              className="recipe-image"
-            />
-            <FavouriteButton
-              recipeId={recipe.RecipeId || id}
-              isFavourite={recipe.IsFavourite}
-            />
-          </div>
-
-          <h1>{recipe.name}</h1>
-          <p>{recipe.description}</p>
-          {/*======Recipe Info==========*/}
-          <div className="recipe-info">
-            {recipe.info.map((info, i) => (
-              <div key={i}>
-                <span>{info.label}</span>
-                <span>{info.value}</span>
-              </div>
+        <h1>{recipe.name}</h1>
+        <p>{recipe.description}</p>
+        {/*======Recipe Info==========*/}
+        <div className="recipe-info">
+          {recipe.info.map((info, i) => (
+            <div key={i}>
+              <span>{info.label}</span>
+              <span>{info.value}</span>
+            </div>
+          ))}
+        </div>
+        {/*======Recipe Description=========*/}
+        <section>
+          <h2>Ingredients</h2>
+          <ul>
+            {recipe.ingredients.map((ing, i) => (
+              <li key={i}>
+                {ing.amount} {ing.name}
+              </li>
             ))}
-          </div>
-          {/*======Recipe Description=========*/}
-          <section>
-            <h2>Ingredients</h2>
-            <ul>
-              {recipe.ingredients.map((ing, i) => (
-                <li key={i}>
-                  {ing.amount} {ing.name}
-                </li>
-              ))}
-            </ul>
-          </section>
-          {/*======Instructions=========*/}
-          <section>
-            <h2>Instructions</h2>
-            <ol>
-              {recipe.instructions.map((step, i) => (
-                <li key={i}>{step}</li>
-              ))}
-            </ol>
-          </section>
-        </main>
-      </div>
+          </ul>
+        </section>
+        {/*======Instructions=========*/}
+        <section>
+          <h2>Instructions</h2>
+          <ol>
+            {recipe.instructions.map((step, i) => (
+              <li key={i}>{step}</li>
+            ))}
+          </ol>
+        </section>
+      </main>
     </div>
   );
 }
 
-export default RecipeDetailPage;
+export default IndividualRecipePage;

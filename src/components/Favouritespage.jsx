@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Header from "./Header";
 import Loading from "./Loading";
 import RecipeCard from "./RecipeCard";
 
@@ -38,7 +37,6 @@ function FavouritesPage() {
 
   return (
     <div>
-      <Header />
       <div className="favourites-page-content" style={{ padding: "20px" }}>
         <h1>My Favourite Recipes</h1>
         {favourites.length === 0 ? (

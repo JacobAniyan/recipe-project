@@ -56,7 +56,8 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          aria-label="Enter ingredients"
+          id="ingredient-search"
+          name="ingredientSearch"
           placeholder="Type your ingredient(s) here"
           value={searchInput}
           onChange={handleChange}
