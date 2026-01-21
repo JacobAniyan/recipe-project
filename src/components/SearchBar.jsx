@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 
 const SearchBar = ({ onSearch, availableIngredients = [] }) => {
-  const [ingredientInput, setIngredientInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [error, setError] = useState("");
 
-  const filteredIngredients = ingredientInput.trim()
+  const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
         ingredient.IngredientName.toLowerCase().startsWith(
-          ingredientInput.toLowerCase(),
+          searchInput.toLowerCase(),
         ),
       )
     : [];
 
   const handleChange = (event) => {
-    setIngredientInput(event.target.value);
+    setSearchInput(event.target.value);
   };
 
-  const handleSelectIngredient = //EH: duplicate input
+  const handleAddIngredient = //EH: duplicate input
     (ingredientName) => {
       if (!selectedIngredients.includes(ingredientName)) {
         setSelectedIngredients([...selectedIngredients, ingredientName]);
@@ -58,14 +58,14 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
           type="text"
           aria-label="Enter ingredients"
           placeholder="Type your ingredient(s) here"
-          value={ingredientInput}
+          value={searchInput}
           onChange={handleChange}
         />
         <ul className="ingredients-dropdown" role="listbox">
-          {filteredIngredients.map((ingredient) => (
+          {dropdownIngredients.map((ingredient) => (
             <li
               key={ingredient.IngredientName}
-              onClick={() => handleSelectIngredient(ingredient.IngredientName)}
+              onClick={() => handleAddIngredient(ingredient.IngredientName)}
               className="dropdown-item"
             >
               {ingredient.IngredientName}

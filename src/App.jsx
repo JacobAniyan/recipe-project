@@ -1,9 +1,10 @@
-import "./src/CSS/App.css";
+import "./CSS/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./src/components/Header";
-import Homepage from "./src/components/Homepage";
-import FavouritesPage from "./src/components/Favouritespage";
+import Header from "./components/Header";
+import Homepage from "./components/Homepage";
+import FavouritesPage from "./components/Favouritespage";
+import IndividualRecipePage from "./components/IndividualRecipePage";
 
 function App() {
   return (
