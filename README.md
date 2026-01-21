@@ -65,7 +65,10 @@ As a user, I want to...
 
 ### Frontend
 
-- **React** with Vite for fast development and optimised builds
+- **React** with Vite for fast development and optimised build
+- **React Router** for client-side routing
+- **Axios** for API communication
+- **Prettier & ESLint** for code quality
 - **CSS** for styling and responsive design
 
 ### Backend
@@ -80,15 +83,17 @@ As a user, I want to...
 ## Known Risks & Mitigation
 
 ### Frontend Risks
-| Risk | Mitigation Strategy |
-|------|---------------------|
-| Team's foundational CSS knowledge | Focus on simple, clean styling; use CSS frameworks if needed |
-| Basic React functionality experience | Prioritise core features; incremental learning approach |
+
+| Risk                                 | Mitigation Strategy                                          |
+| ------------------------------------ | ------------------------------------------------------------ |
+| Team's foundational CSS knowledge    | Focus on simple, clean styling; use CSS frameworks if needed |
+| Basic React functionality experience | Prioritise core features; incremental learning approach      |
 
 ### Backend Risks
-| Risk | Mitigation Strategy |
-|------|---------------------|
-| Limited C# experience | Leverage documentation and tutorials; pair programming |
+
+| Risk                   | Mitigation Strategy                                                       |
+| ---------------------- | ------------------------------------------------------------------------- |
+| Limited C# experience  | Leverage documentation and tutorials; pair programming                    |
 | AI feature scope creep | Keep AI as separate endpoint and UI route; treat as stretch goal, not MVP |
 
 ---
@@ -131,4 +136,5 @@ dotnet ef database update
 # Run the application
 dotnet run
 ```
-------
+
+---

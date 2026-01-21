@@ -25,8 +25,8 @@ const SearchResultsRecipeCard = ({
         <div className="missing-ingredients">
           <p className="missing-label">Missing Ingredients:</p>
           <ul>
-            {recipes.MissingIngredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
+            {recipes.MissingIngredients.map((ingredient) => (
+              <li key={ingredient}>{ingredient}</li>
             ))}
           </ul>
         </div>
