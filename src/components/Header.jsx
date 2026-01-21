@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 const Header = () => {
   return (
     <header>
+      {/* logo here */}
       <Navbar />
     </header>
   );
