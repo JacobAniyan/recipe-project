@@ -3,22 +3,39 @@ import axios from "axios";
 import SearchBar from "./SearchBar";
 
 const Homepage = () => {
-  const [availableIngredients, setAvailableIngredients] = useState([]);
-  const [loading, setLoading] = useState(true);
+  //Hardcoded test data
+  const mockIngredients = [
+    { IngredientName: "Chicken" },
+    { IngredientName: "Tomato" },
+    { IngredientName: "Garlic" },
+    { IngredientName: "Onion" },
+    { IngredientName: "Pasta" },
+    { IngredientName: "Rice" },
+    { IngredientName: "Cheese" },
+    { IngredientName: "Milk" },
+    { IngredientName: "Eggs" },
+    { IngredientName: "Bread" },
+  ];
+
+  const [availableIngredients, setAvailableIngredients] =
+    useState(mockIngredients);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:")
-      .then((response) => {
-        setAvailableIngredients(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setError("Failed to load ingredients"); //EH: API failure
-        setLoading(false);
-      });
-  }, []);
+  // //When BE is ready
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:")
+  //     .then((response) => {
+  //       setAvailableIngredients(response.data);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //      //EH: API failure
+  //       setError("Failed to load ingredients");
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const handleSearch = (selectedIngredients) => {
     //navigate to /results with ingredients as URL param

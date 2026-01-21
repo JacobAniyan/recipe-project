@@ -1,9 +1,5 @@
 ﻿# Recipe Generator
 
-> An intelligent recipe discovery application that helps you create delicious meals with the ingredients you already have.
-
----
-
 ## Repository Structure
 
 - **Frontend**: [github.com/JacobAniyan/recipe-project](https://github.com/JacobAniyan/recipe-project)
@@ -13,7 +9,7 @@
 
 ## Overview
 
-Recipe Generator is a full-stack web application that transforms your available ingredients into delicious recipe possibilities. Simply input what you have in your kitchen, and receive personalised recipe recommendations from our curated database. For an enhanced experience, leverage our AI-powered feature to generate custom recipes tailored specifically to your ingredients and their quantities.
+Recipe Generator is a full-stack web application that transforms your available ingredients into delicious recipes . Simply input what you have in your kitchen, and receive personalised recipe recommendations from our curated database. You can even use our AI-powered feature to generate custom recipes tailored specific to your ingredients and their quantities.
 
 ### Key Features
 
@@ -63,7 +59,7 @@ As a user, I want to...
 
 ## Tech Stack
 
-### Frontend
+### Front-End
 
 - **React** with Vite for fast development and optimised build
 - **React Router** for client-side routing
@@ -71,25 +67,25 @@ As a user, I want to...
 - **Prettier & ESLint** for code quality
 - **CSS** for styling and responsive design
 
-### Backend
+### Back-End
 
 - **ASP.NET Core MVC** for RESTful API architecture
 - **Entity Framework Core** for database ORM
 - **SQL Server** for data persistence
-- **Custom recipe dataset** for demonstration purposes
+- **Recipe dataset** for demonstration purposes
 
 ---
 
 ## Known Risks & Mitigation
 
-### Frontend Risks
+### Front-End:
 
 | Risk                                 | Mitigation Strategy                                          |
 | ------------------------------------ | ------------------------------------------------------------ |
 | Team's foundational CSS knowledge    | Focus on simple, clean styling; use CSS frameworks if needed |
 | Basic React functionality experience | Prioritise core features; incremental learning approach      |
 
-### Backend Risks
+### Back-End:
 
 | Risk                   | Mitigation Strategy                                                       |
 | ---------------------- | ------------------------------------------------------------------------- |
@@ -106,7 +102,7 @@ As a user, I want to...
 - .NET 6.0 SDK or higher
 - SQL Server (LocalDB or Express)
 
-### Frontend Setup
+### Front-End Setup
 
 ```bash
 # Clone the repository
@@ -120,7 +116,7 @@ npm install
 npm run dev
 ```
 
-### Backend Setup
+### Back-End Setup
 
 ```bash
 # Clone the repository
