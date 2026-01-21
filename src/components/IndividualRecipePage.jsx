@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function ReceipeDetailPage() {
+function IndividualRecipePage() {
   const { id } = useParams();
 
   const [recipe, setRecipe] = useState(null);
