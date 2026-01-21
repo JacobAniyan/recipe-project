@@ -13,13 +13,9 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/recipe" element={<div>All Recipes Page</div>} />
-          <Route
-            path="/recipe/:id"
-            element={<div>Individual Recipe Page</div>}
-          />
-          <Route path="/results" element={<div>Search Results Page</div>} />
-          <Route path="/favourites" element={<div>Favourites Page</div>} />
+          <Route path="/recipe/:id" element={<IndividualRecipePage />} />
+          {/* <Route path="/results" element={<SearchResultsPage />} /> */}
+          <Route path="/favourites" element={<FavouritesPage />} />
         </Routes>
       </div>
     </BrowserRouter>
