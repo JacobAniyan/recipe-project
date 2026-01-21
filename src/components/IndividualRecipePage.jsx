@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Loading from "./Loading";
+import Header from "./Header";
+import Navbar from "./Navbar";
+import FavouriteButton from "./FavouriteButton";
 
 function ReceipeDetailPage() {
   const { id } = useParams();
@@ -12,31 +16,48 @@ function ReceipeDetailPage() {
     fetchRecipeDetail();
   }, [id]);
 
-  const fetchRecipeDetail = async () => {
+  const fetchRecipeDetail = () => {
     setIsLoading(true);
-    try {
-      const response = await fetch(`/api/recipe/${id}`);
-      setIsLoading(false);
-    } catch {}
+    axios
+      .get(`/api/recipe/${id}`)
+      .then((response) => {
+        setRecipe(response.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch recipe details:", error);
+        setIsLoading(false);
+      });
   };
 
   if (isLoading) {
     return <Loading />;
   }
+
+  if (!recipe) {
+    return <div>Recipe not found</div>;
+  }
+
   return (
     <div className="page-container">
       {" "}
       {/*change necessary keys*/}
       <Header />
       <div className="main-layout">
-        <Navigation />
+        <Navbar />
 
         <main className="recipe-detail-content">
-          <img
-            src={recipe.imageUrl}
-            alt={recipe.name}
-            className="recipe-image"
-          />
+          <div className="recipe-header">
+            <img
+              src={recipe.imageUrl}
+              alt={recipe.name}
+              className="recipe-image"
+            />
+            <FavouriteButton
+              recipeId={recipe.RecipeId || id}
+              isFavourite={recipe.IsFavourite}
+            />
+          </div>
 
           <h1>{recipe.name}</h1>
           <p>{recipe.description}</p>
