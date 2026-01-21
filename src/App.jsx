@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Homepage from "./components/Homepage";
+import FavouritesPage from "./components/Favouritespage";
+import IndividualRecipePage from "./components/IndividualRecipePage";
 
 function App() {
   return (

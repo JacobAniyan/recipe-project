@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
+import Loading from "./Loading";
 
 const Homepage = () => {
   //Hardcoded test data
@@ -42,7 +43,7 @@ const Homepage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   if (error) {
