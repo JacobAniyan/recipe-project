@@ -9,6 +9,7 @@ function IndividualRecipePage() {
 
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchRecipeDetail();
@@ -16,20 +17,33 @@ function IndividualRecipePage() {
 
   const fetchRecipeDetail = () => {
     setIsLoading(true);
+    setError(null);
     axios
       .get(`/api/recipe/${id}`)
       .then((response) => {
         setRecipe(response.data);
         setIsLoading(false);
+        setError(null);
       })
       .catch((error) => {
         console.error("Failed to fetch recipe details:", error);
         setIsLoading(false);
+        setError("Failed to load recipe. Please try again.");
       });
   };
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={() => navigate("/")}>Go Home</button>
+      </div>
+    );
   }
 
   if (!recipe) {

@@ -25,9 +25,6 @@ function ErrorPage() {
             <button onClick={() => navigate("/")} className="btn">
               Home
             </button>
-            <button onClick={() => window.location.reload()} className="btn">
-              Retry
-            </button>
           </div>
         </main>
       </div>

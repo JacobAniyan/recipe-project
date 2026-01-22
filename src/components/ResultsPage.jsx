@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
+
 import RecipeCard from "../components/RecipeCard";
 import Loading from "../components/Loading";
 
@@ -13,6 +13,8 @@ function ResultsPage() {
 
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [sortBy, setSortBy] = useState("bestMatch");
 
   useEffect(() => {
     if (ingredients.length > 0) {
@@ -21,6 +23,7 @@ function ResultsPage() {
   }, [ingredients]);
   const fetchMatchingRecipes = async () => {
     setIsLoading(true);
+    setError(null);
 
     try {
     } catch (error) {
