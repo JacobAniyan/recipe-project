@@ -1,15 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
 
-const SearchResultsRecipeCard = ({
-  recipes,
-  onCardClick,
-}) => {
+const SearchResultsRecipeCard = ({ recipes }) => {
   return (
-    <div
-      className="search-results-recipe-card"
-      onClick={() => onCardClick(recipes.RecipeId)}
-    >
+    <Link to={`/recipe/${recipes.RecipeId}`} className="recipe-card">
       <h3>{recipes.Name}</h3>
 
       <div className="match-percentage">
@@ -38,7 +33,7 @@ const SearchResultsRecipeCard = ({
           isFavourite={recipes.IsFavourite}
         />
       </div>
-    </div>
+    </Link>
   );
 };
 

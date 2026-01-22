@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
 
-const RecipeCard = ({ recipes, onCardClick }) => {
+const RecipeCard = ({ recipes }) => {
   return (
-    <div className="recipe-card" onClick={() => onCardClick(recipes.RecipeId)}>
+    <Link to={`/recipe/${recipes.RecipeId}`} className="recipe-card">
       <h3>{recipes.Name}</h3>
       <div className="recipe-info">
         <span className="cooking-time">Duration: {recipes.CookTime} mins</span>
@@ -15,7 +16,7 @@ const RecipeCard = ({ recipes, onCardClick }) => {
           isFavourite={recipes.IsFavourite}
         />
       </div>
-    </div>
+    </Link>
   );
 };
 
