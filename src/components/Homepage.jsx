@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import SearchBar from "./SearchBar";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DietaryFilters from "./DietaryFilters";
 import Loading from "./Loading";
+import SearchBar from "./SearchBar";
 
 const Homepage = ({ onCardClick }) => {
+  const navigate = useNavigate();
+
   //Hardcoded test data (search dropdown)
   const mockIngredients = [
     { IngredientName: "Chicken" },
@@ -51,10 +53,6 @@ const Homepage = ({ onCardClick }) => {
     paleo: false,
   });
 
-  const handleSearch = (selectedIngredients) => {
-    //TO-DO: navigate to /results with ingredients as URL param
-  };
-
   const handleFilterToggle = (filterKey) => {
     setFilters((previous) => ({
       //'UPDATED ON CLICK' STATE
@@ -73,6 +71,19 @@ const Homepage = ({ onCardClick }) => {
       keto: false,
       paleo: false,
     });
+  };
+
+  const handleSearch = (selectedIngredients) => {
+    //Search params URL
+    const params = new URLSearchParams();
+    params.append("ingredients", selectedIngredients.join(","));
+
+    const activeFilters = Object.keys(filters).filter((key) => filters[key]);
+    if (activeFilters.length > 0) {
+      params.append("filters", activeFilters.join(","));
+    }
+
+    navigate(`/results?${params.toString()}`);
   };
 
   if (loading) {

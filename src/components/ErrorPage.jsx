@@ -1,13 +1,12 @@
-import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
+import NavBar from "../components/NavBar";
 
 function ErrorPage() {
   return (
     <div className="page-container">
       <Header />
       <div className="main-layout">
-        <Navigation />
+        <NavBar />
         <main className="error-content">
           <div className="error-code">404</div>
           <h1 className="error-title">Error: Page Not Found</h1>

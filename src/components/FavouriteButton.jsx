@@ -1,29 +1,24 @@
-import React from "react";
 import axios from "axios";
 
-const FavouriteButton = ({ recipeId, isFavourite }) => {
+const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
   const handleFavouriteClick = (event) => {
     event.stopPropagation(); //Prevents triggering onclick of recipecard
 
-    if (isFavourite) {
+    if (isFavourite) //Favourite status pending BE implementation
+    {
       axios
         .delete(`/api/favourites/${recipeId}`)
         .then(() => {
-          //Favourite status pending BE implementation
-          console.log("Removed from favourites:", recipeId);
+          onToggle?.(recipeId, false);
         })
-        .catch((error) => {
-          console.error("Failed to remove favourite:", error);
-        });
+        .catch((error) => {});
     } else {
       axios
         .post(`/api/favourites/${recipeId}`)
         .then(() => {
-          console.log("Added to favourites:", recipeId);
+          onToggle?.(recipeId, true);
         })
-        .catch((error) => {
-          console.error("Failed to add favourite:", error);
-        });
+        .catch((error) => {});
     }
   };
 
