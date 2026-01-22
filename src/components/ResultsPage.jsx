@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
-import Navigation from "../components/Navigation";
+
 import RecipeCard from "../components/RecipeCard";
 import Loading from "../components/Loading";
 
