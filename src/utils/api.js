@@ -1,4 +1,4 @@
-const BASE_URL = "https://api.example.com";
+const BASE_URL = "https://api.example.com"; // Need to change to actual API base URL
 
 export const fetchRecipes = () => {
   const url = `${BASE_URL}/recipes`;
