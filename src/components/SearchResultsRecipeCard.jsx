@@ -1,10 +1,7 @@
 import React from "react";
 import FavouriteButton from "./FavouriteButton";
 
-const SearchResultsRecipeCard = ({
-  recipes,
-  onCardClick,
-}) => {
+const SearchResultsRecipeCard = ({ recipes, onCardClick }) => {
   return (
     <div
       className="search-results-recipe-card"
