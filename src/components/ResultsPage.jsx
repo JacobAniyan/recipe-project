@@ -13,8 +13,6 @@ function ResultsPage() {
 
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [sortBy, setSortBy] = useState("bestMatch");
 
   useEffect(() => {
     if (ingredients.length > 0) {
@@ -23,7 +21,6 @@ function ResultsPage() {
   }, [ingredients]);
   const fetchMatchingRecipes = async () => {
     setIsLoading(true);
-    setError(null);
 
     try {
     } catch (error) {
