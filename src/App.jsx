@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Homepage from "./components/Homepage";
 import FavouritesPage from "./components/Favouritespage";
 import IndividualRecipePage from "./components/IndividualRecipePage";
+import ErrorPage from "./components/ErrorPage";
+import ResultsPage from "./components/ResultsPage";
 
 function App() {
   return (
@@ -13,9 +15,11 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/recipe/:id" element={<IndividualRecipePage />} />
-          {/* <Route path="/results" element={<SearchResultsPage />} /> */}
+          <Route path="/results" element={<ResultsPage />} />
           <Route path="/favourites" element={<FavouritesPage />} />
+          {/* <Route path="/recipe" element={<All Recipes Page/>} /> */}
+          <Route path="/recipe/:id" element={<IndividualRecipePage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
     </BrowserRouter>
