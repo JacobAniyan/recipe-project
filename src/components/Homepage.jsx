@@ -24,7 +24,7 @@ const Homepage = ({ onCardClick }) => {
   const [availableIngredients, setAvailableIngredients] =
     useState(mockIngredients);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   // //When BE is ready
   // useEffect(() => {

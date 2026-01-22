@@ -6,6 +6,7 @@ import RecipeCard from "./RecipeCard";
 function FavouritesPage() {
   const [favourites, setFavourites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchFavourites();
@@ -13,6 +14,7 @@ function FavouritesPage() {
 
   const fetchFavourites = () => {
     setIsLoading(true);
+    setError(null);
     axios
       .get("/api/favourites")
       .then((response) => {
@@ -21,12 +23,24 @@ function FavouritesPage() {
       })
       .catch((error) => {
         console.error("Failed to fetch favourites:", error);
+        setError("Failed to load favourites. Please try again.");
         setIsLoading(false);
       });
   };
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <button onClick={fetchFavourites}>Try Again</button>
+        <button onClick={() => navigate("/")}>Go Home</button>
+      </div>
+    );
   }
 
   return (

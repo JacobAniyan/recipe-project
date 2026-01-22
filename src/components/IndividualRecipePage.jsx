@@ -19,10 +19,12 @@ function IndividualRecipePage() {
       .then((response) => {
         setRecipe(response.data);
         setIsLoading(false);
+        setError(null);
       })
       .catch((error) => {
         setError("Failed to load recipe details. Please try again later.");
         setIsLoading(false);
+        setError("Failed to load recipe. Please try again.");
       });
   }, [id]);
 
