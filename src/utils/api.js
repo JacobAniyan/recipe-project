@@ -1,32 +1,92 @@
 const BASE_URL = "https://api.example.com";
 
-export async function fetchRecipes(ingredients, filters, sortBy) {
-  const params = new URLSearchParams();
-  if (ingredients && ingredients.length > 0) {
-    params.append("ingredients", ingredients.join(","));
-  }
-  if (filters) {
-    Object.keys(filters).forEach((key) => {
-      if (filters[key]) {
-        params.append("filters", key);
+export const fetchRecipes = () => {
+  const url = `${BASE_URL}/recipes`;
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
+      return response.json();
+    })
+    .then((data) => {
+      return data.recipes;
+    })
+    .catch((error) => {
+      console.error("Error Fetching Recipe:", error);
+      throw error;
     });
-  }
-  if (sortBy) {
-    params.append("sortBy", sortBy);
-  }
+};
+export const fetchRecipeById = (id) => {
+  const url = `${BASE_URL}/recipes/${id}`;
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data.recipe;
+    })
+    .catch((error) => {
+      console.error("Error Fetching Recipe by ID:", error);
+      throw error;
+    });
+};
 
-  const response = await fetch(`${BASE_URL}/recipes?${params.toString()}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch recipes");
-  }
-  return response.json();
-}
+export const fetchFavourites = () => {
+  const url = `${BASE_URL}/favourites`;
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      return data.favourites;
+    })
+    .catch((error) => {
+      console.error("Error Fetching Favourites:", error);
+      throw error;
+    });
+};
 
-export async function fetchRecipeDetail(id) {
-  const response = await fetch(`${BASE_URL}/recipe/${id}`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch recipe details");
-  }
-  return response.json();
-}
+export const addFavourite = (recipeId) => {
+  const url = `${BASE_URL}/favourites`;
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ recipeId }),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Error Adding Favourite:", error);
+      throw error;
+    });
+};
+
+export const removeFavourite = (recipeId) => {
+  const url = `${BASE_URL}/favourites/${recipeId}`;
+  return fetch(url, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Error Removing Favourite:", error);
+      throw error;
+    });
+};
