@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../components/Header";
-import Navbar from "./Navbar";
+import NavBar from "../components/NavBar";
 
 function ErrorPage() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function ErrorPage() {
     <div className="page-container">
       <Header />
       <div className="main-layout">
-        <Navigation />
+        <NavBar />
         <main className="error-content" role="alert" aria-live="polite">
           <div className="error-code">{status}</div>
           <h1 className="error-title">Error: {message}</h1>

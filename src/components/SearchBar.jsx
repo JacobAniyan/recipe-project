@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const SearchBar = ({ onSearch, availableIngredients = [] }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -36,19 +36,14 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
     (event) => {
       event.preventDefault();
 
-      if (selectedIngredients.length === 0) {
-        setError("Please select at least one ingredient");
-        return;
+      const result = onSearch(selectedIngredients);
+      if (result && typeof result.then === "function") {
+        result
+          .then(() => setError(""))
+          .catch(() => setError("Search failed. Please try again."));
+      } else {
+        setError("");
       }
-
-      onSearch(selectedIngredients)
-        .then(() => {
-          setError("");
-        })
-        .catch((error) => {
-          //EH: API failure
-          setError("Search failed. Please try again.");
-        });
     };
 
   return (
@@ -87,7 +82,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
                     type="button"
                     onClick={() => handleRemoveIngredient(ingredient)}
                     aria-label={`Remove ${ingredient}`}
-                    className="remove-ingredient-btn"
+                    className="remove-ingredient-button"
                   >
                     X
                   </button>

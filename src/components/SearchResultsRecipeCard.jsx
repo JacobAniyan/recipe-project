@@ -1,21 +1,20 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
 
-const SearchResultsRecipeCard = ({ recipes }) => {
+const SearchResultsRecipeCard = ({ recipe }) => {
   return (
-    <Link to={`/recipe/${recipes.RecipeId}`} className="recipe-card">
-      <h3>{recipes.Name}</h3>
+    <Link to={`/recipe/${recipe.RecipeId}`} className="recipe-card">
+      <h3>{recipe.Name}</h3>
 
       <div className="match-percentage">
-        <span>Match: {recipes.MatchPercentage}%</span>
+        <span>Match: {recipe.MatchPercentage}%</span>
       </div>
 
-      {recipes.MissingIngredients && recipes.MissingIngredients.length > 0 && (
+      {recipe.MissingIngredients && recipe.MissingIngredients.length > 0 && (
         <div className="missing-ingredients">
           <p className="missing-label">Missing Ingredients:</p>
           <ul>
-            {recipes.MissingIngredients.map((ingredient) => (
+            {recipe.MissingIngredients.map((ingredient) => (
               <li key={ingredient}>{ingredient}</li>
             ))}
           </ul>
@@ -23,14 +22,17 @@ const SearchResultsRecipeCard = ({ recipes }) => {
       )}
 
       <div className="recipe-info">
-        <span className="cooking-time">Duration: {recipes.CookTime} mins</span>
-        <span className="difficulty">Difficulty: {recipes.Difficulty}</span>
+        <span className="cooking-time">Duration: {recipe.CookTime} mins</span>
+        <span className="difficulty">Difficulty: {recipe.Difficulty}</span>
+        <span className="date-added">
+          Added: {new Date(recipe.CreatedAt).toLocaleDateString()}
+        </span>
       </div>
 
       <div className="recipecard-actions">
         <FavouriteButton
-          recipeId={recipes.RecipeId}
-          isFavourite={recipes.IsFavourite}
+          recipeId={recipe.RecipeId}
+          isFavourite={recipe.IsFavourite}
         />
       </div>
     </Link>

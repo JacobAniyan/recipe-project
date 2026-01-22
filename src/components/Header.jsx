@@ -1,11 +1,10 @@
-import React from "react";
-import Navbar from "./Navbar";
+import NavBar from "./NavBar";
 
 const Header = () => {
   return (
     <header>
       {/* logo here */}
-      <Navbar />
+      <NavBar />
     </header>
   );
 };

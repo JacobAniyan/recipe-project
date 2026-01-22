@@ -1,4 +1,3 @@
-import "./CSS/App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -7,6 +6,7 @@ import FavouritesPage from "./components/Favouritespage";
 import IndividualRecipePage from "./components/IndividualRecipePage";
 import ErrorPage from "./components/ErrorPage";
 import ResultsPage from "./components/ResultsPage";
+import "./CSS/App.css";
 
 function App() {
   return (
