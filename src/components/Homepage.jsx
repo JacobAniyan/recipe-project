@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SearchBar from "./SearchBar";
+import DietaryFilters from "./DietaryFilters";
 import Loading from "./Loading";
 
-const Homepage = () => {
-  //Hardcoded test data
+const Homepage = ({ onCardClick }) => {
+  //Hardcoded test data (search dropdown)
   const mockIngredients = [
     { IngredientName: "Chicken" },
     { IngredientName: "Tomato" },
@@ -25,6 +26,7 @@ const Homepage = () => {
 
   // //When BE is ready
   // useEffect(() => {
+  //   setLoading(true);
   //   axios
   //     .get("http://localhost:")
   //     .then((response) => {
@@ -32,14 +34,45 @@ const Homepage = () => {
   //       setLoading(false);
   //     })
   //     .catch((error) => {
-  //      //EH: API failure
+  //       //EH: API failure
   //       setError("Failed to load ingredients");
   //       setLoading(false);
   //     });
   // }, []);
 
+  //Dietary filters
+  const [filters, setFilters] = useState({
+    //DEFAULT STATE
+    vegan: false,
+    vegetarian: false,
+    "gluten-free": false,
+    "dairy-free": false,
+    keto: false,
+    paleo: false,
+  });
+
   const handleSearch = (selectedIngredients) => {
-    //navigate to /results with ingredients as URL param
+    //TO-DO: navigate to /results with ingredients as URL param
+  };
+
+  const handleFilterToggle = (filterKey) => {
+    setFilters((previous) => ({
+      //'UPDATED ON CLICK' STATE
+      ...previous,
+      [filterKey]: !previous[filterKey],
+    }));
+  };
+
+  const handleClearAllFilters = () => {
+    setFilters({
+      //'CLEAR ALL' STATE
+      vegan: false,
+      vegetarian: false,
+      "gluten-free": false,
+      "dairy-free": false,
+      keto: false,
+      paleo: false,
+    });
   };
 
   if (loading) {
@@ -47,7 +80,7 @@ const Homepage = () => {
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <p>Error: {error}</p>;
   }
 
   return (
@@ -56,6 +89,12 @@ const Homepage = () => {
       <SearchBar
         onSearch={handleSearch}
         availableIngredients={availableIngredients}
+        onCardClick={onCardClick}
+      />
+      <DietaryFilters
+        filters={filters}
+        onToggle={handleFilterToggle}
+        onClearAll={handleClearAllFilters}
       />
     </div>
   );

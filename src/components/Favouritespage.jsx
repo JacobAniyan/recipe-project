@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loading from "./Loading";
 import RecipeCard from "./RecipeCard";
@@ -7,7 +6,6 @@ import RecipeCard from "./RecipeCard";
 function FavouritesPage() {
   const [favourites, setFavourites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     fetchFavourites();
@@ -27,10 +25,6 @@ function FavouritesPage() {
       });
   };
 
-  const handleCardClick = (recipeId) => {
-    navigate(`/recipe/${recipeId}`);
-  };
-
   if (isLoading) {
     return <Loading />;
   }
@@ -47,7 +41,6 @@ function FavouritesPage() {
               <RecipeCard
                 key={recipe.RecipeId}
                 recipes={recipe}
-                onCardClick={handleCardClick}
               />
             ))}
           </div>
