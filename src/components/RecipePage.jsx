@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { fetchRecipeById } from "../utils/api";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
-import Loading from "./Loading";
+import Loader from "./Loader";
+import InlineError from "./InlineError";
 
 function IndividualRecipePage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,20 +23,30 @@ function IndividualRecipePage() {
       })
       .catch((error) => {
         console.error("Failed to load recipe:", error);
-        const status = error.response?.status || 500;
-        const message = error.response?.data?.message || error.message;
-        navigate("/error", { state: { status, message } });
+        setError("Unable to load recipe details. Please try again later.");
+        setIsLoading(false);
       });
-  }, [id, navigate]);
+  }, [id]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loader />;
+  }
+
+  if (error) {
+    return (
+      <div className="page-container">
+        <InlineError type="500" message={error} />
+      </div>
+    );
   }
 
   if (!recipe) {
     return (
-      <div className="error-message">
-        <p>Recipe not found</p>
+      <div className="page-container">
+        <InlineError
+          type="500"
+          message="Recipe not found. The recipe you're looking for doesn't exist."
+        />
       </div>
     );
   }

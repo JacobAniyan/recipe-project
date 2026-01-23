@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import RecipeCard from "./RecipeCard";
-import Loading from "./Loading";
+import Loader from "./Loader";
 import SortByDropdown from "./SortByDropdown";
+import InlineError from "./InlineError";
 import { fetchRecipes } from "../utils/api";
 
 const AllRecipesPage = () => {
@@ -10,28 +11,27 @@ const AllRecipesPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   let sort_by = searchParams.get("sort_by");
   let order = searchParams.get("order");
 
   useEffect(() => {
+    setError(null);
     setIsLoading(true);
     fetchRecipes(sort_by, order)
       .then((data) => {
-        setIsLoading(false);
         setRecipes(Array.isArray(data) ? data : []);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
-        const status = error.response?.status || 500;
-        const message = error.response?.data?.message || error.message;
-        navigate("/error", { state: { status, message } });
+        setError("Unable to load recipes. Please try again later.");
+        setIsLoading(false);
       });
-  }, [sort_by, order, navigate]);
+  }, [sort_by, order]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (
@@ -40,19 +40,25 @@ const AllRecipesPage = () => {
         <h1>All Recipes</h1>
       </div>
 
-      <div className="sortBy-container">
-        <SortByDropdown />
-      </div>
+      {error ? (
+        <InlineError type="500" message={error} />
+      ) : (
+        <>
+          <div className="sortBy-container">
+            <SortByDropdown />
+          </div>
 
-      <div className="recipe-grid">
-        {recipes.length > 0 ? (
-          recipes.map((recipe) => (
-            <RecipeCard key={recipe.RecipeId} recipe={recipe} />
-          ))
-        ) : (
-          <p>No recipes found.</p>
-        )}
-      </div>
+          <div className="recipe-grid">
+            {recipes.length > 0 ? (
+              recipes.map((recipe) => (
+                <RecipeCard key={recipe.RecipeId} recipe={recipe} />
+              ))
+            ) : (
+              <p>No recipes found.</p>
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };
