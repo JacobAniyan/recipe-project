@@ -1,29 +1,34 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { fetchFavourites } from "../utils/api";
 import Loading from "./Loading";
 import RecipeCard from "./RecipeCard";
 
 function FavouritesPage() {
+  const navigate = useNavigate();
   const [favourites, setFavourites] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchFavourites();
-  }, []);
+  ////pending BE implementation
+  // useEffect(() => {
+  //   fetchFavouritesData();
+  // }, []);
 
-  const fetchFavourites = () => {
+  const fetchFavouritesData = () => {
     setIsLoading(true);
     setError(null);
-    axios
-      .get("/api/favourites")
-      .then((response) => {
-        setFavourites(response.data);
+
+    fetchFavourites()
+      .then((data) => {
+        setFavourites(data);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error("Failed to fetch favourites:", error);
-        setError("Failed to load favourites. Please try again.");
+        console.error("Failed to load favourites:", error);
+        const status = error.response?.status || 500;
+        const message = error.response?.data?.message || error.message;
+        setError({ status, message });
         setIsLoading(false);
       });
   };
@@ -35,28 +40,28 @@ function FavouritesPage() {
   if (error) {
     return (
       <div className="error-container">
-        <h2>Error</h2>
-        <p>{error}</p>
-        <button onClick={fetchFavourites}>Try Again</button>
-        <button onClick={() => navigate("/")}>Go Home</button>
+        <h2>
+          Error {error.status}: {error.message}
+        </h2>
+        <button onClick={fetchFavouritesData}>Try Again</button>
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="favourites-page-content" style={{ padding: "20px" }}>
+    <div className="page-container">
+      <div className="page-header">
         <h1>My Favourite Recipes</h1>
-        {favourites.length === 0 ? (
-          <p>No favourite recipes yet. Start adding some!</p>
-        ) : (
-          <div className="recipe-grid">
-            {favourites.map((recipe) => (
-              <RecipeCard key={recipe.RecipeId} recipe={recipe} />
-            ))}
-          </div>
-        )}
       </div>
+      {favourites.length === 0 ? (
+        <p>No favourited recipes yet!</p>
+      ) : (
+        <div className="recipe-grid">
+          {favourites.map((recipe) => (
+            <RecipeCard key={recipe.RecipeId} recipe={recipe} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

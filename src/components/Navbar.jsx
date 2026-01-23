@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/Logo(RecipeGen).png";
 
 const NavBar = () => {
   return (
     <nav>
+      <Link to="/" className="logo-link">
+        <img src={logo} alt="Recipe Gen Logo" className="brand-logo" />
+      </Link>
       <Link to="/">Homepage</Link>
       <Link to="/recipe">All Recipes</Link>
       <Link to="/favourites">Favourites</Link>

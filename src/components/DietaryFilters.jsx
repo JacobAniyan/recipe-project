@@ -10,15 +10,13 @@ function DietaryFilters({ filters, onToggle, onClearAll }) {
 
   return (
     <div className="dietary-filters">
-      {/* Header */}
       <div className="filters-header">
-        <p className="filters-description">filter by diet</p>
+        <p className="filters-description">Filter by Diet:</p>
         <button className="clear-filters-button" onClick={onClearAll}>
           Clear All
         </button>
       </div>
 
-      {/* Filter checkboxes */}
       <div className="filters-list">
         {filterOptions.map((filter) => (
           <label key={filter.key} className="filter-option">

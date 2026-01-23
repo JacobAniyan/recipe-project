@@ -6,6 +6,7 @@ import FavouritesPage from "./components/Favouritespage";
 import IndividualRecipePage from "./components/IndividualRecipePage";
 import ErrorPage from "./components/ErrorPage";
 import ResultsPage from "./components/ResultsPage";
+import AllRecipesPage from "./components/AllRecipesPage";
 import "./CSS/App.css";
 
 function App() {
@@ -17,8 +18,9 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/favourites" element={<FavouritesPage />} />
-          {/* <Route path="/recipe" element={<All Recipes Page/>} /> */}
+          <Route path="/recipe" element={<AllRecipesPage />} />
           <Route path="/recipe/:id" element={<IndividualRecipePage />} />
+          <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>

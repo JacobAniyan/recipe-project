@@ -1,92 +1,53 @@
-const BASE_URL = "https://api.example.com"; // Need to change to actual API base URL
+import axios from "axios";
 
-export const fetchRecipes = () => {
-  const url = `${BASE_URL}/recipes`;
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.recipes;
-    })
-    .catch((error) => {
-      console.error("Error Fetching Recipe:", error);
-      throw error;
-    });
+//pending BE implementation - set BASE_URL once backend is deployed
+const BASE_URL = "";
+
+export const fetchRecipes = (sortBy, order) => {
+  //pending BE implementation - GET all recipes
+  const params = {};
+  if (sortBy) params.sort_by = sortBy;
+  if (order) params.order = order;
+
+  return axios.get("/recipes", { params }).then((response) => response.data);
 };
+
 export const fetchRecipeById = (id) => {
-  const url = `${BASE_URL}/recipes/${id}`;
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.recipe;
-    })
-    .catch((error) => {
-      console.error("Error Fetching Recipe by ID:", error);
-      throw error;
-    });
+  //pending BE implementation - GET recipe by ID
+  return axios.get(`/recipe/${id}`).then((response) => response.data);
+};
+
+export const searchRecipes = (ingredients, filters = [], sortBy, order) => {
+  //pending BE implementation - GET recipes by ingredients and filters
+  const params = new URLSearchParams();
+  params.append("ingredients", ingredients);
+  if (filters.length > 0) {
+    params.append("filters", filters);
+  }
+  if (sortBy) params.append("sort_by", sortBy);
+  if (order) params.append("order", order);
+
+  return axios
+    .get(`/recipes/search?${params.toString()}`)
+    .then((response) => response.data);
 };
 
 export const fetchFavourites = () => {
-  const url = `${BASE_URL}/favourites`;
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      return data.favourites;
-    })
-    .catch((error) => {
-      console.error("Error Fetching Favourites:", error);
-      throw error;
-    });
+  //pending BE implementation - GET recipes if Favourited
+
+  return axios.get("/favourites").then((response) => response.data);
 };
 
 export const addFavourite = (recipeId) => {
-  const url = `${BASE_URL}/favourites`;
-  return fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ recipeId }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error Adding Favourite:", error);
-      throw error;
-    });
+  //pending BE implementation - POST recipes to Favourited
+  return axios
+    .post(`/api/favourites/${recipeId}`)
+    .then((response) => response.data);
 };
 
 export const removeFavourite = (recipeId) => {
-  const url = `${BASE_URL}/favourites/${recipeId}`;
-  return fetch(url, {
-    method: "DELETE",
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      console.error("Error Removing Favourite:", error);
-      throw error;
-    });
+  //pending BE implementation - DELETE recipe from favourites
+  return axios
+    .delete(`/api/favourites/${recipeId}`)
+    .then((response) => response.data);
 };
