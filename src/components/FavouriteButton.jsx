@@ -11,14 +11,18 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
         .then(() => {
           onToggle?.(recipeId, false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.error("Failed to remove from favourites:", error);
+        });
     } else {
       axios
         .post(`/api/favourites/${recipeId}`)
         .then(() => {
           onToggle?.(recipeId, true);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.error("Failed to add to favourites:", error);
+        });
     }
   };
 
