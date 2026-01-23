@@ -22,10 +22,6 @@ const ResultsPage = () => {
     : [];
   const selectedFilters = filtersParam ? filtersParam.split(",") : [];
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   useEffect(() => {
     getRecipes();
   }, [ingredientsParam, filtersParam]);
@@ -82,7 +78,9 @@ const ResultsPage = () => {
   } else {
     sortedRecipes = recipesCopy;
   }
-
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="results-page">
       <div className="results-header">
