@@ -1,43 +1,36 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { useParams } from "react-router-dom";
+import { fetchRecipeById } from "../utils/api";
+import { useParams, useNavigate } from "react-router-dom";
 import FavouriteButton from "./FavouriteButton";
 import Loading from "./Loading";
 
 function IndividualRecipePage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
 
-    axios
-      .get(`/api/recipe/${id}`)
-      .then((response) => {
-        setRecipe(response.data);
+    fetchRecipeById(id)
+      .then((data) => {
+        setRecipe(data);
         setIsLoading(false);
         setError(null);
       })
       .catch((error) => {
-        setError("Failed to load recipe details. Please try again later.");
-        setIsLoading(false);
-        setError("Failed to load recipe. Please try again.");
+        console.error("Failed to load recipe:", error);
+        const status = error.response?.status || 500;
+        const message = error.response?.data?.message || error.message;
+        navigate("/error", { state: { status, message } });
       });
-  }, [id]);
+  }, [id, navigate]);
 
   if (isLoading) {
     return <Loading />;
-  }
-
-  if (error) {
-    return (
-      <div className="error-message">
-        <p>{error}</p>
-      </div>
-    );
   }
 
   if (!recipe) {
@@ -80,30 +73,22 @@ function IndividualRecipePage() {
 
       <section className="ingredients-section">
         <h2>Ingredients</h2>
-        {recipe.Ingredients && recipe.Ingredients.length > 0 ? (
-          <ul className="ingredients-list">
-            {recipe.Ingredients.map((ingredient, index) => (
-              <li key={index}>{ingredient}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>No ingredients available</p>
-        )}
+        <ul className="ingredients-list">
+          {recipe.Ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
       </section>
 
       <section className="instructions-section">
         <h2>Instructions</h2>
-        {recipe.Instruction ? (
-          <ol className="instructions-list">
-            {recipe.Instruction.split("\n").map((step, index) => (
-              <li key={index} className="instruction-step">
-                {step}
-              </li>
-            ))}
-          </ol>
-        ) : (
-          <p>No instructions available</p>
-        )}
+        <ol className="instructions-list">
+          {recipe.Instruction.split("\n").map((step, index) => (
+            <li key={index} className="instruction-step">
+              {step}
+            </li>
+          ))}
+        </ol>
       </section>
     </div>
   );

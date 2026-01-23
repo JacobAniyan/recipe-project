@@ -1,13 +1,40 @@
-const SortByDropdown = ({ sortBy, onSortChange }) => {
+import { useSearchParams } from "react-router-dom";
+
+const SortByDropdown = () => {
+  const [setSearchParams] = useSearchParams();
+
   return (
     <div className="sort-by">
-      <label htmlFor="sort-by">Sort by:</label>
-      <select id="sort-by" value={sortBy} onChange={onSortChange}>
-        <option value="match">Best Match</option>
-        <option value="CookTime">Cook Time</option>
-        <option value="Difficulty">Difficulty</option>
-        <option value="CreatedAt">Date Added</option>
-      </select>
+      <label>Sort by:</label>
+      <div className="sort-buttons">
+        <button onClick={() => setSearchParams("?sort_by=match&order=DESC")}>
+          Best Match
+        </button>
+        <button onClick={() => setSearchParams("?sort_by=CookTime&order=ASC")}>
+          Cook Time (Low to High)
+        </button>
+        <button onClick={() => setSearchParams("?sort_by=CookTime&order=DESC")}>
+          Cook Time (High to Low)
+        </button>
+        <button
+          onClick={() => setSearchParams("?sort_by=Difficulty&order=ASC")}
+        >
+          Difficulty (Easy to Hard)
+        </button>
+        <button
+          onClick={() => setSearchParams("?sort_by=Difficulty&order=DESC")}
+        >
+          Difficulty (Hard to Easy)
+        </button>
+        <button
+          onClick={() => setSearchParams("?sort_by=CreatedAt&order=DESC")}
+        >
+          Date Added (Newest First)
+        </button>
+        <button onClick={() => setSearchParams("?sort_by=CreatedAt&order=ASC")}>
+          Date Added (Oldest First)
+        </button>
+      </div>
     </div>
   );
 };

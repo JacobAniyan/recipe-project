@@ -40,7 +40,10 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       if (result && typeof result.then === "function") {
         result
           .then(() => setError(""))
-          .catch(() => setError("Search failed. Please try again."));
+          .catch((error) => {
+            console.error("Search failed:", error);
+            setError("Search failed. Please try again.");
+          });
       } else {
         setError("");
       }

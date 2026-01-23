@@ -4,7 +4,7 @@ import DietaryFilters from "./DietaryFilters";
 import Loading from "./Loading";
 import SearchBar from "./SearchBar";
 
-const Homepage = ({ onCardClick }) => {
+const Homepage = () => {
   const navigate = useNavigate();
 
   //Hardcoded test data (search dropdown)
@@ -26,7 +26,7 @@ const Homepage = ({ onCardClick }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // //When BE is ready
+  ////pending BE implementation
   // useEffect(() => {
   //   setLoading(true);
   //   axios
@@ -74,7 +74,6 @@ const Homepage = ({ onCardClick }) => {
   };
 
   const handleSearch = (selectedIngredients) => {
-    //Search params URL
     const params = new URLSearchParams();
     params.append("ingredients", selectedIngredients.join(","));
 
@@ -100,7 +99,6 @@ const Homepage = ({ onCardClick }) => {
       <SearchBar
         onSearch={handleSearch}
         availableIngredients={availableIngredients}
-        onCardClick={onCardClick}
       />
       <DietaryFilters
         filters={filters}

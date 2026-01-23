@@ -1,24 +1,29 @@
-import axios from "axios";
+import { addFavourite, removeFavourite } from "../utils/api";
 
 const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
   const handleFavouriteClick = (event) => {
-    event.stopPropagation(); //Prevents triggering onclick of recipecard
+    event.stopPropagation();
 
-    if (isFavourite) //Favourite status pending BE implementation
-    {
-      axios
-        .delete(`/api/favourites/${recipeId}`)
+    if (isFavourite) {
+      removeFavourite(recipeId)
         .then(() => {
+          //pending BE implementation
+          //EH: remove favourite
           onToggle?.(recipeId, false);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.error("Failed to remove favourite:", error);
+        });
     } else {
-      axios
-        .post(`/api/favourites/${recipeId}`)
+      addFavourite(recipeId)
         .then(() => {
+          //pending BE implementation
+          //EH: add favourite
           onToggle?.(recipeId, true);
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.error("Failed to add favourite:", error);
+        });
     }
   };
 
@@ -28,7 +33,7 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
       onClick={handleFavouriteClick}
       aria-label={isFavourite ? "Remove from favourites" : "Add to favourites"}
     >
-      {isFavourite ? "❤️" : "🤍"} Save to Favourites
+      {isFavourite ? "❤️" : "🤍"}
     </button>
   );
 };

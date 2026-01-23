@@ -1,7 +1,8 @@
 function Loading() {
   return (
-    <div className="loading">
-      <p>Loading..</p>
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading recipes...</p>
     </div>
   );
 }
