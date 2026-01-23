@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchFavourites } from "../utils/api";
-import Loading from "./Loading";
+import Loader from "./Loader";
 import RecipeCard from "./RecipeCard";
+import InlineError from "./InlineError";
 
 function FavouritesPage() {
   const navigate = useNavigate();
@@ -21,31 +22,22 @@ function FavouritesPage() {
 
     fetchFavourites()
       .then((data) => {
-        setFavourites(data);
+        setFavourites(Array.isArray(data) ? data : []);
         setIsLoading(false);
       })
       .catch((error) => {
         console.error("Failed to load favourites:", error);
-        const status = error.response?.status || 500;
-        const message = error.response?.data?.message || error.message;
-        setError({ status, message });
+        setError("Unable to load your favourites. Please try again later.");
         setIsLoading(false);
       });
   };
 
   if (isLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   if (error) {
-    return (
-      <div className="error-container">
-        <h2>
-          Error {error.status}: {error.message}
-        </h2>
-        <button onClick={fetchFavouritesData}>Try Again</button>
-      </div>
-    );
+    return <InlineError type="500" message={error} />;
   }
 
   return (

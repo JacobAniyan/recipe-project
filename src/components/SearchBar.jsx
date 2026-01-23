@@ -1,9 +1,10 @@
 import { useState } from "react";
+import InlineError from "./InlineError";
 
 const SearchBar = ({ onSearch, availableIngredients = [] }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
 
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
@@ -39,13 +40,13 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       const result = onSearch(selectedIngredients);
       if (result && typeof result.then === "function") {
         result
-          .then(() => setError(""))
+          .then(() => setError(null))
           .catch((error) => {
             console.error("Search failed:", error);
             setError("Search failed. Please try again.");
           });
       } else {
-        setError("");
+        setError(null);
       }
     };
 
@@ -72,7 +73,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
           ))}
         </ul>
 
-        {error && <p className="error-message">{error}</p>}
+        {error && <InlineError type="500" message={error} />}
 
         {selectedIngredients.length > 0 && (
           <div className="selected-ingredients">

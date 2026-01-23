@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Homepage from "./components/Homepage";
-import FavouritesPage from "./components/Favouritespage";
-import IndividualRecipePage from "./components/IndividualRecipePage";
-import ErrorPage from "./components/ErrorPage";
-import ResultsPage from "./components/ResultsPage";
+import FavouritesPage from "./components/FavouritesPage";
+import RecipePage from "./components/RecipePage";
+import InlineError from "./components/InlineError";
+import SearchResultsPage from "./components/SearchResultsPage";
 import AllRecipesPage from "./components/AllRecipesPage";
 import "./CSS/App.css";
 
@@ -16,12 +16,11 @@ function App() {
         <Header />
         <Routes>
           <Route path="/" element={<Homepage />} />
-          <Route path="/results" element={<ResultsPage />} />
+          <Route path="/results" element={<SearchResultsPage />} />
           <Route path="/favourites" element={<FavouritesPage />} />
           <Route path="/recipe" element={<AllRecipesPage />} />
-          <Route path="/recipe/:id" element={<IndividualRecipePage />} />
-          <Route path="/error" element={<ErrorPage />} />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="/recipe/:id" element={<RecipePage />} />
+          <Route path="*" element={<InlineError type="404" />} />
         </Routes>
       </div>
     </BrowserRouter>
