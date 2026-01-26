@@ -9,7 +9,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
         ingredient.IngredientName.toLowerCase().startsWith(
-          searchInput.toLowerCase(), //+ .includes(searchTerm.toLowerCase()) = More flexible search
+          searchInput.toLowerCase(),
         ),
       )
     : [];
@@ -23,7 +23,6 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       if (!selectedIngredients.includes(ingredientName)) {
         setSelectedIngredients([...selectedIngredients, ingredientName]);
       }
-      // + setSearchTerm("");  = Clear input after selection
     };
 
   const handleRemoveIngredient = (ingredientToRemove) => {
@@ -53,7 +52,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
 
   return (
     <form onSubmit={handleSubmit} className="search-bar-container">
-      {/* Search Input Wrapper - contains input, dropdown, and selected ingredients */}
+      {/* Search Input */}
       <div className="search-input-wrapper">
         <input
           type="text"
