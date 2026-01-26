@@ -53,6 +53,9 @@ body {
   );
   color: var(--dark-gray);
   line-height: 1.7;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 .app {
@@ -662,4 +665,63 @@ nav a.active {
     padding: 0.36rem 0.6rem;
     font-size: 0.9rem;
   }
+}
+
+/* simple dark mode toggle styles (W3 approach) */
+body {
+  transition:
+    background-color 1000ms ease,
+    color 1000ms ease;
+}
+
+/* class toggled on <body> to enable dark mode */
+body.dark-mode {
+  background-image: none;
+  background-color: var(--dark-mode-background-color, #333);
+}
+
+/* Page containers / cards / header / nav */
+body.dark-mode .page-container,
+body.dark-mode .card,
+body.dark-mode .recipe-card,
+body.dark-mode header,
+body.dark-mode nav,
+body.dark-mode .main-layout,
+body.dark-mode .search-section {
+  background-color: #071018 !important;
+  color: #e6eef3 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  box-shadow: none !important;
+}
+
+/* Links and nav items */
+body.dark-mode a,
+body.dark-mode nav a,
+body.dark-mode .brand-logo {
+  color: #dbe9f0 !important;
+}
+
+/* Inputs and borders */
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  background: #0f1a22 !important;
+  color: #e6eef3 !important;
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Buttons (example: find-button and sort chips) */
+body.dark-mode .find-button,
+body.dark-mode .sort-option,
+body.dark-mode .sort-chip,
+body.dark-mode .filter-tag,
+body.dark-mode .btn {
+  background: #ff7a59 !important; /* keep your accent */
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* Make sure placeholders are visible */
+body.dark-mode ::placeholder {
+  color: #9aa8b0 !important;
 }
