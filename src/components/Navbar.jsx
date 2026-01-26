@@ -7,9 +7,11 @@ const NavBar = () => {
       <Link to="/" className="logo-link">
         <img src={logo} alt="Recipe Gen Logo" className="brand-logo" />
       </Link>
-      <Link to="/">Homepage</Link>
-      <Link to="/recipe">All Recipes</Link>
-      <Link to="/favourites">Favourites</Link>
+      <div className="nav-links">
+        <Link to="/">Homepage</Link>
+        <Link to="/recipe">All Recipes</Link>
+        <Link to="/favourites">Favourites</Link>
+      </div>
     </nav>
   );
 };
