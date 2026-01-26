@@ -8,7 +8,7 @@ import InlineError from "./InlineError";
 const Homepage = () => {
   const navigate = useNavigate();
 
-  //Hardcoded test data (search dropdown)
+  //Hardcoded test data
   const mockIngredients = [
     { IngredientName: "Chicken" },
     { IngredientName: "Tomato" },
@@ -56,7 +56,7 @@ const Homepage = () => {
 
   const handleFilterToggle = (filterKey) => {
     setFilters((previous) => ({
-      //'UPDATED ON CLICK' STATE
+      //UPDATED ON CLICK STATE
       ...previous,
       [filterKey]: !previous[filterKey],
     }));
@@ -64,7 +64,7 @@ const Homepage = () => {
 
   const handleClearAllFilters = () => {
     setFilters({
-      //'CLEAR ALL' STATE
+      //CLEAR ALL STATE
       vegan: false,
       vegetarian: false,
       "gluten-free": false,

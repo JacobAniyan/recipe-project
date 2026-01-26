@@ -4,10 +4,10 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
   const handleFavouriteClick = (event) => {
     event.stopPropagation();
 
+    //pending BE implementation
     if (isFavourite) {
       removeFavourite(recipeId)
         .then(() => {
-          //pending BE implementation
           //EH: remove favourite
           onToggle?.(recipeId, false);
         })
@@ -17,7 +17,6 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
     } else {
       addFavourite(recipeId)
         .then(() => {
-          //pending BE implementation
           //EH: add favourite
           onToggle?.(recipeId, true);
         })
