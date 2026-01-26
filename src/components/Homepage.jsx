@@ -94,17 +94,19 @@ const Homepage = () => {
   }
 
   return (
-    <div>
+    <div className="homepage">
       <h1>Welcome to Recipe Generator</h1>
-      <SearchBar
-        onSearch={handleSearch}
-        availableIngredients={availableIngredients}
-      />
-      <DietaryFilters
-        filters={filters}
-        onToggle={handleFilterToggle}
-        onClearAll={handleClearAllFilters}
-      />
+      <div className="search-section">
+        <SearchBar
+          onSearch={handleSearch}
+          availableIngredients={availableIngredients}
+        />
+        <DietaryFilters
+          filters={filters}
+          onToggle={handleFilterToggle}
+          onClearAll={handleClearAllFilters}
+        />
+      </div>
     </div>
   );
 };

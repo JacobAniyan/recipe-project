@@ -8,7 +8,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
         ingredient.IngredientName.toLowerCase().startsWith(
-          searchInput.toLowerCase(),
+          searchInput.toLowerCase(), //+ .includes(searchTerm.toLowerCase()) = More flexible search
         ),
       )
     : [];
@@ -22,6 +22,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       if (!selectedIngredients.includes(ingredientName)) {
         setSelectedIngredients([...selectedIngredients, ingredientName]);
       }
+      // + setSearchTerm("");  = Clear input after selection
     };
 
   const handleRemoveIngredient = (ingredientToRemove) => {
@@ -50,8 +51,9 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
     };
 
   return (
-    <div className="search-bar-container">
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="search-bar-container">
+      {/* Search Input Wrapper - contains input, dropdown, and selected ingredients */}
+      <div className="search-input-wrapper">
         <input
           type="text"
           id="ingredient-search"
@@ -77,9 +79,9 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
         {selectedIngredients.length > 0 && (
           <div className="selected-ingredients">
             <p>Selected Ingredients:</p>
-            <ul>
+            <div className="selected-ingredients-list">
               {selectedIngredients.map((ingredient) => (
-                <li key={ingredient} className="selected-ingredient">
+                <span key={ingredient} className="selected-ingredient-tag">
                   {ingredient}
                   <button
                     type="button"
@@ -87,18 +89,22 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
                     aria-label={`Remove ${ingredient}`}
                     className="remove-ingredient-button"
                   >
-                    X
+                    ✕
                   </button>
-                </li>
+                </span>
               ))}
-            </ul>
+            </div>
           </div>
         )}
-        <button type="submit" disabled={selectedIngredients.length === 0}>
-          Find
-        </button>
-      </form>
-    </div>
+      </div>
+      <button
+        type="submit"
+        className="find-button"
+        disabled={selectedIngredients.length === 0}
+      >
+        Find
+      </button>
+    </form>
   );
 };
 

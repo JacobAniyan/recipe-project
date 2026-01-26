@@ -35,7 +35,7 @@ const AllRecipesPage = () => {
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container all-recipes-page">
       <div className="page-header">
         <h1>All Recipes</h1>
       </div>
