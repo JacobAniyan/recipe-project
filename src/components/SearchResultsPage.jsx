@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import SearchResultsRecipeCard from "./SearchResultsRecipeCard";
 import Loader from "./Loader";
 import SortByDropdown from "./SortByDropdown";
@@ -8,23 +8,24 @@ import { searchRecipes } from "../utils/api";
 
 const ResultsPage = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
 
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const ingredientsParam = searchParams.get("ingredients");
-  const filtersParam = searchParams.get("filters");
+  const {
+    ingredientIds = [],
+    dietaryRestrictionIds = [],
+    ingredientNames = [],
+    filterNames = [],
+  } = location.state || {};
+
   let sort_by = searchParams.get("sort_by");
   let order = searchParams.get("order");
 
-  const selectedIngredients = ingredientsParam
-    ? ingredientsParam.split(",")
-    : [];
-  const selectedFilters = filtersParam ? filtersParam.split(",") : [];
-
   useEffect(() => {
-    if (selectedIngredients.length === 0) {
+    if (ingredientIds.length === 0) {
       setRecipes([]);
       setIsLoading(false);
       return;
@@ -33,7 +34,7 @@ const ResultsPage = () => {
     setIsLoading(true);
     setError(null);
 
-    searchRecipes(ingredientsParam, selectedFilters, sort_by, order)
+    searchRecipes(ingredientIds, dietaryRestrictionIds, sort_by, order)
       .then((data) => {
         setRecipes(Array.isArray(data) ? data : []);
         setIsLoading(false);
@@ -43,7 +44,7 @@ const ResultsPage = () => {
         setError("Unable to search recipes. Please try again later.");
         setIsLoading(false);
       });
-  }, [ingredientsParam, filtersParam, sort_by, order]);
+  }, [ingredientIds, dietaryRestrictionIds, sort_by, order]);
 
   if (isLoading) {
     return <Loader />;
@@ -54,9 +55,9 @@ const ResultsPage = () => {
       <div className="page-header">
         <h1>Recipe Results</h1>
         <div className="search-summary">
-          <p>Recipes containing: {selectedIngredients.join(", ")}</p>
-          {selectedFilters.length > 0 && (
-            <p>Selected Filters: {selectedFilters.join(", ")}</p>
+          <p>Recipes containing: {ingredientNames.join(", ")}</p>
+          {filterNames.length > 0 && (
+            <p>Selected Filters: {filterNames.join(", ")}</p>
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/Logo.png";
 
-const NavBar = () => {
+const NavBar = ({ themeToggleButton }) => {
   return (
     <nav>
       <Link to="/" className="logo-link" aria-label="Homepage/ Search Recipe">
@@ -11,6 +11,7 @@ const NavBar = () => {
         <Link to="/recipe">All Recipes</Link>
         <Link to="/favourites">Favourites</Link>
         <Link to="/">Search</Link>
+        {themeToggleButton}
       </div>
     </nav>
   );
