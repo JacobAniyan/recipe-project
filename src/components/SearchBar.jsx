@@ -37,17 +37,16 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
     (event) => {
       event.preventDefault();
 
-      const result = onSearch(selectedIngredients);
-      if (result && typeof result.then === "function") {
-        result
-          .then(() => setError(null))
-          .catch((error) => {
-            console.error("Search failed:", error);
-            setError("Search failed. Please try again.");
-          });
-      } else {
-        setError(null);
+      if (selectedIngredients.length === 0) {
+        setError({
+          type: "400",
+          message: "Please select at least one ingredient to search.",
+        });
+        return;
       }
+
+      setError(null);
+      onSearch(selectedIngredients);
     };
 
   return (
@@ -74,7 +73,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
           ))}
         </ul>
 
-        {error && <InlineError type="500" message={error} />}
+        {error && <InlineError type={error.type} message={error.message} />}
 
         {selectedIngredients.length > 0 && (
           <div className="selected-ingredients">
@@ -97,11 +96,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
           </div>
         )}
       </div>
-      <button
-        type="submit"
-        className="find-button"
-        disabled={selectedIngredients.length === 0}
-      >
+      <button type="submit" className="find-button">
         Find
       </button>
     </form>

@@ -50,13 +50,13 @@ const ResultsPage = () => {
   }
 
   return (
-    <div className="page-container">
+    <div className="page-container search-results-page">
       <div className="page-header">
         <h1>Recipe Results</h1>
         <div className="search-summary">
           <p>Recipes containing: {selectedIngredients.join(", ")}</p>
           {selectedFilters.length > 0 && (
-            <p>Filters: {selectedFilters.join(", ")}</p>
+            <p>Selected Filters: {selectedFilters.join(", ")}</p>
           )}
         </div>
       </div>

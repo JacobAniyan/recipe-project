@@ -16,7 +16,7 @@
   --medium-gray: #718096;
   --error-red: #e53e3e;
   --success-green: #38a169;
-  --allrecipes-accent: #ff7a59; /* orange used for All Recipes header/buttons */
+  --allrecipes-accent: #ff7a59;
 
   /* Typography */
   --font-heading: "Quicksand", sans-serif;
@@ -33,11 +33,7 @@
   --shadow-md: 0 4px 8px rgba(74, 117, 102, 0.15);
   --shadow-lg: 0 8px 16px rgba(74, 117, 102, 0.2);
 }
-------------
 
-
-
-/* Global Styles */
 * {
   margin: 0;
   padding: 0;
@@ -95,7 +91,7 @@ h1 {
   margin-bottom: var(--space-xl);
   color: var(--deep-teal);
 }
-------------------------
+
 /* NavBar */
 nav {
   display: flex;
@@ -110,6 +106,7 @@ nav {
   );
   height: 60px;
   box-shadow: var(--shadow-lg);
+  overflow: hidden;
 }
 
 .nav-links {
@@ -122,16 +119,25 @@ nav {
   margin-right: auto;
   display: flex;
   align-items: center;
-  margin-left: 0;
+  margin-left: -50px;
+  margin-top: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logo-link:hover {
+  background-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
 
 .brand-logo {
-  height: 100px;
+  height: 180px;
   width: auto;
 }
 
 nav a {
-  color: var(--deep-teal);
+  color: var(--white);
   padding: 0.5rem 1rem;
   border-radius: 8px;
   text-decoration: none;
@@ -141,6 +147,7 @@ nav a {
 }
 
 nav a:hover {
+  color: var(--white);
   background-color: rgba(255, 215, 0, 0.2);
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
   transform: translateY(-2px);
@@ -151,7 +158,7 @@ nav a.active {
   color: var(--golden-yellow);
 }
 
-/* Homepage Layout */
+/* Homepage */
 .homepage {
   max-width: 1400px;
   margin: 0 auto;
@@ -168,33 +175,30 @@ nav a.active {
   box-shadow: var(--shadow-md);
 }
 
-/* Search Bar Container (Input + Button) */
+/* Search Bar */
 .search-bar-container {
-  display: flex; /* place input and button side-by-side */
-  gap: 10px; /* no overlap */
+  display: flex;
+  gap: 10px;
   align-items: center;
   flex: 1;
   max-width: 900px;
   color: var(--deep-teal);
-
-  /* allow wrapping on very small screens */
   flex-wrap: wrap;
 }
 
 .search-input-wrapper {
   flex: 1 1 auto;
-  min-width: 0; /* prevents flex overflow */
+  min-width: 0;
   position: relative;
 }
 
-/* Input: only round the left corners so it meets the button cleanly */
 #ingredient-search {
   width: 100%;
   padding: 0.875rem 1.25rem;
   font-size: 1rem;
   font-family: var(--font-body);
   border: 2px solid var(--light-sage);
-  border-radius: 8px 0 0 8px; /* LEFT corners rounded only */
+  border-radius: 8px 0 0 8px;
   transition: all 0.3s ease;
   background: var(--white);
   color: var(--dark-gray);
@@ -211,7 +215,7 @@ nav a.active {
   color: var(--medium-gray);
 }
 
-/* Button: sit next to the input, round only right corners */
+/* Find Button */
 .find-button {
   padding: 0.875rem 1.25rem;
   background: linear-gradient(
@@ -221,70 +225,20 @@ nav a.active {
   );
   color: var(--forest-green);
   border: 2px solid var(--light-sage);
-  border-left: none; /* remove double border between input and button */
-  border-radius: 0 8px 8px 0; /* RIGHT corners rounded only */
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  flex: 0 0 auto; /* don't let button shrink */
-  height: 50px;
-  align-self: center;
-  position: relative; /* ensure not absolute */
-  z-index: 1; /* ensure above input border if necessary */
-  white-space: nowrap;
-}
-
-/* If there was previously extra right-padding reserved on the input, remove it */
-/* (This ensures the button sits next to the input rather than overlapping it) */
-#ingredient-search {
-  padding-right: 1.25rem; /* normal padding, no calc for button width */
-}
-
-/* Responsive: stack on narrow screens */
-@media (max-width: 700px) {
-  .search-bar-container {
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: stretch;
-  }
-
-  #ingredient-search {
-    border-radius: 8px; /* full rounding when stacked */
-    padding-right: 1.25rem;
-  }
-
-  .find-button {
-    width: 100%;
-    border-left: 2px solid var(--light-sage);
-    border-radius: 8px;
-    align-self: stretch;
-  }
-}
-
-/* Find Button */
-.find-button {
-  padding: 0.875rem 2rem;
-  background: linear-gradient(
-    135deg,
-    var(--golden-yellow) 0%,
-    var(--warm-gold) 100%
-  );
-  color: var(--forest-green);
-  border: none;
-  border-radius: 8px;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
   font-family: var(--font-heading);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: var(--shadow-sm);
-  white-space: nowrap;
-  align-self: flex-start;
+  flex: 0 0 auto;
   height: 50px;
-  flex-shrink: 0;
-  min-width: 100px;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
 }
 
 .find-button:hover {
@@ -299,6 +253,25 @@ nav a.active {
 
 .find-button:active {
   transform: translateY(0);
+}
+
+@media (max-width: 700px) {
+  .search-bar-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  #ingredient-search {
+    border-radius: 8px;
+  }
+
+  .find-button {
+    width: 100%;
+    border-left: 2px solid var(--light-sage);
+    border-radius: 8px;
+    align-self: stretch;
+  }
 }
 
 /* Selected Ingredients */
@@ -349,7 +322,7 @@ nav a.active {
   transform: scale(1.2);
 }
 
-/* Dietary Filters - Horizontal beside Find button */
+/* Dietary Filters */
 .dietary-filters {
   display: flex;
   flex-direction: column;
@@ -619,13 +592,19 @@ nav a.active {
   box-shadow: var(--shadow-md);
 }
 
-/* All Recipes — smaller orange buttons to match header */
+/* All Recipes & Search Results */
 .all-recipes-page .sort-option,
 .all-recipes-page .sort-chip,
 .all-recipes-page .sort-button,
 .all-recipes-page .filter-tag,
 .all-recipes-page .sort-controls button,
-.all-recipes-page .sortBy-container button {
+.all-recipes-page .sortBy-container button,
+.search-results-page .sort-option,
+.search-results-page .sort-chip,
+.search-results-page .sort-button,
+.search-results-page .filter-tag,
+.search-results-page .sort-controls button,
+.search-results-page .sortBy-container button {
   background: var(--allrecipes-accent);
   color: #ffffff;
   font-size: 0.95rem;
@@ -649,7 +628,13 @@ nav a.active {
 .all-recipes-page .sort-button:hover,
 .all-recipes-page .filter-tag:hover,
 .all-recipes-page .sort-controls button:hover,
-.all-recipes-page .sortBy-container button:hover {
+.all-recipes-page .sortBy-container button:hover,
+.search-results-page .sort-option:hover,
+.search-results-page .sort-chip:hover,
+.search-results-page .sort-button:hover,
+.search-results-page .filter-tag:hover,
+.search-results-page .sort-controls button:hover,
+.search-results-page .sortBy-container button:hover {
   transform: translateY(-2px);
   filter: brightness(0.96);
 }
@@ -660,7 +645,13 @@ nav a.active {
   .all-recipes-page .sort-button,
   .all-recipes-page .filter-tag,
   .all-recipes-page .sort-controls button,
-  .all-recipes-page .sortBy-container button {
+  .all-recipes-page .sortBy-container button,
+  .search-results-page .sort-option,
+  .search-results-page .sort-chip,
+  .search-results-page .sort-button,
+  .search-results-page .filter-tag,
+  .search-results-page .sort-controls button,
+  .search-results-page .sortBy-container button {
     min-width: 0;
     padding: 0.36rem 0.6rem;
     font-size: 0.9rem;
