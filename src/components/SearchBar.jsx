@@ -22,6 +22,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
     (ingredientName) => {
       if (!selectedIngredients.includes(ingredientName)) {
         setSelectedIngredients([...selectedIngredients, ingredientName]);
+        setError(null);
       }
     };
 
@@ -31,6 +32,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
         (ingredient) => ingredient !== ingredientToRemove,
       ),
     );
+    setError(null);
   };
 
   const handleSubmit = //EH: page refresh & zero input
