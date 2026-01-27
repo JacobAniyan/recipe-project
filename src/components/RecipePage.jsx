@@ -12,6 +12,15 @@ function IndividualRecipePage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    if (!id || isNaN(id) || Number(id) <= 0) {
+      setError({
+        type: "400",
+        message: "Invalid recipe ID format.",
+      });
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
@@ -23,7 +32,19 @@ function IndividualRecipePage() {
       })
       .catch((error) => {
         console.error("Failed to load recipe:", error);
-        setError("Unable to load recipe details. Please try again later.");
+
+        if (error.response?.status === 404) {
+          setError({
+            type: "404",
+            message:
+              "Recipe not found. The recipe you're looking for doesn't exist.",
+          });
+        } else {
+          setError({
+            type: "500",
+            message: "Unable to load recipe details. Please try again later.",
+          });
+        }
         setIsLoading(false);
       });
   }, [id]);
@@ -35,7 +56,7 @@ function IndividualRecipePage() {
   if (error) {
     return (
       <div className="page-container">
-        <InlineError type="500" message={error} />
+        <InlineError type={error.type} message={error.message} />
       </div>
     );
   }
@@ -44,7 +65,7 @@ function IndividualRecipePage() {
     return (
       <div className="page-container">
         <InlineError
-          type="500"
+          type="404"
           message="Recipe not found. The recipe you're looking for doesn't exist."
         />
       </div>

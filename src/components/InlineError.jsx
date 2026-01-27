@@ -13,6 +13,12 @@ function InlineError({ type, message }) {
         <h1>404: Page Not Found</h1>
       </main>
     );
+  } else if (type === "400") {
+    return (
+      <main role="alert">
+        <h1>400: Bad Request</h1>
+      </main>
+    );
   } else {
     return (
       <main role="alert">

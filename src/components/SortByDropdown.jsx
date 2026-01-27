@@ -1,8 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 
 const SortByDropdown = () => {
-  const [setSearchParams] = useSearchParams();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div className="sort-by">
       <label>Sort by:</label>
