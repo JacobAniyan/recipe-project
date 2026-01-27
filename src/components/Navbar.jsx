@@ -8,7 +8,7 @@ const NavBar = () => {
         <img src={logo} alt="Recipe Gen Logo" className="brand-logo" />
       </Link>
       <div className="nav-links">
-        <Link to="/">Homepage</Link>
+        <Link to="/">Search</Link>
         <Link to="/recipe">All Recipes</Link>
         <Link to="/favourites">Favourites</Link>
       </div>
