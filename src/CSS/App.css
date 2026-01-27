@@ -1,8 +1,6 @@
-/* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap");
-/* Global Styles */
+
 :root {
-  /* Colors */
   --sage-green: #80a799;
   --deep-teal: #4a7566;
   --forest-green: #3d5e52;
@@ -17,21 +15,17 @@
   --error-red: #e53e3e;
   --success-green: #38a169;
   --allrecipes-accent: #ff7a59;
+  --shadow-sm: 0 2px 4px rgba(74, 117, 102, 0.1);
+  --shadow-md: 0 4px 8px rgba(74, 117, 102, 0.15);
+  --shadow-lg: 0 8px 16px rgba(74, 117, 102, 0.2);
 
-  /* Typography */
   --font-heading: "Quicksand", sans-serif;
   --font-body: "Nunito", sans-serif;
 
-  /* Spacing */
   --space-sm: 8px;
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 32px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(74, 117, 102, 0.1);
-  --shadow-md: 0 4px 8px rgba(74, 117, 102, 0.15);
-  --shadow-lg: 0 8px 16px rgba(74, 117, 102, 0.2);
 }
 
 * {
@@ -72,7 +66,6 @@ body {
   margin: 0 auto;
 }
 
-/* Typography */
 h1,
 h2,
 h3,
@@ -678,58 +671,6 @@ nav a.active {
   }
 }
 
-.loading-text {
-  font-size: 1.25rem;
-  color: var(--deep-teal);
-  font-weight: 600;
-  font-family: var(--font-heading);
-  margin: 0;
-}
-
-/* Error */
-.error-container {
-  padding: var(--space-xl);
-  text-align: center;
-  background: var(--white);
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
-  max-width: 600px;
-  margin: var(--space-xl) auto;
-}
-
-.error-container h2 {
-  color: var(--error-red);
-  margin-bottom: var(--space-lg);
-  font-family: var(--font-heading);
-}
-
-.error-container p {
-  color: var(--dark-gray);
-  margin-bottom: var(--space-lg);
-}
-
-.error-container button {
-  margin: var(--space-sm);
-  padding: var(--space-md) var(--space-xl);
-  background: linear-gradient(
-    135deg,
-    var(--sage-green) 0%,
-    var(--deep-teal) 100%
-  );
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.error-container button:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
 /* All Recipes & Search Results */
 .all-recipes-page .sort-option,
 .all-recipes-page .sort-chip,
@@ -796,20 +737,18 @@ nav a.active {
   }
 }
 
-/* simple dark mode toggle styles (W3 approach) */
+/*  Dark mode */
 body {
   transition:
     background-color 1000ms ease,
     color 1000ms ease;
 }
 
-/* class toggled on <body> to enable dark mode */
 body.dark-mode {
   background-image: none;
   background-color: var(--dark-mode-background-color, #333);
 }
 
-/* Page containers / cards / header / nav */
 body.dark-mode .page-container,
 body.dark-mode .card,
 body.dark-mode .recipe-card,
@@ -822,14 +761,12 @@ body.dark-mode .search-section {
   box-shadow: none !important;
 }
 
-/* Links and nav items */
 body.dark-mode a,
 body.dark-mode nav a,
 body.dark-mode .brand-logo {
   color: #dbe9f0 !important;
 }
 
-/* Inputs and borders */
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
@@ -838,18 +775,16 @@ body.dark-mode select {
   border-color: rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Buttons (example: find-button and sort chips) */
 body.dark-mode .find-button,
 body.dark-mode .sort-option,
 body.dark-mode .sort-chip,
 body.dark-mode .filter-tag,
 body.dark-mode .btn {
-  background: #ff7a59 !important; /* keep your accent */
+  background: #ff7a59 !important;
   color: #ffffff !important;
   border-color: transparent !important;
 }
 
-/* Make sure placeholders are visible */
 body.dark-mode ::placeholder {
   color: #9aa8b0 !important;
 }
