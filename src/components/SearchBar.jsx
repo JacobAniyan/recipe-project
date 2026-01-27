@@ -16,6 +16,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
 
   const handleChange = (event) => {
     setSearchInput(event.target.value);
+    if (error) setError(null);
   };
 
   const handleAddIngredient = //EH: duplicate input
