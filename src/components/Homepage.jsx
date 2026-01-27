@@ -10,16 +10,16 @@ const Homepage = () => {
 
   //Hardcoded test data
   const mockIngredients = [
-    { IngredientName: "Chicken" },
-    { IngredientName: "Tomato" },
-    { IngredientName: "Garlic" },
-    { IngredientName: "Onion" },
-    { IngredientName: "Pasta" },
-    { IngredientName: "Rice" },
-    { IngredientName: "Cheese" },
-    { IngredientName: "Milk" },
-    { IngredientName: "Eggs" },
-    { IngredientName: "Bread" },
+    { IngredientId: 1, IngredientName: "Chicken" },
+    { IngredientId: 2, IngredientName: "Tomato" },
+    { IngredientId: 3, IngredientName: "Garlic" },
+    { IngredientId: 4, IngredientName: "Onion" },
+    { IngredientId: 5, IngredientName: "Pasta" },
+    { IngredientId: 6, IngredientName: "Rice" },
+    { IngredientId: 7, IngredientName: "Cheese" },
+    { IngredientId: 8, IngredientName: "Milk" },
+    { IngredientId: 9, IngredientName: "Eggs" },
+    { IngredientId: 10, IngredientName: "Bread" },
   ];
 
   const [availableIngredients, setAvailableIngredients] =
@@ -44,7 +44,6 @@ const Homepage = () => {
   //     });
   // }, []);
 
-  //Dietary filters
   const [filters, setFilters] = useState({
     //DEFAULT STATE
     vegan: false,
@@ -54,6 +53,15 @@ const Homepage = () => {
     keto: false,
     paleo: false,
   });
+
+  const dietaryRestrictionMap = {
+    vegan: 1,
+    vegetarian: 2,
+    "gluten-free": 3,
+    "dairy-free": 4,
+    keto: 5,
+    paleo: 6,
+  };
 
   const handleFilterToggle = (filterKey) => {
     setFilters((previous) => ({
@@ -81,18 +89,36 @@ const Homepage = () => {
 
   const handleFindClick = () => {
     if (selectedIngredients.length === 0) {
-      return; // SearchBar will show its own error
+      return;
     }
 
-    const params = new URLSearchParams();
-    params.append("ingredients", selectedIngredients.join(","));
+    const ingredientIds = selectedIngredients
+      .map((name) => {
+        const ingredient = availableIngredients.find(
+          (ingredient) => ingredient.IngredientName === name,
+        );
 
-    const activeFilters = Object.keys(filters).filter((key) => filters[key]);
-    if (activeFilters.length > 0) {
-      params.append("filters", activeFilters.join(","));
-    }
+        if (ingredient) {
+          return ingredient.IngredientId;
+        } else {
+          return null;
+        }
+      })
+      .filter((id) => id !== null);
 
-    navigate(`/results?${params.toString()}`);
+    const activeFilterKeys = Object.keys(filters).filter((key) => filters[key]);
+    const dietaryRestrictionIds = activeFilterKeys.map(
+      (key) => dietaryRestrictionMap[key],
+    );
+
+    navigate(`/results`, {
+      state: {
+        ingredientIds,
+        dietaryRestrictionIds,
+        ingredientNames: selectedIngredients,
+        filterNames: activeFilterKeys,
+      },
+    });
   };
 
   if (loading) {

@@ -6,15 +6,13 @@
   --forest-green: #3d5e52;
   --light-sage: #a4c4b8;
   --pale-sage: #d4e7e0;
-  --golden-yellow: #ffd700;
-  --warm-gold: #f4c430;
   --white: #ffffff;
   --off-white: #f9f9f9;
   --dark-gray: #2d3748;
   --medium-gray: #718096;
   --error-red: #e53e3e;
   --success-green: #38a169;
-  --allrecipes-accent: #ff7a59;
+  --orange: #ff7a59;
   --shadow-sm: 0 2px 4px rgba(74, 117, 102, 0.1);
   --shadow-md: 0 4px 8px rgba(74, 117, 102, 0.15);
   --shadow-lg: 0 8px 16px rgba(74, 117, 102, 0.2);
@@ -43,9 +41,6 @@ body {
   );
   color: var(--dark-gray);
   line-height: 1.7;
-  transition:
-    background-color 180ms ease,
-    color 180ms ease;
 }
 
 .app {
@@ -58,12 +53,6 @@ body {
   margin: 0;
   padding: 0;
   max-width: none;
-}
-
-.app > div {
-  padding: var(--space-lg);
-  max-width: 1400px;
-  margin: 0 auto;
 }
 
 h1,
@@ -91,7 +80,7 @@ nav {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 1.75rem;
   background: linear-gradient(
     135deg,
     var(--deep-teal) 0%,
@@ -141,14 +130,35 @@ nav a {
 
 nav a:hover {
   color: var(--white);
-  background-color: rgba(255, 215, 0, 0.2);
-  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+  background-color: rgba(255, 122, 89, 0.2);
+  box-shadow: 0 0 15px rgba(255, 122, 89, 0.3);
   transform: translateY(-2px);
 }
 
 nav a.active {
-  background: rgba(255, 215, 0, 0.2);
-  color: var(--golden-yellow);
+  background: rgba(255, 122, 89, 0.2);
+  color: var(--orange);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+  padding: 0.5rem 1rem;
+  background: var(--orange);
+  color: var(--white);
+  border: 2px solid var(--orange);
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background: #ff6a49;
+  border-color: #ff6a49;
+  transform: translateY(-2px);
+  box-shadow: 0 0 10px rgba(255, 122, 89, 0.3);
 }
 
 /* Homepage */
@@ -196,6 +206,12 @@ nav a.active {
   outline: none;
   border-color: var(--sage-green);
   box-shadow: 0 0 0 3px rgba(128, 167, 153, 0.1);
+}
+
+/* Adjust input border radius when dropdown is visible */
+.ingredients-dropdown.visible ~ #ingredient-search:focus,
+#ingredient-search:focus:not(:placeholder-shown) {
+  border-radius: 8px 8px 0 0;
 }
 
 #ingredient-search::placeholder {
@@ -317,24 +333,12 @@ nav a.active {
   font-size: 0.9rem;
 }
 
-/* Adjust search input when dropdown is open */
-#ingredient-search:focus {
-  outline: none;
-  border-color: var(--sage-green);
-  box-shadow: 0 0 0 3px rgba(128, 167, 153, 0.1);
-  border-radius: 8px 0 0 0;
-}
-
 /* Find Button */
 .find-button {
   padding: 1rem 3rem;
-  background: linear-gradient(
-    135deg,
-    var(--golden-yellow) 0%,
-    var(--warm-gold) 100%
-  );
-  color: var(--forest-green);
-  border: 2px solid var(--golden-yellow);
+  background: var(--orange);
+  color: var(--white);
+  border: 2px solid var(--orange);
   border-radius: 8px;
   font-family: var(--font-heading);
   font-size: 1.1rem;
@@ -350,13 +354,10 @@ nav a.active {
 }
 
 .find-button:hover {
-  background: linear-gradient(
-    135deg,
-    var(--warm-gold) 0%,
-    var(--golden-yellow) 100%
-  );
+  background: #ff6a49;
+  border-color: #ff6a49;
   transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 122, 89, 0.4);
 }
 
 .find-button:active {
@@ -524,14 +525,6 @@ nav a.active {
   accent-color: var(--sage-green);
 }
 
-.filter-option label {
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  color: var(--dark-gray);
-  font-weight: 500;
-}
-
 /* RECIPE CARDS */
 .recipe-grid {
   display: grid;
@@ -592,7 +585,7 @@ nav a.active {
   background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
   padding: var(--space-md);
   border-radius: 8px;
-  border-left: 3px solid var(--golden-yellow);
+  border-left: 3px solid var(--orange);
   margin-top: var(--space-sm);
 }
 
@@ -671,21 +664,188 @@ nav a.active {
   }
 }
 
-/* All Recipes & Search Results */
-.all-recipes-page .sort-option,
-.all-recipes-page .sort-chip,
-.all-recipes-page .sort-button,
-.all-recipes-page .filter-tag,
-.all-recipes-page .sort-controls button,
+/* Page Container & Headers */
+.page-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.page-header {
+  margin-bottom: var(--space-xl);
+}
+
+.page-header h1 {
+  margin-bottom: var(--space-md);
+}
+
+.search-summary {
+  color: var(--medium-gray);
+  font-size: 1rem;
+  margin-top: var(--space-md);
+}
+
+.search-summary p {
+  margin: var(--space-sm) 0;
+}
+
+/* Sort By Container */
+.sortBy-container {
+  margin-bottom: var(--space-lg);
+}
+
+/* Individual Recipe Page */
+.individual-recipe-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-xl);
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+
+.recipe-header {
+  position: relative;
+  margin-bottom: var(--space-xl);
+}
+
+.recipe-image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+}
+
+.recipe-header .favourite-button {
+  position: absolute;
+  top: var(--space-lg);
+  right: var(--space-lg);
+  background: rgba(255, 255, 255, 0.95);
+  padding: var(--space-md);
+  border-radius: 50%;
+  box-shadow: var(--shadow-md);
+  font-size: 2rem;
+}
+
+.recipe-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--dark-gray);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--pale-sage);
+  border-radius: 8px;
+  border-left: 4px solid var(--sage-green);
+}
+
+.individual-recipe-page .recipe-info {
+  display: flex;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  padding: var(--space-lg);
+  background: var(--off-white);
+  border-radius: 8px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.info-label {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--deep-teal);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  color: var(--dark-gray);
+  font-weight: 500;
+}
+
+.ingredients-section,
+.instructions-section {
+  margin-bottom: var(--space-xl);
+}
+
+.ingredients-section h2,
+.instructions-section h2 {
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 2px solid var(--light-sage);
+}
+
+.ingredients-list {
+  list-style: none;
+  padding: 0;
+}
+
+.ingredients-list li {
+  padding: var(--space-md);
+  margin-bottom: var(--space-sm);
+  background: var(--off-white);
+  border-radius: 8px;
+  border-left: 3px solid var(--sage-green);
+  font-size: 1rem;
+  color: var(--dark-gray);
+}
+
+.instructions-list {
+  list-style: none;
+  counter-reset: step-counter;
+  padding: 0;
+}
+
+.instruction-step {
+  counter-increment: step-counter;
+  position: relative;
+  padding: var(--space-lg);
+  padding-left: 4rem;
+  margin-bottom: var(--space-lg);
+  background: var(--off-white);
+  border-radius: 8px;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--dark-gray);
+}
+
+.instruction-step::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: var(--space-lg);
+  top: var(--space-lg);
+  width: 32px;
+  height: 32px;
+  background: var(--sage-green);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Recipe Card Info Styles */
+.cooking-time,
+.difficulty,
+.date-added {
+  font-size: 0.95rem;
+  color: var(--medium-gray);
+}
+
+/* All Recipes & Search Results - Sort Buttons */
 .all-recipes-page .sortBy-container button,
-.search-results-page .sort-option,
-.search-results-page .sort-chip,
-.search-results-page .sort-button,
-.search-results-page .filter-tag,
-.search-results-page .sort-controls button,
 .search-results-page .sortBy-container button {
-  background: var(--allrecipes-accent);
-  color: #ffffff;
+  background: var(--orange);
+  color: var(--white);
   font-size: 0.95rem;
   padding: 0.42rem 0.8rem;
   border-radius: 8px;
@@ -697,39 +857,18 @@ nav a.active {
   min-width: 98px;
   text-align: center;
   line-height: 1.15;
-  transition:
-    transform 0.12s ease,
-    filter 0.12s ease;
+  transition: filter 0.12s ease;
+  font-family: var(--font-heading);
+  font-weight: 500;
 }
 
-.all-recipes-page .sort-option:hover,
-.all-recipes-page .sort-chip:hover,
-.all-recipes-page .sort-button:hover,
-.all-recipes-page .filter-tag:hover,
-.all-recipes-page .sort-controls button:hover,
 .all-recipes-page .sortBy-container button:hover,
-.search-results-page .sort-option:hover,
-.search-results-page .sort-chip:hover,
-.search-results-page .sort-button:hover,
-.search-results-page .filter-tag:hover,
-.search-results-page .sort-controls button:hover,
 .search-results-page .sortBy-container button:hover {
-  transform: translateY(-2px);
   filter: brightness(0.96);
 }
 
 @media (max-width: 700px) {
-  .all-recipes-page .sort-option,
-  .all-recipes-page .sort-chip,
-  .all-recipes-page .sort-button,
-  .all-recipes-page .filter-tag,
-  .all-recipes-page .sort-controls button,
   .all-recipes-page .sortBy-container button,
-  .search-results-page .sort-option,
-  .search-results-page .sort-chip,
-  .search-results-page .sort-button,
-  .search-results-page .filter-tag,
-  .search-results-page .sort-controls button,
   .search-results-page .sortBy-container button {
     min-width: 0;
     padding: 0.36rem 0.6rem;
@@ -738,82 +877,77 @@ nav a.active {
 }
 
 /*  Dark mode */
-body {
-  transition:
-    background-color 1000ms ease,
-    color 1000ms ease;
-}
-
 body.dark-mode {
   background-image: none;
-  background-color: var(--dark-mode-background-color, #333);
+  background-color: #000000;
 }
 
 body.dark-mode .page-container,
-body.dark-mode .card,
 body.dark-mode .recipe-card,
-body.dark-mode header,
-body.dark-mode nav body.dark-mode .main-layout,
+body.dark-mode nav,
 body.dark-mode .search-section {
-  background-color: #071018 !important;
-  color: #e6eef3 !important;
-  border-color: rgba(255, 255, 255, 0.06) !important;
-  box-shadow: none !important;
+  background-color: #000000;
+  color: #e6eef3;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
 }
 
 body.dark-mode a,
 body.dark-mode nav a,
 body.dark-mode .brand-logo {
-  color: #dbe9f0 !important;
+  color: #dbe9f0;
 }
 
 body.dark-mode input,
 body.dark-mode textarea,
 body.dark-mode select {
-  background: #0f1a22 !important;
-  color: #e6eef3 !important;
-  border-color: rgba(255, 255, 255, 0.06) !important;
+  background: #718096;
+  color: #e6eef3;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #ingredient-search {
+  background: #2d3748;
+  color: #e6eef3;
 }
 
 body.dark-mode .find-button,
-body.dark-mode .sort-option,
-body.dark-mode .sort-chip,
-body.dark-mode .filter-tag,
-body.dark-mode .btn {
-  background: #ff7a59 !important;
-  color: #ffffff !important;
-  border-color: transparent !important;
+body.dark-mode .sortBy-container button,
+body.dark-mode .theme-toggle-button {
+  background: var(--orange);
+  color: var(--white);
+  border-color: transparent;
 }
 
 body.dark-mode ::placeholder {
-  color: #9aa8b0 !important;
+  color: #9aa8b0;
 }
 
 /* Dark mode dropdown styles */
 body.dark-mode .ingredients-dropdown {
-  background: #0f1a22 !important;
-  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: #1a1a1a;
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 body.dark-mode .dropdown-item {
-  background: #0f1a22 !important;
-  color: #e6eef3 !important;
-  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+  background: #1a1a1a;
+  color: #e6eef3;
+  border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 body.dark-mode .dropdown-item:hover {
-  background: #1a2730 !important;
-  color: #80a799 !important;
+  background: #2a2a2a;
+  color: #80a799;
 }
 
 body.dark-mode .ingredients-dropdown::-webkit-scrollbar-track {
-  background: #071018 !important;
+  background: #000000;
 }
 
 body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3) !important;
+  background: rgba(255, 255, 255, 0.3);
 }

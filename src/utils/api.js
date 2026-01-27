@@ -17,19 +17,27 @@ export const fetchRecipeById = (id) => {
   return axios.get(`/recipe/${id}`).then((response) => response.data);
 };
 
-export const searchRecipes = (ingredients, filters = [], sortBy, order) => {
-  //GET recipes by ingredients and diet filters
+export const searchRecipes = (
+  ingredientIds,
+  dietaryRestrictionIds = [],
+  sortBy,
+  order,
+) => {
+  //POST recipes by ingredient IDs and dietary restriction IDs
+  const body = {
+    ingredientIds: ingredientIds,
+    dietaryRestrictionIds: dietaryRestrictionIds,
+  };
+
   const params = new URLSearchParams();
-  params.append("ingredients", ingredients);
-  if (filters.length > 0) {
-    params.append("filters", filters);
-  }
   if (sortBy) params.append("sort_by", sortBy);
   if (order) params.append("order", order);
 
-  return axios
-    .get(`/recipes/search?${params.toString()}`)
-    .then((response) => response.data);
+  const url = params.toString()
+    ? `/recipes/search?${params.toString()}`
+    : "/recipes/search";
+
+  return axios.post(url, body).then((response) => response.data);
 };
 
 export const fetchFavourites = () => {

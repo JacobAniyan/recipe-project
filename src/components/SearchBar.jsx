@@ -10,7 +10,6 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
-  // Filter ingredients based on search input
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
         ingredient.IngredientName.toLowerCase().startsWith(
@@ -19,7 +18,6 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
       )
     : [];
 
-  // Show/hide dropdown based on filtered results
   useEffect(() => {
     if (searchInput.trim() && dropdownIngredients.length > 0) {
       setIsDropdownVisible(true);
@@ -28,12 +26,10 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
     }
   }, [searchInput, dropdownIngredients.length]);
 
-  // Notify parent when selected ingredients change
   useEffect(() => {
     onIngredientsChange(selectedIngredients);
   }, [selectedIngredients, onIngredientsChange]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -59,11 +55,15 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
     if (!selectedIngredients.includes(ingredientName)) {
       setSelectedIngredients([...selectedIngredients, ingredientName]);
       setError(null);
+    } else {
+      setError({
+        type: "400",
+        message: `"${ingredientName}" is already in your ingredients list.`,
+      });
+      return;
     }
-    // Clear search and hide dropdown after selection
     setSearchInput("");
     setIsDropdownVisible(false);
-    // Return focus to input
     inputRef.current?.focus();
   };
 
@@ -77,32 +77,31 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   };
 
   const handleKeyDown = (event) => {
-    // Select first ingredient on Enter key
-    if (
-      event.key === "Enter" &&
-      dropdownIngredients.length > 0 &&
-      searchInput.trim()
-    ) {
-      event.preventDefault();
-      handleAddIngredient(dropdownIngredients[0].IngredientName);
-    }
-    // Close dropdown on Escape key
-    else if (event.key === "Escape") {
+    if (event.key === "Escape") {
       setIsDropdownVisible(false);
       setSearchInput("");
     }
   };
 
   const handleInputFocus = () => {
-    // Show dropdown on focus if there are filtered results
     if (searchInput.trim() && dropdownIngredients.length > 0) {
       setIsDropdownVisible(true);
     }
   };
 
+  if (availableIngredients.length === 0) {
+    return (
+      <div className="search-bar-container">
+        <InlineError
+          type="500"
+          message="No ingredients available. Please try again later."
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="search-bar-container">
-      {/* Search Input */}
       <div className="search-input-wrapper">
         <div className="search-input-container">
           <input
@@ -118,7 +117,6 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
             autoComplete="off"
           />
 
-          {/* Emerging Dropdown */}
           <ul
             ref={dropdownRef}
             className={`ingredients-dropdown ${isDropdownVisible ? "visible" : ""}`}
@@ -131,7 +129,7 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
                     onClick={() =>
                       handleAddIngredient(ingredient.IngredientName)
                     }
-                    onMouseDown={(e) => e.preventDefault()} // Prevent input blur on click
+                    onMouseDown={(e) => e.preventDefault()}
                     className="dropdown-item"
                     role="option"
                   >

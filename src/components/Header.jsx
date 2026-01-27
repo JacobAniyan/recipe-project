@@ -20,17 +20,19 @@ const Header = (props) => {
 
   return (
     <header className="site-header">
-      <NavBar />
-
-      <button
-        type="button"
-        className="theme-toggle-btn"
-        onClick={toggleDarkMode}
-        aria-pressed={isDark}
-        aria-label="Toggle dark mode"
-      >
-        {isDark ? "☀️" : "🌙"}
-      </button>
+      <NavBar
+        themeToggleButton={
+          <button
+            type="button"
+            className="theme-toggle-button"
+            onClick={toggleDarkMode}
+            aria-pressed={isDark}
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? "Switch to: Light Mode" : "Switch to: Dark Mode"}
+          </button>
+        }
+      />
     </header>
   );
 };
