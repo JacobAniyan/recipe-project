@@ -26,6 +26,7 @@ const Homepage = () => {
     useState(mockIngredients);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   ////pending BE implementation
   // useEffect(() => {
@@ -74,7 +75,15 @@ const Homepage = () => {
     });
   };
 
-  const handleSearch = (selectedIngredients) => {
+  const handleIngredientsChange = (ingredients) => {
+    setSelectedIngredients(ingredients);
+  };
+
+  const handleFindClick = () => {
+    if (selectedIngredients.length === 0) {
+      return; // SearchBar will show its own error
+    }
+
     const params = new URLSearchParams();
     params.append("ingredients", selectedIngredients.join(","));
 
@@ -99,14 +108,22 @@ const Homepage = () => {
       <h1>Welcome to Recipe Generator</h1>
       <div className="search-section">
         <SearchBar
-          onSearch={handleSearch}
           availableIngredients={availableIngredients}
+          onIngredientsChange={handleIngredientsChange}
         />
         <DietaryFilters
           filters={filters}
           onToggle={handleFilterToggle}
           onClearAll={handleClearAllFilters}
         />
+        <button
+          type="button"
+          className="find-button"
+          onClick={handleFindClick}
+          disabled={selectedIngredients.length === 0}
+        >
+          Find
+        </button>
       </div>
     </div>
   );

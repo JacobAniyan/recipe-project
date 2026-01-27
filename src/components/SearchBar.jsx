@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import InlineError from "./InlineError";
 
-const SearchBar = ({ onSearch, availableIngredients = [] }) => {
+const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [error, setError] = useState(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
+  const dropdownRef = useRef(null);
+  const inputRef = useRef(null);
+
+  // Filter ingredients based on search input
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
         ingredient.IngredientName.toLowerCase().startsWith(
@@ -14,16 +19,53 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
       )
     : [];
 
-  const handleChange = (event) => {
-    setSearchInput(event.target.value);
-  };
+  // Show/hide dropdown based on filtered results
+  useEffect(() => {
+    if (searchInput.trim() && dropdownIngredients.length > 0) {
+      setIsDropdownVisible(true);
+    } else {
+      setIsDropdownVisible(false);
+    }
+  }, [searchInput, dropdownIngredients.length]);
 
-  const handleAddIngredient = //EH: duplicate input
-    (ingredientName) => {
-      if (!selectedIngredients.includes(ingredientName)) {
-        setSelectedIngredients([...selectedIngredients, ingredientName]);
+  // Notify parent when selected ingredients change
+  useEffect(() => {
+    onIngredientsChange(selectedIngredients);
+  }, [selectedIngredients, onIngredientsChange]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        inputRef.current &&
+        !inputRef.current.contains(event.target)
+      ) {
+        setIsDropdownVisible(false);
       }
     };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleChange = (event) => {
+    setSearchInput(event.target.value);
+    setError(null);
+  };
+
+  const handleAddIngredient = (ingredientName) => {
+    if (!selectedIngredients.includes(ingredientName)) {
+      setSelectedIngredients([...selectedIngredients, ingredientName]);
+      setError(null);
+    }
+    // Clear search and hide dropdown after selection
+    setSearchInput("");
+    setIsDropdownVisible(false);
+    // Return focus to input
+    inputRef.current?.focus();
+  };
 
   const handleRemoveIngredient = (ingredientToRemove) => {
     setSelectedIngredients(
@@ -31,47 +73,76 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
         (ingredient) => ingredient !== ingredientToRemove,
       ),
     );
+    setError(null);
   };
 
-  const handleSubmit = //EH: page refresh & zero input
-    (event) => {
+  const handleKeyDown = (event) => {
+    // Select first ingredient on Enter key
+    if (
+      event.key === "Enter" &&
+      dropdownIngredients.length > 0 &&
+      searchInput.trim()
+    ) {
       event.preventDefault();
+      handleAddIngredient(dropdownIngredients[0].IngredientName);
+    }
+    // Close dropdown on Escape key
+    else if (event.key === "Escape") {
+      setIsDropdownVisible(false);
+      setSearchInput("");
+    }
+  };
 
-      if (selectedIngredients.length === 0) {
-        setError({
-          type: "400",
-          message: "Please select at least one ingredient to search.",
-        });
-        return;
-      }
-
-      setError(null);
-      onSearch(selectedIngredients);
-    };
+  const handleInputFocus = () => {
+    // Show dropdown on focus if there are filtered results
+    if (searchInput.trim() && dropdownIngredients.length > 0) {
+      setIsDropdownVisible(true);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="search-bar-container">
+    <div className="search-bar-container">
       {/* Search Input */}
       <div className="search-input-wrapper">
-        <input
-          type="text"
-          id="ingredient-search"
-          name="ingredientSearch"
-          placeholder="Type your ingredient(s) here"
-          value={searchInput}
-          onChange={handleChange}
-        />
-        <ul className="ingredients-dropdown" role="listbox">
-          {dropdownIngredients.map((ingredient) => (
-            <li
-              key={ingredient.IngredientName}
-              onClick={() => handleAddIngredient(ingredient.IngredientName)}
-              className="dropdown-item"
-            >
-              {ingredient.IngredientName}
-            </li>
-          ))}
-        </ul>
+        <div className="search-input-container">
+          <input
+            ref={inputRef}
+            type="text"
+            id="ingredient-search"
+            name="ingredientSearch"
+            placeholder="Type your ingredient(s) here"
+            value={searchInput}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+            onFocus={handleInputFocus}
+            autoComplete="off"
+          />
+
+          {/* Emerging Dropdown */}
+          <ul
+            ref={dropdownRef}
+            className={`ingredients-dropdown ${isDropdownVisible ? "visible" : ""}`}
+            role="listbox"
+          >
+            {dropdownIngredients.length > 0
+              ? dropdownIngredients.map((ingredient) => (
+                  <li
+                    key={ingredient.IngredientName}
+                    onClick={() =>
+                      handleAddIngredient(ingredient.IngredientName)
+                    }
+                    onMouseDown={(e) => e.preventDefault()} // Prevent input blur on click
+                    className="dropdown-item"
+                    role="option"
+                  >
+                    {ingredient.IngredientName}
+                  </li>
+                ))
+              : searchInput.trim() && (
+                  <li className="dropdown-no-results">No ingredients found</li>
+                )}
+          </ul>
+        </div>
 
         {error && <InlineError type={error.type} message={error.message} />}
 
@@ -96,10 +167,7 @@ const SearchBar = ({ onSearch, availableIngredients = [] }) => {
           </div>
         )}
       </div>
-      <button type="submit" className="find-button">
-        Find
-      </button>
-    </form>
+    </div>
   );
 };
 

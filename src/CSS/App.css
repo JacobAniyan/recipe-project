@@ -165,8 +165,9 @@ nav a.active {
 }
 
 .search-section {
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
   gap: var(--space-lg);
   margin-bottom: var(--space-xl);
   background: var(--white);
@@ -178,18 +179,11 @@ nav a.active {
 /* Search Bar */
 .search-bar-container {
   display: flex;
-  gap: 10px;
-  align-items: center;
-  flex: 1;
-  max-width: 900px;
+  flex-direction: column;
+  gap: var(--space-md);
   color: var(--deep-teal);
-  flex-wrap: wrap;
-}
-
-.search-input-wrapper {
-  flex: 1 1 auto;
-  min-width: 0;
-  position: relative;
+  grid-column: 1;
+  grid-row: 1;
 }
 
 #ingredient-search {
@@ -198,7 +192,7 @@ nav a.active {
   font-size: 1rem;
   font-family: var(--font-body);
   border: 2px solid var(--light-sage);
-  border-radius: 8px 0 0 8px;
+  border-radius: 8px;
   transition: all 0.3s ease;
   background: var(--white);
   color: var(--dark-gray);
@@ -215,30 +209,151 @@ nav a.active {
   color: var(--medium-gray);
 }
 
+/* Input wrapper needs to create positioning context for input only */
+.search-input-wrapper {
+  width: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+/* Create a separate container for input + dropdown positioning */
+.search-input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Ingredients Dropdown - Emerging Animation */
+.ingredients-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 2px solid var(--light-sage);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 0;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 8px 16px rgba(74, 117, 102, 0);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* When dropdown is visible */
+.ingredients-dropdown.visible {
+  max-height: 300px;
+  overflow-y: auto;
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 8px 16px rgba(74, 117, 102, 0.2);
+}
+
+/* Scrollbar styling for dropdown */
+.ingredients-dropdown::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingredients-dropdown::-webkit-scrollbar-track {
+  background: var(--pale-sage);
+  border-radius: 0 0 8px 0;
+}
+
+.ingredients-dropdown::-webkit-scrollbar-thumb {
+  background: var(--light-sage);
+  border-radius: 4px;
+}
+
+.ingredients-dropdown::-webkit-scrollbar-thumb:hover {
+  background: var(--sage-green);
+}
+
+.dropdown-item {
+  padding: 0.875rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--dark-gray);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--pale-sage);
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  background: linear-gradient(90deg, var(--sage-green) 0%, transparent 100%);
+  transition: width 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background: var(--pale-sage);
+  color: var(--forest-green);
+  padding-left: 1.5rem;
+}
+
+.dropdown-item:hover::before {
+  width: 4px;
+}
+
+.dropdown-item:active {
+  background: var(--light-sage);
+  transform: scale(0.98);
+}
+
+/* No results message */
+.dropdown-no-results {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--medium-gray);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Adjust search input when dropdown is open */
+#ingredient-search:focus {
+  outline: none;
+  border-color: var(--sage-green);
+  box-shadow: 0 0 0 3px rgba(128, 167, 153, 0.1);
+  border-radius: 8px 0 0 0;
+}
+
 /* Find Button */
 .find-button {
-  padding: 0.875rem 1.25rem;
+  padding: 1rem 3rem;
   background: linear-gradient(
     135deg,
     var(--golden-yellow) 0%,
     var(--warm-gold) 100%
   );
   color: var(--forest-green);
-  border: 2px solid var(--light-sage);
-  border-left: none;
-  border-radius: 0 8px 8px 0;
+  border: 2px solid var(--golden-yellow);
+  border-radius: 8px;
   font-family: var(--font-heading);
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: var(--shadow-sm);
-  flex: 0 0 auto;
-  height: 50px;
-  align-self: center;
-  position: relative;
-  z-index: 1;
+  box-shadow: var(--shadow-md);
   white-space: nowrap;
+  grid-column: 2;
+  grid-row: 2;
+  justify-self: end;
+  align-self: end;
 }
 
 .find-button:hover {
@@ -248,29 +363,50 @@ nav a.active {
     var(--golden-yellow) 100%
   );
   transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .find-button:active {
   transform: translateY(0);
 }
 
-@media (max-width: 700px) {
+.find-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 1024px) {
+  .search-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
   .search-bar-container {
-    flex-direction: column;
-    gap: 0.75rem;
-    align-items: stretch;
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .dietary-filters {
+    grid-column: 1;
+    grid-row: 2;
+    border-left: none;
+    border-top: 2px solid var(--light-sage);
+    padding-left: 0;
+    padding-top: var(--space-lg);
+    min-width: unset;
+  }
+
+  .find-button {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: stretch;
+    width: 100%;
+    margin-top: var(--space-md);
   }
 
   #ingredient-search {
     border-radius: 8px;
-  }
-
-  .find-button {
-    width: 100%;
-    border-left: 2px solid var(--light-sage);
-    border-radius: 8px;
-    align-self: stretch;
   }
 }
 
@@ -330,6 +466,8 @@ nav a.active {
   padding-left: var(--space-lg);
   border-left: 2px solid var(--light-sage);
   min-width: 450px;
+  grid-column: 2;
+  grid-row: 1;
 }
 
 .filters-header {
@@ -676,8 +814,7 @@ body.dark-mode .page-container,
 body.dark-mode .card,
 body.dark-mode .recipe-card,
 body.dark-mode header,
-body.dark-mode nav,
-body.dark-mode .main-layout,
+body.dark-mode nav body.dark-mode .main-layout,
 body.dark-mode .search-section {
   background-color: #071018 !important;
   color: #e6eef3 !important;
@@ -715,4 +852,33 @@ body.dark-mode .btn {
 /* Make sure placeholders are visible */
 body.dark-mode ::placeholder {
   color: #9aa8b0 !important;
+}
+
+/* Dark mode dropdown styles */
+body.dark-mode .ingredients-dropdown {
+  background: #0f1a22 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+body.dark-mode .dropdown-item {
+  background: #0f1a22 !important;
+  color: #e6eef3 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+body.dark-mode .dropdown-item:hover {
+  background: #1a2730 !important;
+  color: #80a799 !important;
+}
+
+body.dark-mode .ingredients-dropdown::-webkit-scrollbar-track {
+  background: #071018 !important;
+}
+
+body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
 }
