@@ -66,7 +66,6 @@ function IndividualRecipePage() {
             message: "Server error. Please try again later.",
           });
         } else {
-          //Network error OR no response from BE
           setError({
             type: "404",
             message: "Recipe not found.",
