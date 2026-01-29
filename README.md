@@ -9,16 +9,18 @@
 
 ## Overview
 
-Recipe Generator is a full-stack web application that transforms your available ingredients into delicious recipes . Simply input what you have in your kitchen, and receive personalised recipe recommendations from our curated database. You can even use our AI-powered feature to generate custom recipes tailored specific to your ingredients and their quantities.
+Recipe Generator is a full-stack web application that takes in your available ingredients to find delicious recipes to make. Simply input what you have, and receive tailored recipe recommendations from our curated database. In addition to this, our AI-powered generate feature can create custom recipes specific to your ingredients and their quantities.
 
 ### Key Features
 
-- **Smart Recipe Matching**: Enter your available ingredients and discover recipes you can make right now
-- **Favourites Management**: Save your favourite recipes for quick access later
-- **Advanced Filtering**: Sort recipes by preparation time, difficulty level, or date added
-- **AI Recipe Generation**: Get custom recipes generated specifically for your ingredients and quantities (Stretch Goal)
-- **Accessibility First**: Fully compatible with screen readers for an inclusive experience
-- **Desktop Optimised**: Designed for comfortable desktop browsing and cooking
+- **Smart Recipe Matching**: Discover recipes based on your available ingredients
+- **Browse All Recipes**: Explore the complete recipe database
+- **Favourites Management**: Save and access your favourite recipes
+- **Dietary Filters**: Filter by 6 dietary restrictions including Vegan, Vegetarian, Gluten-Free, Dairy-Free, Keto, and Paleo
+- **Advanced Sorting**: Sort by: Best match, Cook time, Difficulty, or Date added
+- **AI Recipe Generation**: Generate custom recipes for your specific ingredients and quantities (Stretch Goal)
+- **Accessibility First**: Fully compatible with screen readers
+- **Desktop Optimised**: Designed for comfortable desktop use
 
 ---
 
@@ -26,13 +28,13 @@ Recipe Generator is a full-stack web application that transforms your available 
 
 ### Minimum Viable Product (MVP)
 
-- ✅ Users can input ingredients and receive matching recipes from the database
-- ✅ Recipe data persisted in SQL Server database
+- ✅ Add/remove ingredients from available list
+- ✅ Search recipes by ingredients with dietary filters and sorting
+- ✅ Detailed recipe view with full instructions and metadata
 - ✅ Save and retrieve favourite recipes
+- ✅ Browse all recipes in the database
 - ✅ Desktop-responsive user interface
-- ✅ Detailed recipe view (ingredients, instructions, cooking time, difficulty)
-- ✅ Add/remove ingredients from user's available list
-- ✅ Filter recipes by date, time, and difficulty
+- ✅ Recipe data persisted in SQL Server database
 
 ### Stretch Goals
 
@@ -46,14 +48,14 @@ Recipe Generator is a full-stack web application that transforms your available 
 As a user, I want to...
 
 - View and interact with the application on my desktop
-- Click on individual recipes to see full details (instructions, ingredients, cooking time, difficulty)
+- Click on individual recipes to see full details
 - Add and remove ingredients from my available ingredients list
 - Retrieve matching recipes based on my available ingredients
-- Filter recipes by date, preparation time, and difficulty level
+- Filter and sort recipes by various criteria
 - Add and remove recipes from my favourites
 - View all my favourited recipes in one place
 - Navigate and read recipes comfortably using a screen reader
-- Generate customised recipes using AI based on my specific ingredients and quantities
+- Generate customised recipes using AI
 
 ---
 
@@ -61,10 +63,10 @@ As a user, I want to...
 
 ### Front-End
 
-- **React** with Vite for fast development and optimised build
+- **React** with Vite for optimised build
 - **React Router** for client-side routing
 - **Axios** for API communication
-- **Prettier & ESLint** for code quality
+- **ESLint** for code quality
 - **CSS** for styling and responsive design
 
 ### Back-End
@@ -114,6 +116,7 @@ npm install
 
 # Start development server
 npm run dev
+# The app will be available at http://localhost:5173
 ```
 
 ### Back-End Setup
