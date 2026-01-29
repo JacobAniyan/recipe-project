@@ -26,6 +26,28 @@ function IndividualRecipePage() {
 
     fetchRecipeById(id)
       .then((data) => {
+        //Validation malformed or missing recipe data
+        if (!data || typeof data !== "object" || !data.RecipeId) {
+          setError({
+            type: "404",
+            message:
+              "Recipe not found. The recipe you're looking for doesn't exist.",
+          });
+          setIsLoading(false);
+          setRecipe(null);
+          return;
+        }
+
+        if (!data.Name || !data.Ingredients || !data.Instruction) {
+          setError({
+            type: "500",
+            message: "Recipe data is incomplete. Please try again later.",
+          });
+          setIsLoading(false);
+          setRecipe(null);
+          return;
+        }
+
         setRecipe(data);
         setIsLoading(false);
         setError(null);
@@ -36,13 +58,18 @@ function IndividualRecipePage() {
         if (error.response?.status === 404) {
           setError({
             type: "404",
-            message:
-              "Recipe not found. The recipe you're looking for doesn't exist.",
+            message: "Recipe not found.",
           });
-        } else {
+        } else if (error.response?.status >= 500) {
           setError({
             type: "500",
-            message: "Unable to load recipe details. Please try again later.",
+            message: "Server error. Please try again later.",
+          });
+        } else {
+          //Network error OR no response from BE
+          setError({
+            type: "404",
+            message: "Recipe not found.",
           });
         }
         setIsLoading(false);
