@@ -14,7 +14,7 @@ export const fetchRecipes = (sortBy, order) => {
 
 export const fetchRecipeById = (id) => {
   //GET recipe by ID
-  return axios.get(`/recipe/${id}`).then((response) => response.data);
+  return axios.get(`/recipes/${id}`).then((response) => response.data);
 };
 
 export const searchRecipes = (

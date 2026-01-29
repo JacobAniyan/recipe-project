@@ -3,7 +3,7 @@ import FavouriteButton from "./FavouriteButton";
 
 const SearchResultsRecipeCard = ({ recipe }) => {
   return (
-    <Link to={`/recipe/${recipe.RecipeId}`} className="recipe-card">
+    <Link to={`/recipes/${recipe.RecipeId}`} className="recipe-card">
       <h3>{recipe.Name}</h3>
 
       <div className="match-percentage">

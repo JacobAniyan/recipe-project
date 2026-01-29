@@ -18,8 +18,8 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/results" element={<SearchResultsPage />} />
           <Route path="/favourites" element={<FavouritesPage />} />
-          <Route path="/recipe" element={<AllRecipesPage />} />
-          <Route path="/recipe/:id" element={<RecipePage />} />
+          <Route path="/recipes" element={<AllRecipesPage />} />
+          <Route path="/recipes/:id" element={<RecipePage />} />
           <Route path="*" element={<InlineError type="404" />} />
         </Routes>
       </div>
