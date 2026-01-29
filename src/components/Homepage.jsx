@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import DietaryFilters from "./DietaryFilters";
-import Loader from "./Loader";
-import SearchBar from "./SearchBar";
 import InlineError from "./InlineError";
+import SearchBar from "./SearchBar";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -120,10 +120,6 @@ const Homepage = () => {
       },
     });
   };
-
-  if (loading) {
-    return <Loader />;
-  }
 
   if (error) {
     return <InlineError type="500" message={error} />;

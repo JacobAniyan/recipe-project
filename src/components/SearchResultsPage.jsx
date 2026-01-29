@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
-import SearchResultsRecipeCard from "./SearchResultsRecipeCard";
-import Loader from "./Loader";
-import SortByDropdown from "./SortByDropdown";
+
 import InlineError from "./InlineError";
+import SearchResultsRecipeCard from "./SearchResultsRecipeCard";
+import SortByDropdown from "./SortByDropdown";
+
 import { searchRecipes } from "../utils/api";
 
 const ResultsPage = () => {
@@ -46,10 +47,6 @@ const ResultsPage = () => {
       });
   }, [ingredientIds, dietaryRestrictionIds, sort_by, order]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <div className="page-container search-results-page">
       <div className="page-header">
@@ -71,7 +68,11 @@ const ResultsPage = () => {
           </div>
 
           <div className="recipe-grid">
-            {recipes.length > 0 ? (
+            {isLoading ? (
+              [...Array(6)].map((_, index) => (
+                <SearchResultsRecipeCard key={index} loading={true} />
+              ))
+            ) : recipes.length > 0 ? (
               recipes.map((recipe) => (
                 <SearchResultsRecipeCard
                   key={recipe.RecipeId}

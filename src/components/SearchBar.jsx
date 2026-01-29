@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+
 import InlineError from "./InlineError";
 
 const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {

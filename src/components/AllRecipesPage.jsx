@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import RecipeCard from "./RecipeCard";
-import Loader from "./Loader";
-import SortByDropdown from "./SortByDropdown";
+
 import InlineError from "./InlineError";
+import RecipeCard from "./RecipeCard";
+import SortByDropdown from "./SortByDropdown";
+
 import { fetchRecipes } from "../utils/api";
 
 const AllRecipesPage = () => {
@@ -30,10 +31,6 @@ const AllRecipesPage = () => {
       });
   }, [sort_by, order]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   return (
     <div className="page-container all-recipes-page">
       <div className="page-header">
@@ -49,7 +46,11 @@ const AllRecipesPage = () => {
           </div>
 
           <div className="recipe-grid">
-            {recipes.length > 0 ? (
+            {isLoading ? (
+              [...Array(9)].map((_, index) => (
+                <RecipeCard key={index} loading={true} />
+              ))
+            ) : recipes.length > 0 ? (
               recipes.map((recipe) => (
                 <RecipeCard key={recipe.RecipeId} recipe={recipe} />
               ))

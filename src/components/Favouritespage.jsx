@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchFavourites } from "../utils/api";
-import Loader from "./Loader";
-import RecipeCard from "./RecipeCard";
+
 import InlineError from "./InlineError";
+import RecipeCard from "./RecipeCard";
+
+import { fetchFavourites } from "../utils/api";
 
 function FavouritesPage() {
   const navigate = useNavigate();
@@ -32,27 +33,32 @@ function FavouritesPage() {
       });
   };
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (error) {
-    return <InlineError type="500" message={error} />;
-  }
-
   return (
     <div className="page-container">
       <div className="page-header">
         <h1>My Favourite Recipes</h1>
       </div>
-      {favourites.length === 0 ? (
-        <p>No favourited recipes yet!</p>
+
+      {error ? (
+        <InlineError type="500" message={error} />
       ) : (
-        <div className="recipe-grid">
-          {favourites.map((recipe) => (
-            <RecipeCard key={recipe.RecipeId} recipe={recipe} />
-          ))}
-        </div>
+        <>
+          {isLoading ? (
+            <div className="recipe-grid">
+              {[...Array(6)].map((_, index) => (
+                <RecipeCard key={index} loading={true} />
+              ))}
+            </div>
+          ) : favourites.length === 0 ? (
+            <p>No favourited recipes yet!</p>
+          ) : (
+            <div className="recipe-grid">
+              {favourites.map((recipe) => (
+                <RecipeCard key={recipe.RecipeId} recipe={recipe} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );
