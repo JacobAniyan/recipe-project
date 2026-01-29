@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+
 import NavBar from "./NavBar";
 
-const Header = (props) => {
+const Header = () => {
   const [isDark, setIsDark] = useState(() => {
     const saved = localStorage.getItem("darkMode");
     return saved ? saved === "true" : false;
