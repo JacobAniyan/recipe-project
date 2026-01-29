@@ -105,7 +105,7 @@ function IndividualRecipePage() {
       <section className="ingredients-section">
         <h2>Ingredients</h2>
         <ul className="ingredients-list">
-          {recipe.Ingredients.map((ingredient, index) => (
+          {recipe.Ingredients?.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
           ))}
         </ul>
@@ -114,7 +114,7 @@ function IndividualRecipePage() {
       <section className="instructions-section">
         <h2>Instructions</h2>
         <ol className="instructions-list">
-          {recipe.Instruction.split("\n").map((step, index) => (
+          {recipe.Instruction?.split("\n").map((step, index) => (
             <li key={index} className="instruction-step">
               {step}
             </li>
