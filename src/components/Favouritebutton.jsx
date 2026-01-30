@@ -5,8 +5,6 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const userId = 1; //Hardcoded for now
-
     if (isFavourite) {
       removeFavourite(recipeId)
         .then(() => {
@@ -17,7 +15,7 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
           console.error("Failed to remove favourite:", error);
         });
     } else {
-      addFavourite(userId, recipeId)
+      addFavourite(recipeId)
         .then(() => {
           //EH: add favourite
           onToggle?.(recipeId, true);

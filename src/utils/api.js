@@ -2,6 +2,7 @@ import axios from "axios";
 
 //pending BE implementation - set BASE_URL once BE is deployed
 const BASE_URL = "https://recipegenerator-api.azurewebsites.net/api";
+const userId = 1; //Hardcoded
 
 export const fetchRecipes = (sortBy, sortOrder) => {
   //GET all recipes
@@ -44,14 +45,14 @@ export const searchRecipes = (
   return axios.post(url, body).then((response) => response.data);
 };
 
-export const fetchFavourites = (userId) => {
+export const fetchFavourites = () => {
   //GET recipes if Favourited
   return axios
     .get(`${BASE_URL}/favourites/${userId}`)
     .then((response) => response.data);
 };
 
-export const addFavourite = (userId, recipeId) => {
+export const addFavourite = (recipeId) => {
   //POST recipes to Favourited
   const body = {
     recipeId: recipeId,
