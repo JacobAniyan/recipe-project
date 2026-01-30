@@ -3,13 +3,15 @@ import axios from "axios";
 //pending BE implementation - set BASE_URL once BE is deployed
 const BASE_URL = "http://recipegenerator-api.azurewebsites.net/api";
 
-export const fetchRecipes = (sortBy, order) => {
+export const fetchRecipes = (sortBy, sortOrder) => {
   //GET all recipes
   const params = {};
-  if (sortBy) params.sort_by = sortBy;
-  if (order) params.order = order;
+  if (sortBy) params.sortBy = sortBy;
+  if (sortOrder) params.sortorder = sortOrder;
 
-  return axios.get(BASE_URL+"/recipes", { params }).then((response) => response.data);
+  return axios
+    .get(BASE_URL + "/recipes", { params })
+    .then((response) => response.data);
 };
 
 export const fetchRecipeById = (id) => {
