@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
+
 import InlineError from "./InlineError";
 
 const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
@@ -7,7 +9,6 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   const [error, setError] = useState(null);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
-  const dropdownRef = useRef(null);
   const inputRef = useRef(null);
 
   const dropdownIngredients = searchInput.trim()
@@ -29,22 +30,6 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   useEffect(() => {
     onIngredientsChange(selectedIngredients);
   }, [selectedIngredients, onIngredientsChange]);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        inputRef.current &&
-        !inputRef.current.contains(event.target)
-      ) {
-        setIsDropdownVisible(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleChange = (event) => {
     setSearchInput(event.target.value);
@@ -103,44 +88,47 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   return (
     <div className="search-bar-container">
       <div className="search-input-wrapper">
-        <div className="search-input-container">
-          <input
-            ref={inputRef}
-            type="text"
-            id="ingredient-search"
-            name="ingredientSearch"
-            placeholder="Type your ingredient(s) here"
-            value={searchInput}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onFocus={handleInputFocus}
-            autoComplete="off"
-          />
+        <OutsideClickHandler onOutsideClick={() => setIsDropdownVisible(false)}>
+          <div className="search-input-container">
+            <input
+              ref={inputRef}
+              type="text"
+              id="ingredient-search"
+              name="ingredientSearch"
+              placeholder="Type your ingredient(s) here"
+              value={searchInput}
+              onChange={handleChange}
+              onKeyDown={handleKeyDown}
+              onFocus={handleInputFocus}
+              autoComplete="off"
+            />
 
-          <ul
-            ref={dropdownRef}
-            className={`ingredients-dropdown ${isDropdownVisible ? "visible" : ""}`}
-            role="listbox"
-          >
-            {dropdownIngredients.length > 0
-              ? dropdownIngredients.map((ingredient) => (
-                  <li
-                    key={ingredient.IngredientName}
-                    onClick={() =>
-                      handleAddIngredient(ingredient.IngredientName)
-                    }
-                    onMouseDown={(e) => e.preventDefault()}
-                    className="dropdown-item"
-                    role="option"
-                  >
-                    {ingredient.IngredientName}
-                  </li>
-                ))
-              : searchInput.trim() && (
-                  <li className="dropdown-no-results">No ingredients found</li>
-                )}
-          </ul>
-        </div>
+            <ul
+              className={`ingredients-dropdown ${isDropdownVisible ? "visible" : ""}`}
+              role="listbox"
+            >
+              {dropdownIngredients.length > 0
+                ? dropdownIngredients.map((ingredient) => (
+                    <li
+                      key={ingredient.IngredientName}
+                      onClick={() =>
+                        handleAddIngredient(ingredient.IngredientName)
+                      }
+                      onMouseDown={(e) => e.preventDefault()}
+                      className="dropdown-item"
+                      role="option"
+                    >
+                      {ingredient.IngredientName}
+                    </li>
+                  ))
+                : searchInput.trim() && (
+                    <li className="dropdown-no-results">
+                      No ingredients found
+                    </li>
+                  )}
+            </ul>
+          </div>
+        </OutsideClickHandler>
 
         {error && <InlineError type={error.type} message={error.message} />}
 

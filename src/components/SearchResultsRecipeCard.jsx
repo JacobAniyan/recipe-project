@@ -1,9 +1,34 @@
 import { Link } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
+
 import FavouriteButton from "./FavouriteButton";
 
-const SearchResultsRecipeCard = ({ recipe }) => {
+const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
+  if (loading) {
+    return (
+      <div className="recipe-card skeleton-card">
+        <Skeleton height={24} width="80%" style={{ marginBottom: "12px" }} />
+        <div className="match-percentage">
+          <Skeleton height={20} width={80} />
+        </div>
+        <div className="missing-ingredients">
+          <Skeleton height={16} width="60%" style={{ marginBottom: "8px" }} />
+          <Skeleton height={16} width="70%" count={2} />
+        </div>
+        <div className="recipe-info">
+          <Skeleton height={16} width="60%" style={{ marginBottom: "8px" }} />
+          <Skeleton height={16} width="50%" style={{ marginBottom: "8px" }} />
+          <Skeleton height={16} width="70%" />
+        </div>
+        <div className="recipecard-actions">
+          <Skeleton circle width={40} height={40} />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Link to={`/recipe/${recipe.RecipeId}`} className="recipe-card">
+    <Link to={`/recipes/${recipe.RecipeId}`} className="recipe-card">
       <h3>{recipe.Name}</h3>
 
       <div className="match-percentage">

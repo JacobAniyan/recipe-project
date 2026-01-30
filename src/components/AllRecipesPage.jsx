@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import RecipeCard from "./RecipeCard";
-import Loader from "./Loader";
-import SortByDropdown from "./SortByDropdown";
+
 import InlineError from "./InlineError";
+import RecipeCard from "./RecipeCard";
+import SortByDropdown from "./SortByDropdown";
+
 import { fetchRecipes } from "../utils/api";
 
 const AllRecipesPage = () => {
@@ -17,26 +18,6 @@ const AllRecipesPage = () => {
 
  useEffect(() => {
   console.log("useEffect triggered", { sort_by, order });
-
-  setError(null);
-  setIsLoading(true);
-
-  fetchRecipes(sort_by, order)
-    .then((data) => {
-      setRecipes(Array.isArray(data) ? data : []);
-      setIsLoading(false);
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-      setError("Unable to load recipes. Please try again later.");
-      setIsLoading(false);
-    });
-}, [sort_by, order]);
-
- 
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div className="page-container all-recipes-page">
@@ -53,7 +34,11 @@ const AllRecipesPage = () => {
           </div>
 
           <div className="recipe-grid">
-            {recipes.length > 0 ? (
+            {isLoading ? (
+              [...Array(9)].map((_, index) => (
+                <RecipeCard key={index} loading={true} />
+              ))
+            ) : recipes.length > 0 ? (
               recipes.map((recipe) => (
                 <RecipeCard key={recipe.recipeId} recipe={recipe} />
               ))

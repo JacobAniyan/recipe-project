@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 import logo from "../assets/Logo.png";
 
 const NavBar = ({ themeToggleButton }) => {
@@ -8,7 +9,7 @@ const NavBar = ({ themeToggleButton }) => {
         <img src={logo} alt="Recipe Gen Logo" className="brand-logo" />
       </Link>
       <div className="nav-links">
-        <Link to="/recipe">All Recipes</Link>
+        <Link to="/recipes">All Recipes</Link>
         <Link to="/favourites">Favourites</Link>
         <Link to="/">Search</Link>
         {themeToggleButton}
