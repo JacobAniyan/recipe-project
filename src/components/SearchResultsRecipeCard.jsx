@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-import FavouriteButton from "./FavouriteButton";
+import FavouriteButton from "./Favouritebutton";
 
 const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
   if (loading) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import NavBar from "./NavBar";
+import NavBar from "./Navbar";
 
 const Header = () => {
   const [isDark, setIsDark] = useState(() => {

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import OutsideClickHandler from "react-outside-click-handler";
 
-import InlineError from "./InlineError";
+import InlineError from "./Inlineerror";
 
 const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
   const [searchInput, setSearchInput] = useState("");

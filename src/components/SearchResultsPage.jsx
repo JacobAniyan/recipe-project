@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useLocation } from "react-router-dom";
 
-import InlineError from "./InlineError";
-import SearchResultsRecipeCard from "./SearchResultsRecipeCard";
-import SortByDropdown from "./SortByDropdown";
+import InlineError from "./Inlineerror";
+import SearchResultsRecipeCard from "./Searchresultsrecipecard";
+import SortByDropdown from "./Sortbydropdown";
 
 import { searchRecipes } from "../utils/api";
 

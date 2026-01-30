@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-import FavouriteButton from "./FavouriteButton";
-import InlineError from "./InlineError";
+import FavouriteButton from "./Favouritebutton";
+import InlineError from "./Inlineerror";
 
 import { fetchRecipeById } from "../utils/api";
 
