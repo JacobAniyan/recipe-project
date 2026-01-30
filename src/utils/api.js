@@ -44,20 +44,25 @@ export const searchRecipes = (
   return axios.post(url, body).then((response) => response.data);
 };
 
-export const fetchFavourites = () => {
+export const fetchFavourites = (userId) => {
   //GET recipes if Favourited
-  return axios.get(`${BASE_URL}/favourites`).then((response) => response.data);
+  return axios
+    .get(`${BASE_URL}/favourites/${userId}`)
+    .then((response) => response.data);
 };
 
-export const addFavourite = (recipeId) => {
+export const addFavourite = (userId, recipeId) => {
   //POST recipes to Favourited
+  const body = {
+    recipeId: recipeId,
+  };
   return axios
-    .post(`${BASE_URL}/favourites/${recipeId}`)
+    .post(`${BASE_URL}/favourites/${userId}/recipes`, body)
     .then((response) => response.data);
 };
 
 export const removeFavourite = (recipeId) => {
-  //DELETE recipe from favourites
+  //DELETE recipe from Favourited
   return axios
     .delete(`${BASE_URL}/favourites/${recipeId}`)
     .then((response) => response.data);

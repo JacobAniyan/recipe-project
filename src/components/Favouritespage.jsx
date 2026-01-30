@@ -21,7 +21,9 @@ function FavouritesPage() {
     setIsLoading(true);
     setError(null);
 
-    fetchFavourites()
+    const userId = 1; //Hardcoded for now
+
+    fetchFavourites(userId)
       .then((data) => {
         setFavourites(Array.isArray(data) ? data : []);
         setIsLoading(false);
