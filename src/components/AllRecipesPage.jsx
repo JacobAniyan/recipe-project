@@ -17,7 +17,22 @@ const AllRecipesPage = () => {
   let order = searchParams.get("order");
 
  useEffect(() => {
-  console.log("useEffect triggered", { sort_by, order });
+    console.log("Fetching recipes with:", { sortBy, sortOrder });
+
+    setError(null);
+    setIsLoading(true);
+
+    fetchRecipes(sortBy, sortOrder)
+      .then((data) => {
+        setRecipes(Array.isArray(data) ? data : []);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setError("Unable to load recipes.");
+        setIsLoading(false);
+      });
+  }, [sortBy, sortOrder]);
 
   return (
     <div className="page-container all-recipes-page">
