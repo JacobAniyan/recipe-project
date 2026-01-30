@@ -6,31 +6,31 @@ const SortByDropdown = () => {
     <div className="sort-by">
       <label>Sort by:</label>
       <div className="sort-buttons">
-        <button onClick={() => setSearchParams("?sort_by=match&order=DESC")}>
+        <button onClick={() => setSearchParams({sortBy: "match", sortorder: "desc"})}>
           Best Match
         </button>
-        <button onClick={() => setSearchParams("?sort_by=CookTime&order=ASC")}>
+        <button onClick={() => setSearchParams({sortBy: "cooktime", sortorder: "asc"})}>
           Cook Time (Low to High)
         </button>
-        <button onClick={() => setSearchParams("?sort_by=CookTime&order=DESC")}>
+        <button onClick={() => setSearchParams({sortBy: "cooktime", sortorder: "desc"})}>
           Cook Time (High to Low)
         </button>
         <button
-          onClick={() => setSearchParams("?sort_by=Difficulty&order=ASC")}
+          onClick={() => setSearchParams({sortBy: "difficulty", sortorder: "asc"})}
         >
           Difficulty (Easy to Hard)
         </button>
         <button
-          onClick={() => setSearchParams("?sort_by=Difficulty&order=DESC")}
+          onClick={() => setSearchParams({sortBy: "difficulty", sortorder: "desc"})}
         >
           Difficulty (Hard to Easy)
         </button>
         <button
-          onClick={() => setSearchParams("?sort_by=CreatedAt&order=DESC")}
+          onClick={() => setSearchParams({sortBy: "date", sortorder: "asc"})}
         >
           Date Added (Newest First)
         </button>
-        <button onClick={() => setSearchParams("?sort_by=CreatedAt&order=ASC")}>
+        <button onClick={() => setSearchParams({sortBy: "date", sortorder: "desc"})}>
           Date Added (Oldest First)
         </button>
       </div>
