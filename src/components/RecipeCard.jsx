@@ -24,15 +24,15 @@ const RecipeCard = ({ recipe, loading = false }) => {
     <Link to={`/recipes/${recipe.RecipeId}`} className="recipe-card">
       <h3>{recipe.Name}</h3>
       <div className="recipe-info">
-        <span className="cooking-time">Duration: {recipe.CookTime} mins</span>
-        <span className="difficulty">Difficulty: {recipe.Difficulty}</span>
+        <span className="cooking-time">Duration: {recipe.cookTime} mins</span>
+        <span className="difficulty">Difficulty: {recipe.difficulty}</span>
         <span className="date-added">
-          Added: {new Date(recipe.CreatedAt).toLocaleDateString()}
+          Added: {new Date(recipe.createdAt).toLocaleDateString()}
         </span>
       </div>
       <div className="recipecard-actions">
         <FavouriteButton
-          recipeId={recipe.RecipeId}
+          recipeId={recipe.recipeId}
           isFavourite={recipe.IsFavourite}
         />
       </div>

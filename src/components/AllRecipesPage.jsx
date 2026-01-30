@@ -16,20 +16,8 @@ const AllRecipesPage = () => {
   let sort_by = searchParams.get("sort_by");
   let order = searchParams.get("order");
 
-  useEffect(() => {
-    setError(null);
-    setIsLoading(true);
-    fetchRecipes(sort_by, order)
-      .then((data) => {
-        setRecipes(Array.isArray(data) ? data : []);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError("Unable to load recipes. Please try again later.");
-        setIsLoading(false);
-      });
-  }, [sort_by, order]);
+ useEffect(() => {
+  console.log("useEffect triggered", { sort_by, order });
 
   return (
     <div className="page-container all-recipes-page">
@@ -52,7 +40,7 @@ const AllRecipesPage = () => {
               ))
             ) : recipes.length > 0 ? (
               recipes.map((recipe) => (
-                <RecipeCard key={recipe.RecipeId} recipe={recipe} />
+                <RecipeCard key={recipe.recipeId} recipe={recipe} />
               ))
             ) : (
               <p>No recipes found.</p>
