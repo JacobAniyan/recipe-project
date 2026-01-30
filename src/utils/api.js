@@ -16,7 +16,9 @@ export const fetchRecipes = (sortBy, sortOrder) => {
 
 export const fetchRecipeById = (id) => {
   //GET recipe by ID
-  return axios.get(`/recipes/${id}`).then((response) => response.data);
+  return axios
+    .get(`${BASE_URL}/recipes/${id}`)
+    .then((response) => response.data);
 };
 
 export const searchRecipes = (
@@ -36,27 +38,27 @@ export const searchRecipes = (
   if (order) params.append("order", order);
 
   const url = params.toString()
-    ? `/recipes/search?${params.toString()}`
-    : "/recipes/search";
+    ? `${BASE_URL}/recipes/search?${params.toString()}`
+    : `${BASE_URL}/recipes/search`;
 
   return axios.post(url, body).then((response) => response.data);
 };
 
 export const fetchFavourites = () => {
   //GET recipes if Favourited
-  return axios.get("/favourites").then((response) => response.data);
+  return axios.get(`${BASE_URL}/favourites`).then((response) => response.data);
 };
 
 export const addFavourite = (recipeId) => {
   //POST recipes to Favourited
   return axios
-    .post(`/api/favourites/${recipeId}`)
+    .post(`${BASE_URL}/favourites/${recipeId}`)
     .then((response) => response.data);
 };
 
 export const removeFavourite = (recipeId) => {
   //DELETE recipe from favourites
   return axios
-    .delete(`/api/favourites/${recipeId}`)
+    .delete(`${BASE_URL}/favourites/${recipeId}`)
     .then((response) => response.data);
 };
