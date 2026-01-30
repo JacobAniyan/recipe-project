@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "./CSS/App.css";
 
 import AllRecipesPage from "./components/AllRecipesPage";
-import FavouritesPage from "./components/FavouritesPage";
+import FavouritesPage from "./components/Favouritespage";
 import Header from "./components/Header";
 import Homepage from "./components/Homepage";
 import InlineError from "./components/InlineError";
