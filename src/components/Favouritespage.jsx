@@ -12,18 +12,15 @@ function FavouritesPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  ////pending BE implementation
-  // useEffect(() => {
-  //   fetchFavouritesData();
-  // }, []);
+  useEffect(() => {
+    fetchFavouritesData();
+  }, []);
 
   const fetchFavouritesData = () => {
     setIsLoading(true);
     setError(null);
 
-    const userId = 1; //Hardcoded for now
-
-    fetchFavourites(userId)
+    fetchFavourites()
       .then((data) => {
         setFavourites(Array.isArray(data) ? data : []);
         setIsLoading(false);
