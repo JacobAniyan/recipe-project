@@ -28,8 +28,9 @@ function IndividualRecipePage() {
 
     fetchRecipeById(id)
       .then((data) => {
-        //Validation malformed or missing recipe data
-        if (!data || typeof data !== "object" || !data.RecipeId) {
+        console.log(data)
+         //Validation malformed or missing recipe data
+        if (!data || typeof data !== "object" || !data.recipeId) {
           setError({
             type: "404",
             message:
@@ -40,7 +41,7 @@ function IndividualRecipePage() {
           return;
         }
 
-        if (!data.Name || !data.Ingredients || !data.Instruction) {
+        if (!data.name || !data.ingredients || !data.instructions) {
           setError({
             type: "500",
             message: "Recipe data is incomplete. Please try again later.",
@@ -50,8 +51,14 @@ function IndividualRecipePage() {
           return;
         }
 
-        setRecipe(data);
-        setIsLoading(false);
+          setRecipe({
+          ...data,
+          instructions:
+            typeof data.instructions === "object" &&
+            data.instructions.instruction
+              ? data.instructions.instruction
+              : "",
+        });         setIsLoading(false);
         setError(null);
       })
       .catch((error) => {
@@ -103,14 +110,14 @@ function IndividualRecipePage() {
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         ) : (
           <img
-            src={recipe.ImageUrl}
-            alt={recipe.Name}
+            src={recipe.img}
+            alt={recipe.name}
             className="recipe-image"
           />
         )}
         {!isLoading && (
           <FavouriteButton
-            recipeId={recipe.RecipeId}
+            recipeId={recipe.recipeId}
             isFavourite={recipe.IsFavourite}
           />
         )}
@@ -121,8 +128,8 @@ function IndividualRecipePage() {
       {isLoading ? (
         <Skeleton width="90%" style={{ marginBottom: "24px" }} />
       ) : (
-        recipe.Description && (
-          <p className="recipe-description">{recipe.Description}</p>
+        recipe.description && (
+          <p className="recipe-description">{recipe.description}</p>
         )
       )}
 
@@ -140,16 +147,16 @@ function IndividualRecipePage() {
           </>
         ) : (
           <>
-            {recipe.CookTime && (
+            {recipe.cookTime && (
               <div className="info-item">
                 <dt className="info-label">Cook Time:</dt>
-                <dd className="info-value">{recipe.CookTime} mins</dd>
+                <dd className="info-value">{recipe.cookTime} mins</dd>
               </div>
             )}
-            {recipe.Difficulty && (
+            {recipe.difficulty && (
               <div className="info-item">
                 <dt className="info-label">Difficulty:</dt>
-                <dd className="info-value">{recipe.Difficulty}</dd>
+                <dd className="info-value">{recipe.difficulty}</dd>
               </div>
             )}
           </>
@@ -165,7 +172,7 @@ function IndividualRecipePage() {
                   <Skeleton width="80%" />
                 </li>
               ))
-            : recipe.Ingredients?.map((ingredient, index) => (
+            : recipe.ingredients?.map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}
         </ul>
@@ -180,7 +187,7 @@ function IndividualRecipePage() {
                   <Skeleton width="95%" count={2} />
                 </li>
               ))
-            : recipe.Instruction?.split("\n").map((step, index) => (
+            : recipe.instructions?.split("\n").map((step, index) => (
                 <li key={index} className="instruction-step">
                   {step}
                 </li>

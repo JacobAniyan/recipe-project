@@ -28,36 +28,40 @@ const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
   }
 
   return (
-    <Link to={`/recipes/${recipe.RecipeId}`} className="recipe-card">
-      <h3>{recipe.Name}</h3>
+    <Link to={`/recipes/${recipe.recipeId}`} className="recipe-card">
+      <h3>{recipe.name}</h3>
 
-      <div className="match-percentage">
-        <span>Match: {recipe.MatchPercentage}%</span>
-      </div>
+      {recipe.matchPercentage !== undefined && (
+        <div className="match-percentage">
+          <span>Match: {recipe.matchPercentage}%</span>
+        </div>
+      )}
 
-      {recipe.MissingIngredients && recipe.MissingIngredients.length > 0 && (
+      {recipe.missingIngredients && recipe.missingIngredients.length > 0 && (
         <div className="missing-ingredients">
           <p className="missing-label">Missing Ingredients:</p>
           <ul>
-            {recipe.MissingIngredients.map((ingredient) => (
-              <li key={ingredient}>{ingredient}</li>
+            {recipe.missingIngredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
             ))}
           </ul>
         </div>
       )}
 
       <div className="recipe-info">
-        <span className="cooking-time">Duration: {recipe.CookTime} mins</span>
-        <span className="difficulty">Difficulty: {recipe.Difficulty}</span>
-        <span className="date-added">
-          Added: {new Date(recipe.CreatedAt).toLocaleDateString()}
-        </span>
+        <span className="cooking-time">Duration: {recipe.cookTime} mins</span>
+        <span className="difficulty">Difficulty: {recipe.difficulty}</span>
+        {recipe.createdAt && (
+          <span className="date-added">
+            Added: {new Date(recipe.createdAt).toLocaleDateString()}
+          </span>
+        )}
       </div>
 
       <div className="recipecard-actions">
         <FavouriteButton
-          recipeId={recipe.RecipeId}
-          isFavourite={recipe.IsFavourite}
+          recipeId={recipe.recipeId}
+          isFavourite={recipe.isFavourite}
         />
       </div>
     </Link>

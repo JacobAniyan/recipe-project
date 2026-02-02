@@ -3,7 +3,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 
 import InlineError from "./Inlineerror";
 import SearchResultsRecipeCard from "./Searchresultsrecipecard";
-import SortByDropdown from "./Sortbydropdown";
+import SortByDropdown from "./SortByDropdown";
 
 import { searchRecipes } from "../utils/api";
 
@@ -26,7 +26,8 @@ const ResultsPage = () => {
   let order = searchParams.get("order");
 
   useEffect(() => {
-    if (ingredientIds.length === 0) {
+    // Allow search with either ingredients OR dietary filters
+    if (ingredientIds.length === 0 && dietaryRestrictionIds.length === 0) {
       setRecipes([]);
       setIsLoading(false);
       return;
@@ -37,11 +38,15 @@ const ResultsPage = () => {
 
     searchRecipes(ingredientIds, dietaryRestrictionIds, sort_by, order)
       .then((data) => {
-        setRecipes(Array.isArray(data) ? data : []);
+        // Filter out recipes with 0% match
+        const filteredRecipes = Array.isArray(data) 
+          ? data.filter(recipe => recipe.matchPercentage !== 0)
+          : [];
+        setRecipes(filteredRecipes);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error(error);
+        console.error('Search Error:', error);
         setError("Unable to search recipes. Please try again later.");
         setIsLoading(false);
       });
@@ -52,9 +57,14 @@ const ResultsPage = () => {
       <div className="page-header">
         <h1>Recipe Results</h1>
         <div className="search-summary">
-          <p>Recipes containing: {ingredientNames.join(", ")}</p>
+          {ingredientNames.length > 0 && (
+            <p>Recipes containing: {ingredientNames.join(", ")}</p>
+          )}
           {filterNames.length > 0 && (
-            <p>Selected Filters: {filterNames.join(", ")}</p>
+            <p>Dietary Filters: {filterNames.join(", ")}</p>
+          )}
+          {ingredientNames.length === 0 && filterNames.length === 0 && (
+            <p>All Recipes</p>
           )}
         </div>
       </div>
@@ -75,7 +85,7 @@ const ResultsPage = () => {
             ) : recipes.length > 0 ? (
               recipes.map((recipe) => (
                 <SearchResultsRecipeCard
-                  key={recipe.RecipeId}
+                  key={recipe.recipeId}
                   recipe={recipe}
                 />
               ))

@@ -3,7 +3,7 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 import InlineError from "./Inlineerror";
 
-const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
+const SearchBar = ({ onIngredientsChange, availableIngredients = [], loading = false }) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [error, setError] = useState(null);
@@ -13,9 +13,7 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
 
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
-        ingredient.IngredientName.toLowerCase().startsWith(
-          searchInput.toLowerCase(),
-        ),
+        ingredient.toLowerCase().includes(searchInput.toLowerCase())
       )
     : [];
 
@@ -74,7 +72,20 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
     }
   };
 
-  if (availableIngredients.length === 0) {
+  if (loading) {
+    return (
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Loading ingredients..."
+          disabled
+          style={{ width: '100%', padding: '0.875rem 1.25rem', fontSize: '1rem' }}
+        />
+      </div>
+    );
+  }
+
+  if (!loading && availableIngredients.length === 0) {
     return (
       <div className="search-bar-container">
         <InlineError
@@ -110,15 +121,13 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [] }) => {
               {dropdownIngredients.length > 0
                 ? dropdownIngredients.map((ingredient) => (
                     <li
-                      key={ingredient.IngredientName}
-                      onClick={() =>
-                        handleAddIngredient(ingredient.IngredientName)
-                      }
+                      key={ingredient}
+                      onClick={() => handleAddIngredient(ingredient)}
                       onMouseDown={(e) => e.preventDefault()}
                       className="dropdown-item"
                       role="option"
                     >
-                      {ingredient.IngredientName}
+                      {ingredient}
                     </li>
                   ))
                 : searchInput.trim() && (
