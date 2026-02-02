@@ -65,6 +65,6 @@ export const addFavourite = (recipeId) => {
 export const removeFavourite = (recipeId) => {
   //DELETE recipe from Favourited
   return axios
-    .delete(`${BASE_URL}/favourites/${recipeId}`)
+    .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
     .then((response) => response.data);
 };
