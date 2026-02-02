@@ -1,6 +1,5 @@
 import axios from "axios";
 
-//pending BE implementation - set BASE_URL once BE is deployed
 const BASE_URL = "https://recipegenerator-api.azurewebsites.net/api";
 const userId = 1; //Hardcoded
 
@@ -65,6 +64,6 @@ export const addFavourite = (recipeId) => {
 export const removeFavourite = (recipeId) => {
   //DELETE recipe from Favourited
   return axios
-    .delete(`${BASE_URL}/favourites/${recipeId}`)
+    .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
     .then((response) => response.data);
 };
