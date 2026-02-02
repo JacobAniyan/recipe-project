@@ -1,6 +1,5 @@
 import axios from "axios";
 
-//pending BE implementation - set BASE_URL once BE is deployed
 const BASE_URL = "https://recipegenerator-api.azurewebsites.net/api";
 const userId = 1; //Hardcoded
 
