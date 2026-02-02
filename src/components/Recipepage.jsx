@@ -53,14 +53,15 @@ function IndividualRecipePage() {
           return;
         }
 
-          setRecipe({
+        setRecipe({
           ...data,
           instructions:
             typeof data.instructions === "object" &&
             data.instructions.instruction
               ? data.instructions.instruction
               : "",
-        });         setIsLoading(false);
+        });
+        setIsLoading(false);
         setError(null);
       })
       .catch((error) => {
@@ -94,40 +95,15 @@ function IndividualRecipePage() {
     );
   }
 
-  if (!recipe && !isLoading) {
+  if (isLoading) {
     return (
-      <div className="page-container">
-        <InlineError
-          type="404"
-          message="Recipe not found. The recipe you're looking for doesn't exist."
-        />
-      </div>
-    );
-  }
-
-  return (
-    <div className="individual-recipe-page">
-      <div className="recipe-header">
-        {isLoading ? (
+      <div className="individual-recipe-page">
+        <div className="recipe-header">
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
-        ) : (
-          <img
-            src={recipe.img}
-            alt={recipe.name}
-            className="recipe-image"
-          />
-        )}
-        {!isLoading && (
-          <FavouriteButton
-            recipeId={recipe.recipeId}
-            isFavourite={recipe.IsFavourite}
-          />
-        )}
-      </div>
+        </div>
 
       <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
 
-      {isLoading ? (
         <div style={{ marginBottom: "24px" }}>
           <Skeleton
             width={70}
@@ -149,75 +125,102 @@ function IndividualRecipePage() {
           <div className="dietary-restrictions-section">
             <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
           </div>
-        )
+        </div>
+
+        <section className="ingredients-section">
+          <h2>
+            <Skeleton width={200} />
+          </h2>
+          <ul className="ingredients-list">
+            {[...Array(8)].map((_, index) => (
+              <li key={index}>
+                <Skeleton width="80%" />
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="instructions-section">
+          <h2>
+            <Skeleton width={200} />
+          </h2>
+          <ol className="instructions-list">
+            {[...Array(6)].map((_, index) => (
+              <li key={index} className="instruction-step">
+                <Skeleton width="95%" count={2} />
+              </li>
+            ))}
+          </ol>
+        </section>
+      </div>
+    );
+  }
+
+  if (!recipe) {
+    return (
+      <div className="page-container">
+        <InlineError
+          type="404"
+          message="Recipe not found. The recipe you're looking for doesn't exist."
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="individual-recipe-page">
+      <div className="recipe-header">
+        <img src={recipe.img} alt={recipe.name} className="recipe-image" />
+        <FavouriteButton
+          recipeId={recipe.recipeId}
+          isFavourite={recipe.IsFavourite}
+        />
+      </div>
+
+      <h1>{recipe.Name}</h1>
+
+      {recipe.DietaryRestrictions && recipe.DietaryRestrictions.length > 0 && (
+        <div className="dietary-restrictions-section">
+          <DietaryBadges dietaryRestrictions={recipe.DietaryRestrictions} />
+        </div>
       )}
-      {isLoading ? (
-        <Skeleton width="90%" style={{ marginBottom: "24px" }} />
-      ) : (
-        recipe.description && (
-          <p className="recipe-description">{recipe.description}</p>
-        )
+
+      {recipe.description && (
+        <p className="recipe-description">{recipe.description}</p>
       )}
 
       <div className="recipe-info">
-        {isLoading ? (
-          <>
-            <div className="info-item">
-              <Skeleton width={100} />
-              <Skeleton width={80} />
-            </div>
-            <div className="info-item">
-              <Skeleton width={100} />
-              <Skeleton width={80} />
-            </div>
-          </>
-        ) : (
-          <>
-            {recipe.cookTime && (
-              <div className="info-item">
-                <dt className="info-label">Cook Time:</dt>
-                <dd className="info-value">{recipe.cookTime} mins</dd>
-              </div>
-            )}
-            {recipe.difficulty && (
-              <div className="info-item">
-                <dt className="info-label">Difficulty:</dt>
-                <dd className="info-value">{recipe.difficulty}</dd>
-              </div>
-            )}
-          </>
+        {recipe.cookTime && (
+          <div className="info-item">
+            <div className="info-label">Cook Time:</div>
+            <div className="info-value">{recipe.cookTime} mins</div>
+          </div>
+        )}
+        {recipe.difficulty && (
+          <div className="info-item">
+            <div className="info-label">Difficulty:</div>
+            <div className="info-value">{recipe.difficulty}</div>
+          </div>
         )}
       </div>
 
       <section className="ingredients-section">
-        <h2>{isLoading ? <Skeleton width={200} /> : "Ingredients"}</h2>
+        <h2>Ingredients</h2>
         <ul className="ingredients-list">
-          {isLoading
-            ? [...Array(8)].map((_, index) => (
-                <li key={index}>
-                  <Skeleton width="80%" />
-                </li>
-              ))
-            : recipe.ingredients?.map((ingredient, index) => (
-                <li key={index}>{ingredient}</li>
-              ))}
+          {recipe.ingredients?.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
         </ul>
       </section>
 
       <section className="instructions-section">
-        <h2>{isLoading ? <Skeleton width={200} /> : "Instructions"}</h2>
+        <h2>Instructions</h2>
         <ol className="instructions-list">
-          {isLoading
-            ? [...Array(6)].map((_, index) => (
-                <li key={index} className="instruction-step">
-                  <Skeleton width="95%" count={2} />
-                </li>
-              ))
-            : recipe.instructions?.split("\n").map((step, index) => (
-                <li key={index} className="instruction-step">
-                  {step}
-                </li>
-              ))}
+          {recipe.instructions?.split("\n").map((step, index) => (
+            <li key={index} className="instruction-step">
+              {step}
+            </li>
+          ))}
         </ol>
       </section>
     </div>

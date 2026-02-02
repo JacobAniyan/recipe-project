@@ -1,17 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
- import DietaryFilters from "./Dietaryfilters";
+import DietaryFilters from "./Dietaryfilters";
 import InlineError from "./Inlineerror";
 import SearchBar from "./Searchbar";
 import { fetchIngredients, fetchDietaryFilters } from "../utils/api";
 
 const Homepage = () => {
   const navigate = useNavigate();
-
-  
-
-  const [availableIngredients, setAvailableIngredients] =
-    useState([]);  
+  const [availableIngredients, setAvailableIngredients] = useState([]);
   const [availableDietaryFilters, setAvailableDietaryFilters] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,14 +21,18 @@ const Homepage = () => {
         // Handle new API format: array of objects with ingredientId and ingredientName
         const parsedIngredients = data.map((item) => {
           // If item is already an object with ingredientId and ingredientName
-          if (typeof item === 'object' && item.ingredientId && item.ingredientName) {
+          if (
+            typeof item === "object" &&
+            item.ingredientId &&
+            item.ingredientName
+          ) {
             return {
               IngredientId: item.ingredientId,
               IngredientName: item.ingredientName,
             };
           }
           // Handle old string format "1:Avocado"
-          else if (typeof item === 'string' && item.includes(':')) {
+          else if (typeof item === "string" && item.includes(":")) {
             const [id, ...nameParts] = item.split(":");
             return {
               IngredientId: Number(id),
@@ -48,7 +48,7 @@ const Homepage = () => {
             };
           }
         });
-        
+
         setAvailableIngredients(parsedIngredients);
         setLoading(false);
       })
@@ -65,21 +65,24 @@ const Homepage = () => {
       .then((data) => {
         // Handle different data formats
         let filtersArray = [];
-        
+
         if (Array.isArray(data)) {
           filtersArray = data;
-        } else if (data.dietaryRestrictions && Array.isArray(data.dietaryRestrictions)) {
+        } else if (
+          data.dietaryRestrictions &&
+          Array.isArray(data.dietaryRestrictions)
+        ) {
           // If it's an object with dietaryRestrictions property
           filtersArray = data.dietaryRestrictions;
-        } else if (typeof data === 'object' && data !== null) {
+        } else if (typeof data === "object" && data !== null) {
           // If it's an object, convert to array
           filtersArray = Object.values(data);
         }
-        
+
         // Parse "1:Vegan" => { DietaryRestrictionId: 1, DietaryRestrictionName: "Vegan" }
         const parsedFilters = filtersArray.map((item, index) => {
-          if (typeof item === 'string') {
-            if (item.includes(':')) {
+          if (typeof item === "string") {
+            if (item.includes(":")) {
               const [id, ...nameParts] = item.split(":");
               return {
                 DietaryRestrictionId: Number(id),
@@ -91,11 +94,13 @@ const Homepage = () => {
                 DietaryRestrictionName: item,
               };
             }
-          } else if (typeof item === 'object' && item !== null) {
+          } else if (typeof item === "object" && item !== null) {
             // If item is already an object
             return {
-              DietaryRestrictionId: item.DietaryRestrictionId || item.id || index + 1,
-              DietaryRestrictionName: item.DietaryRestrictionName || item.name || String(item),
+              DietaryRestrictionId:
+                item.DietaryRestrictionId || item.id || index + 1,
+              DietaryRestrictionName:
+                item.DietaryRestrictionName || item.name || String(item),
             };
           }
           return {
@@ -103,7 +108,7 @@ const Homepage = () => {
             DietaryRestrictionName: String(item),
           };
         });
-        
+
         setAvailableDietaryFilters(parsedFilters);
       })
       .catch((error) => {
@@ -118,7 +123,10 @@ const Homepage = () => {
     if (availableDietaryFilters.length > 0) {
       const initialFilters = {};
       availableDietaryFilters.forEach((filter) => {
-        const key = filter.DietaryRestrictionName.toLowerCase().replace(/\s+/g, '-');
+        const key = filter.DietaryRestrictionName.toLowerCase().replace(
+          /\s+/g,
+          "-",
+        );
         initialFilters[key] = false;
       });
       setFilters(initialFilters);
@@ -126,11 +134,17 @@ const Homepage = () => {
   }, [availableDietaryFilters]);
 
   // Create dynamic dietary restriction map
-  const dietaryRestrictionMap = availableDietaryFilters.reduce((map, filter) => {
-    const key = filter.DietaryRestrictionName.toLowerCase().replace(/\s+/g, '-');
-    map[key] = filter.DietaryRestrictionId;
-    return map;
-  }, {});
+  const dietaryRestrictionMap = availableDietaryFilters.reduce(
+    (map, filter) => {
+      const key = filter.DietaryRestrictionName.toLowerCase().replace(
+        /\s+/g,
+        "-",
+      );
+      map[key] = filter.DietaryRestrictionId;
+      return map;
+    },
+    {},
+  );
 
   const handleFilterToggle = (filterKey) => {
     setFilters((previous) => ({
@@ -154,7 +168,7 @@ const Homepage = () => {
 
   const handleFindClick = () => {
     const activeFilterKeys = Object.keys(filters).filter((key) => filters[key]);
-    
+
     // Require at least one ingredient OR one dietary filter
     if (selectedIngredients.length === 0 && activeFilterKeys.length === 0) {
       return;
@@ -197,7 +211,7 @@ const Homepage = () => {
     return <InlineError type="500" message={error} />;
   }
 
-  const ingredientNames = availableIngredients.map(i => i.IngredientName);
+  const ingredientNames = availableIngredients.map((i) => i.IngredientName);
 
   return (
     <div className="homepage">
@@ -219,8 +233,8 @@ const Homepage = () => {
           className="find-button"
           onClick={handleFindClick}
           disabled={
-            selectedIngredients.length === 0 && 
-            Object.values(filters).every(value => value === false)
+            selectedIngredients.length === 0 &&
+            Object.values(filters).every((value) => value === false)
           }
         >
           Find
