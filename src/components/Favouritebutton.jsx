@@ -1,15 +1,21 @@
+import { useState } from "react";
 import { addFavourite, removeFavourite } from "../utils/api";
 
 const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
+  const [isFavourited, setIsFavourited] = useState(isFavourite || false);
+
   const handleFavouriteClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (isFavourite) {
+    if (isFavourited) {
       removeFavourite(recipeId)
         .then(() => {
           //EH: remove favourite
-          onToggle?.(recipeId, false);
+          setIsFavourited(false);
+          if (onToggle) {
+            onToggle(recipeId, false);
+          }
         })
         .catch((error) => {
           console.error("Failed to remove favourite:", error);
@@ -18,7 +24,10 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
       addFavourite(recipeId)
         .then(() => {
           //EH: add favourite
-          onToggle?.(recipeId, true);
+          setIsFavourited(true);
+          if (onToggle) {
+            onToggle(recipeId, true);
+          }
         })
         .catch((error) => {
           console.error("Failed to add favourite:", error);
@@ -30,9 +39,9 @@ const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
     <button
       className="favourite-button"
       onClick={handleFavouriteClick}
-      aria-label={isFavourite ? "Remove from favourites" : "Add to favourites"}
+      aria-label={isFavourited ? "Remove from favourites" : "Add to favourites"}
     >
-      {isFavourite ? "❤️" : "🤍"}
+      {isFavourited ? "❤️" : "🤍"}
     </button>
   );
 };

@@ -1,5 +1,9 @@
 ﻿# Recipe Generator
 
+## Overview
+
+Recipe Generator is a full-stack web application that takes in your available ingredients to find delicious recipes to make. Simply input what you have, and receive recipe recommendations from our curated database.
+
 ## Repository Structure
 
 - **Frontend**: [github.com/JacobAniyan/recipe-project](https://github.com/JacobAniyan/recipe-project)
@@ -7,11 +11,7 @@
 
 ---
 
-## Overview
-
-Recipe Generator is a full-stack web application that takes in your available ingredients to find delicious recipes to make. Simply input what you have, and receive tailored recipe recommendations from our curated database. In addition to this, our AI-powered generate feature can create custom recipes specific to your ingredients and their quantities.
-
-### Key Features
+## Key Features
 
 - **Smart Recipe Matching**: Discover recipes based on your available ingredients
 - **Browse All Recipes**: Explore the complete recipe database
@@ -21,25 +21,6 @@ Recipe Generator is a full-stack web application that takes in your available in
 - **AI Recipe Generation**: Generate custom recipes for your specific ingredients and quantities (Stretch Goal)
 - **Accessibility First**: Fully compatible with screen readers
 - **Desktop Optimised**: Designed for comfortable desktop use
-
----
-
-## Project Goals
-
-### Minimum Viable Product (MVP)
-
-- ✅ Add/remove ingredients from available list
-- ✅ Search recipes by ingredients with dietary filters and sorting
-- ✅ Detailed recipe view with full instructions and metadata
-- ✅ Save and retrieve favourite recipes
-- ✅ Browse all recipes in the database
-- ✅ Desktop-responsive user interface
-- ✅ Recipe data persisted in SQL Server database
-
-### Stretch Goals
-
-- AI-powered interface for customised recipe generation
-- Ingredient quantity considerations for more precise recipe suggestions
 
 ---
 
@@ -59,6 +40,26 @@ As a user, I want to...
 
 ---
 
+## Project Goals
+
+### Minimum Viable Product (MVP)
+
+- ✅ Add/remove ingredients from available list
+- ✅ Search recipes by ingredients with dietary filters and sorting
+- ✅ Detailed recipe view with full instructions and metadata
+- ✅ Save and retrieve favourite recipes
+- ✅ Browse all recipes in the database
+- ✅ Desktop-responsive user interface
+- ✅ Recipe data persisted in SQL Server database
+
+### Stretch Goals
+
+- Ingredient quantity considerations for more precise recipe suggestions
+- User sign-in functionality (currently no authentication, and hardcoded user ID to 1 to demo favourites functionality)
+- AI-powered interface for customised recipe generation
+
+---
+
 ## Tech Stack
 
 ### Front-End
@@ -68,31 +69,6 @@ As a user, I want to...
 - **Axios** for API communication
 - **ESLint** for code quality
 - **CSS** for styling and responsive design
-
-### Back-End
-
-- **ASP.NET Core MVC** for RESTful API architecture
-- **Entity Framework Core** for database ORM
-- **SQL Server** for data persistence
-- **Recipe dataset** for demonstration purposes
-
----
-
-## Known Risks & Mitigation
-
-### Front-End:
-
-| Risk                                 | Mitigation Strategy                                          |
-| ------------------------------------ | ------------------------------------------------------------ |
-| Team's foundational CSS knowledge    | Focus on simple, clean styling; use CSS frameworks if needed |
-| Basic React functionality experience | Prioritise core features; incremental learning approach      |
-
-### Back-End:
-
-| Risk                   | Mitigation Strategy                                                       |
-| ---------------------- | ------------------------------------------------------------------------- |
-| Limited C# experience  | Leverage documentation and tutorials; pair programming                    |
-| AI feature scope creep | Keep AI as separate endpoint and UI route; treat as stretch goal, not MVP |
 
 ---
 
@@ -116,24 +92,7 @@ npm install
 
 # Start development server
 npm run dev
-# The app will be available at http://localhost:5173
+
+# Build for production
+npm run build
 ```
-
-### Back-End Setup
-
-```bash
-# Clone the repository
-git clone https://github.com/Sameer-Gurung0602/RecipeGenerator.git
-cd RecipeGenerator
-
-# Restore dependencies
-dotnet restore
-
-# Update database
-dotnet ef database update
-
-# Run the application
-dotnet run
-```
-
----
