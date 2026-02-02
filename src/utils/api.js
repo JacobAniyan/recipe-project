@@ -54,7 +54,7 @@ export const fetchFavourites = () => {
 export const addFavourite = (recipeId) => {
   //POST recipes to Favourited
   const body = {
-    recipeId: recipeId,
+    RecipeId: recipeId,
   };
   return axios
     .post(`${BASE_URL}/favourites/${userId}/recipes`, body)
