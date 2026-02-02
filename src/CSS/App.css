@@ -549,7 +549,6 @@ nav a.active {
 }
 
 .recipe-card:hover {
-  transform: translateY(-6px);
   box-shadow: var(--shadow-lg);
   border-color: var(--sage-green);
 }
@@ -629,11 +628,6 @@ nav a.active {
 .favourite-button:hover {
   transform: scale(1.2);
   background: rgba(128, 167, 153, 0.1);
-  border-radius: 50%;
-}
-
-.favourite-button.active {
-  color: var(--error-red);
 }
 
 /* Page Container & Headers */
