@@ -1,20 +1,24 @@
 import axios from "axios";
 
-//pending BE implementation - set BASE_URL once BE is deployed
-const BASE_URL = "http://recipegenerator-api.azurewebsites.net/api";
+const BASE_URL = "https://recipegenerator-api.azurewebsites.net/api";
+const userId = 1; //Hardcoded
 
-export const fetchRecipes = (sortBy, order) => {
+export const fetchRecipes = (sortBy, sortOrder) => {
   //GET all recipes
   const params = {};
-  if (sortBy) params.sort_by = sortBy;
-  if (order) params.order = order;
+  if (sortBy) params.sortBy = sortBy;
+  if (sortOrder) params.sortorder = sortOrder;
 
-  return axios.get(BASE_URL+"/recipes", { params }).then((response) => response.data);
+  return axios
+    .get(BASE_URL + "/recipes", { params })
+    .then((response) => response.data);
 };
 
 export const fetchRecipeById = (id) => {
   //GET recipe by ID
-  return axios.get(`/recipes/${id}`).then((response) => response.data);
+  return axios
+    .get(`${BASE_URL}/recipes/${id}`)
+    .then((response) => response.data);
 };
 
 export const searchRecipes = (
@@ -34,27 +38,32 @@ export const searchRecipes = (
   if (order) params.append("order", order);
 
   const url = params.toString()
-    ? `/recipes/search?${params.toString()}`
-    : "/recipes/search";
+    ? `${BASE_URL}/recipes/search?${params.toString()}`
+    : `${BASE_URL}/recipes/search`;
 
   return axios.post(url, body).then((response) => response.data);
 };
 
 export const fetchFavourites = () => {
   //GET recipes if Favourited
-  return axios.get("/favourites").then((response) => response.data);
+  return axios
+    .get(`${BASE_URL}/favourites/${userId}`)
+    .then((response) => response.data);
 };
 
 export const addFavourite = (recipeId) => {
   //POST recipes to Favourited
+  const body = {
+    RecipeId: recipeId,
+  };
   return axios
-    .post(`/api/favourites/${recipeId}`)
+    .post(`${BASE_URL}/favourites/${userId}/recipes`, body)
     .then((response) => response.data);
 };
 
 export const removeFavourite = (recipeId) => {
-  //DELETE recipe from favourites
+  //DELETE recipe from Favourited
   return axios
-    .delete(`/api/favourites/${recipeId}`)
+    .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
     .then((response) => response.data);
 };

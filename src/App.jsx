@@ -4,13 +4,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import "./CSS/App.css";
 
-import AllRecipesPage from "./components/AllRecipesPage";
-import FavouritesPage from "./components/FavouritesPage";
+import AllRecipesPage from "./components/Allrecipespage";
+import FavouritesPage from "./components/Favouritespage";
 import Header from "./components/Header";
 import Homepage from "./components/Homepage";
-import InlineError from "./components/InlineError";
-import RecipePage from "./components/RecipePage";
-import SearchResultsPage from "./components/SearchResultsPage";
+import InlineError from "./components/Inlineerror";
+import RecipePage from "./components/Recipepage";
+import SearchResultsPage from "./components/Searchresultspage";
 
 function App() {
   return (

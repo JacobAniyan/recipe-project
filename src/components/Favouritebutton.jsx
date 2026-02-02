@@ -2,9 +2,9 @@ import { addFavourite, removeFavourite } from "../utils/api";
 
 const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
   const handleFavouriteClick = (event) => {
+    event.preventDefault();
     event.stopPropagation();
 
-    //pending BE implementation
     if (isFavourite) {
       removeFavourite(recipeId)
         .then(() => {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
-import FavouriteButton from "./FavouriteButton";
+import FavouriteButton from "./Favouritebutton";
 
 const RecipeCard = ({ recipe, loading = false }) => {
   if (loading) {
@@ -21,8 +21,8 @@ const RecipeCard = ({ recipe, loading = false }) => {
   }
 
   return (
-    <Link to={`/recipes/${recipe.RecipeId}`} className="recipe-card">
-      <h3>{recipe.Name}</h3>
+    <Link to={`/recipes/${recipe.recipeId}`} className="recipe-card">
+      <h3>{recipe.name}</h3>
       <div className="recipe-info">
         <span className="cooking-time">Duration: {recipe.cookTime} mins</span>
         <span className="difficulty">Difficulty: {recipe.difficulty}</span>
@@ -33,7 +33,7 @@ const RecipeCard = ({ recipe, loading = false }) => {
       <div className="recipecard-actions">
         <FavouriteButton
           recipeId={recipe.recipeId}
-          isFavourite={recipe.IsFavourite}
+          isFavourite={recipe.isFavourite}
         />
       </div>
     </Link>

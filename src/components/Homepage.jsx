@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import DietaryFilters from "./DietaryFilters";
-import InlineError from "./InlineError";
-import SearchBar from "./SearchBar";
+import DietaryFilters from "./Dietaryfilters";
+import InlineError from "./Inlineerror";
+import SearchBar from "./Searchbar";
 
 const Homepage = () => {
   const navigate = useNavigate();

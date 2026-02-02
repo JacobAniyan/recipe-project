@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import InlineError from "./InlineError";
-import RecipeCard from "./RecipeCard";
-import SortByDropdown from "./SortByDropdown";
+import InlineError from "./Inlineerror";
+import RecipeCard from "./Recipecard";
+import SortByDropdown from "./Sortbydropdown";
 
 import { fetchRecipes } from "../utils/api";
 
@@ -13,10 +13,10 @@ const AllRecipesPage = () => {
   const [error, setError] = useState(null);
   const [searchParams] = useSearchParams();
 
-  let sort_by = searchParams.get("sort_by");
-  let order = searchParams.get("order");
+  const sortBy = searchParams.get("sortBy");
+  const sortOrder = searchParams.get("sortorder");
 
- useEffect(() => {
+  useEffect(() => {
     console.log("Fetching recipes with:", { sortBy, sortOrder });
 
     setError(null);
