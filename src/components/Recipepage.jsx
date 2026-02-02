@@ -4,6 +4,7 @@ import Skeleton from "react-loading-skeleton";
 
 import FavouriteButton from "./Favouritebutton";
 import InlineError from "./Inlineerror";
+import DietaryBadges from "./Dietarybatch";
 
 import { fetchRecipeById } from "../utils/api";
 
@@ -118,6 +119,30 @@ function IndividualRecipePage() {
 
       <h1>{isLoading ? <Skeleton width="60%" /> : recipe.Name}</h1>
 
+      {isLoading ? (
+        <div style={{ marginBottom: "24px" }}>
+          <Skeleton
+            width={70}
+            height={28}
+            inline
+            style={{ marginRight: "8px" }}
+          />
+          <Skeleton
+            width={80}
+            height={28}
+            inline
+            style={{ marginRight: "8px" }}
+          />
+          <Skeleton width={75} height={28} inline />
+        </div>
+      ) : (
+        recipe.DietaryRestrictions &&
+        recipe.DietaryRestrictions.length > 0 && (
+          <div className="dietary-restrictions-section">
+            <DietaryBadges dietaryRestrictions={recipe.DietaryRestrictions} />
+          </div>
+        )
+      )}
       {isLoading ? (
         <Skeleton width="90%" style={{ marginBottom: "24px" }} />
       ) : (

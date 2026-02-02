@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
+import DietaryBadges from "./Dietarybatch";
 import FavouriteButton from "./Favouritebutton";
 
 const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
@@ -11,6 +12,17 @@ const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
         <div className="match-percentage">
           <Skeleton height={20} width={80} />
         </div>
+
+        <div style={{ marginBottom: "12px" }}>
+          <Skeleton
+            width={70}
+            height={24}
+            inline
+            style={{ marginRight: "8px" }}
+          />
+          <Skeleton width={80} height={24} inline />
+        </div>
+
         <div className="missing-ingredients">
           <Skeleton height={16} width="60%" style={{ marginBottom: "8px" }} />
           <Skeleton height={16} width="70%" count={2} />
