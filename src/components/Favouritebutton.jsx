@@ -1,22 +1,18 @@
 import { useState } from "react";
 import { addFavourite, removeFavourite } from "../utils/api";
 
-const FavouriteButton = ({
-  recipeId,
-  isFavourite: initialIsFavourite,
-  onToggle,
-}) => {
-  const [isFavourite, setIsFavourite] = useState(initialIsFavourite);
+const FavouriteButton = ({ recipeId, isFavourite, onToggle }) => {
+  const [isFavourited, setIsFavourited] = useState(isFavourite || false);
 
   const handleFavouriteClick = (event) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (isFavourite) {
+    if (isFavourited) {
       removeFavourite(recipeId)
         .then(() => {
           //EH: remove favourite
-          setIsFavourite(false);
+          setIsFavourited(false);
           if (onToggle) {
             onToggle(recipeId, false);
           }
@@ -28,7 +24,7 @@ const FavouriteButton = ({
       addFavourite(recipeId)
         .then(() => {
           //EH: add favourite
-          setIsFavourite(true);
+          setIsFavourited(true);
           if (onToggle) {
             onToggle(recipeId, true);
           }
@@ -43,9 +39,9 @@ const FavouriteButton = ({
     <button
       className="favourite-button"
       onClick={handleFavouriteClick}
-      aria-label={isFavourite ? "Remove from favourites" : "Add to favourites"}
+      aria-label={isFavourited ? "Remove from favourites" : "Add to favourites"}
     >
-      {isFavourite ? "❤️" : "🤍"}
+      {isFavourited ? "❤️" : "🤍"}
     </button>
   );
 };
