@@ -192,6 +192,11 @@ const Homepage = () => {
       (key) => dietaryRestrictionMap[key],
     );
 
+    console.log('Active Filter Keys:', activeFilterKeys);
+    console.log('Dietary Restriction Map:', dietaryRestrictionMap);
+    console.log('Dietary Restriction IDs:', dietaryRestrictionIds);
+    console.log('Ingredient IDs:', ingredientIds);
+
     navigate(`/results`, {
       state: {
         ingredientIds,

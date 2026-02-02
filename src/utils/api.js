@@ -45,6 +45,8 @@ export const searchRecipes = (
     DietaryRestrictionIds: dietaryRestrictionIds,
   };
 
+  console.log('Search Request Body:', body);
+
   const params = new URLSearchParams();
   if (sortBy) params.append("sort_by", sortBy);
   if (order) params.append("order", order);
@@ -53,7 +55,12 @@ export const searchRecipes = (
     ? `${BASE_URL}/recipes/match?${params.toString()}`
     : `${BASE_URL}/recipes/match`;
 
-  return axios.post(url, body).then((response) => response.data);
+  console.log('Search URL:', url);
+
+  return axios.post(url, body).then((response) => {
+    console.log('Search Response:', response.data);
+    return response.data;
+  });
 };
 
 export const fetchFavourites = () => {

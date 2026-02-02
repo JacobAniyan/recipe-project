@@ -29,7 +29,9 @@ function IndividualRecipePage() {
 
     fetchRecipeById(id)
       .then((data) => {
-        //Validation malformed or missing recipe data
+        console.log('Recipe data:', data);
+        console.log('Dietary restrictions:', data.dietaryRestrictions);
+         //Validation malformed or missing recipe data
         if (!data || typeof data !== "object" || !data.recipeId) {
           setError({
             type: "404",
@@ -100,9 +102,7 @@ function IndividualRecipePage() {
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         </div>
 
-        <h1>
-          <Skeleton width="60%" />
-        </h1>
+      <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
 
         <div style={{ marginBottom: "24px" }}>
           <Skeleton
@@ -119,17 +119,11 @@ function IndividualRecipePage() {
           />
           <Skeleton width={75} height={28} inline />
         </div>
-
-        <Skeleton width="90%" style={{ marginBottom: "24px" }} />
-
-        <div className="recipe-info">
-          <div className="info-item">
-            <Skeleton width={100} />
-            <Skeleton width={80} />
-          </div>
-          <div className="info-item">
-            <Skeleton width={100} />
-            <Skeleton width={80} />
+      ) : (
+        recipe.dietaryRestrictions &&
+        recipe.dietaryRestrictions.length > 0 && (
+          <div className="dietary-restrictions-section">
+            <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
           </div>
         </div>
 
