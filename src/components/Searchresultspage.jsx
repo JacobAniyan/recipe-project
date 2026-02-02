@@ -38,10 +38,15 @@ const ResultsPage = () => {
 
     searchRecipes(ingredientIds, dietaryRestrictionIds, sort_by, order)
       .then((data) => {
-        // Filter out recipes with 0% match
+        console.log('Search results data:', data);
+        // Only filter out 0% match when searching with ingredients
+        // For filter-only searches, keep all results
         const filteredRecipes = Array.isArray(data) 
-          ? data.filter(recipe => recipe.matchPercentage !== 0)
+          ? (ingredientIds.length > 0 
+              ? data.filter(recipe => recipe.matchPercentage !== 0)
+              : data)
           : [];
+        console.log('Filtered recipes:', filteredRecipes);
         setRecipes(filteredRecipes);
         setIsLoading(false);
       })

@@ -916,3 +916,41 @@ body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb {
 body.dark-mode .ingredients-dropdown::-webkit-scrollbar-thumb:hover {
   background: rgba(128, 167, 153, 0.5);
 }
+
+/* Dietary Badges/Restrictions Display */
+.dietary-restrictions-section {
+  margin: var(--space-md) 0;
+}
+
+.dietary-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.dietary-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--sage-green) 0%, var(--deep-teal) 100%);
+  color: var(--white);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: var(--font-heading);
+  text-transform: capitalize;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+.dietary-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Dark mode support for dietary badges */
+body.dark-mode .dietary-badge {
+  background: linear-gradient(135deg, var(--deep-teal) 0%, var(--forest-green) 100%);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
