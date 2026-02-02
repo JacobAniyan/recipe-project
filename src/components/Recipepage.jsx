@@ -51,13 +51,10 @@ function IndividualRecipePage() {
           return;
         }
 
+        // API returns instructions as object with instruction property
         setRecipe({
           ...data,
-          instructions:
-            typeof data.instructions === "object" &&
-            data.instructions.instruction
-              ? data.instructions.instruction
-              : "",
+          instructions: data.instructions.instruction,
         });
         setIsLoading(false);
         setError(null);

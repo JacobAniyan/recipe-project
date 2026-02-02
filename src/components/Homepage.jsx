@@ -18,36 +18,10 @@ const Homepage = () => {
     setLoading(true);
     fetchIngredients()
       .then((data) => {
-        // Handle new API format: array of objects with ingredientId and ingredientName
-        const parsedIngredients = data.map((item) => {
-          // If item is already an object with ingredientId and ingredientName
-          if (
-            typeof item === "object" &&
-            item.ingredientId &&
-            item.ingredientName
-          ) {
-            return {
-              IngredientId: item.ingredientId,
-              IngredientName: item.ingredientName,
-            };
-          }
-          // Handle old string format "1:Avocado"
-          else if (typeof item === "string" && item.includes(":")) {
-            const [id, ...nameParts] = item.split(":");
-            return {
-              IngredientId: Number(id),
-              IngredientName: nameParts.join(":").trim(),
-            };
-          }
-          // Fallback for plain strings
-          else {
-            console.warn(`Unexpected ingredient format:`, item);
-            return {
-              IngredientId: 0,
-              IngredientName: String(item),
-            };
-          }
-        });
+        const parsedIngredients = data.map((item) => ({
+          IngredientId: item.ingredientId,
+          IngredientName: item.ingredientName,
+        }));
 
         setAvailableIngredients(parsedIngredients);
         setLoading(false);
@@ -63,51 +37,13 @@ const Homepage = () => {
   useEffect(() => {
     fetchDietaryFilters()
       .then((data) => {
-        // Handle different data formats
-        let filtersArray = [];
+        const filtersArray = data.dietaryRestrictions || [];
 
-        if (Array.isArray(data)) {
-          filtersArray = data;
-        } else if (
-          data.dietaryRestrictions &&
-          Array.isArray(data.dietaryRestrictions)
-        ) {
-          // If it's an object with dietaryRestrictions property
-          filtersArray = data.dietaryRestrictions;
-        } else if (typeof data === "object" && data !== null) {
-          // If it's an object, convert to array
-          filtersArray = Object.values(data);
-        }
-
-        // Parse "1:Vegan" => { DietaryRestrictionId: 1, DietaryRestrictionName: "Vegan" }
-        const parsedFilters = filtersArray.map((item, index) => {
-          if (typeof item === "string") {
-            if (item.includes(":")) {
-              const [id, ...nameParts] = item.split(":");
-              return {
-                DietaryRestrictionId: Number(id),
-                DietaryRestrictionName: nameParts.join(":").trim(),
-              };
-            } else {
-              return {
-                DietaryRestrictionId: index + 1,
-                DietaryRestrictionName: item,
-              };
-            }
-          } else if (typeof item === "object" && item !== null) {
-            // If item is already an object
-            return {
-              DietaryRestrictionId:
-                item.DietaryRestrictionId || item.id || index + 1,
-              DietaryRestrictionName:
-                item.DietaryRestrictionName || item.name || String(item),
-            };
-          }
-          return {
-            DietaryRestrictionId: index + 1,
-            DietaryRestrictionName: String(item),
-          };
-        });
+        // Convert array of strings to objects with IDs
+        const parsedFilters = filtersArray.map((name, index) => ({
+          DietaryRestrictionId: index + 1,
+          DietaryRestrictionName: name,
+        }));
 
         setAvailableDietaryFilters(parsedFilters);
       })

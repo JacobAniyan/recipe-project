@@ -46,7 +46,7 @@ const ResultsPage = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Search Error:', error);
+        console.error("Search Error:", error);
         setError("Unable to search recipes. Please try again later.");
         setIsLoading(false);
       });
