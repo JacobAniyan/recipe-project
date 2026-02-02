@@ -18,7 +18,6 @@ const AllRecipesPage = () => {
 
   useEffect(() => {
     console.log("Fetching recipes with:", { sortBy, sortOrder });
-
     setError(null);
     setIsLoading(true);
 
