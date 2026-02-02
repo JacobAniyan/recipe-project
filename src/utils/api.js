@@ -21,6 +21,18 @@ export const fetchRecipeById = (id) => {
     .then((response) => response.data);
 };
 
+export const fetchDietaryFilters = () => {
+  //GET all dietary filters
+  return axios
+    .get(`${BASE_URL}/recipes/dietary-restrictions`)
+    .then((response) => response.data);
+}
+export const fetchIngredients = () => {
+  //GET all ingredients
+  return axios
+    .get(`${BASE_URL}/recipes/ingredients`)
+    .then((response) => response.data);
+}
 export const searchRecipes = (
   ingredientIds,
   dietaryRestrictionIds = [],
@@ -29,8 +41,8 @@ export const searchRecipes = (
 ) => {
   //POST recipes by ingredient IDs and dietary restriction IDs
   const body = {
-    ingredientIds: ingredientIds,
-    dietaryRestrictionIds: dietaryRestrictionIds,
+    IngredientIds: ingredientIds,
+    DietaryRestrictionIds: dietaryRestrictionIds,
   };
 
   const params = new URLSearchParams();
@@ -38,8 +50,8 @@ export const searchRecipes = (
   if (order) params.append("order", order);
 
   const url = params.toString()
-    ? `${BASE_URL}/recipes/search?${params.toString()}`
-    : `${BASE_URL}/recipes/search`;
+    ? `${BASE_URL}/recipes/match?${params.toString()}`
+    : `${BASE_URL}/recipes/match`;
 
   return axios.post(url, body).then((response) => response.data);
 };
