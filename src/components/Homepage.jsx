@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import DietaryFilters from "./Dietaryfilters";
 import InlineError from "./Inlineerror";
 import SearchBar from "./Searchbar";
+
 import { fetchIngredients, fetchDietaryFilters } from "../utils/api";
 
 const Homepage = () => {
@@ -128,10 +130,10 @@ const Homepage = () => {
       (key) => dietaryRestrictionMap[key],
     );
 
-    console.log('Active Filter Keys:', activeFilterKeys);
-    console.log('Dietary Restriction Map:', dietaryRestrictionMap);
-    console.log('Dietary Restriction IDs:', dietaryRestrictionIds);
-    console.log('Ingredient IDs:', ingredientIds);
+    console.log("Active Filter Keys:", activeFilterKeys);
+    console.log("Dietary Restriction Map:", dietaryRestrictionMap);
+    console.log("Dietary Restriction IDs:", dietaryRestrictionIds);
+    console.log("Ingredient IDs:", ingredientIds);
 
     navigate(`/results`, {
       state: {

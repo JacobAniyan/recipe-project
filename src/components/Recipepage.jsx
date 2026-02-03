@@ -89,9 +89,7 @@ function IndividualRecipePage() {
   if (error) {
     return (
       <div className="page-container">
-                
         <InlineError type={error.type} message={error.message} />
-              
       </div>
     );
   }
@@ -99,68 +97,55 @@ function IndividualRecipePage() {
   if (!recipe && !isLoading) {
     return (
       <div className="page-container">
-                
         <InlineError
           type="404"
           message="Recipe not found. The recipe you're looking for doesn't exist."
         />
-              
       </div>
     );
   }
 
   return (
     <div className="individual-recipe-page">
-            
       <div className="recipe-header">
-                
         {isLoading ? (
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         ) : (
           <img src={recipe.img} alt={recipe.name} className="recipe-image" />
         )}
-                
+
         {!isLoading && (
           <FavouriteButton
             recipeId={recipe.recipeId}
             isFavourite={recipe.IsFavourite}
           />
         )}
-              
       </div>
-            <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
-            
+      <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
       {isLoading ? (
         <div style={{ marginBottom: "24px" }}>
-                    
           <Skeleton
             width={70}
             height={28}
             inline
             style={{ marginRight: "8px" }}
           />
-                    
           <Skeleton
             width={80}
             height={28}
             inline
             style={{ marginRight: "8px" }}
           />
-                    
           <Skeleton width={75} height={28} inline />
-                  
         </div>
       ) : (
         recipe.dietaryRestrictions &&
         recipe.dietaryRestrictions.length > 0 && (
           <div className="dietary-restrictions-section">
-                        
             <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
-                      
           </div>
         )
       )}
-            
       {isLoading ? (
         <Skeleton width="90%" style={{ marginBottom: "24px" }} />
       ) : (
@@ -168,100 +153,67 @@ function IndividualRecipePage() {
           <p className="recipe-description">{recipe.description}</p>
         )
       )}
-            
       <div className="recipe-info">
-                
         {isLoading ? (
           <>
-                        
             <div className="info-item">
-                            
               <Skeleton width={100} />
-                            
               <Skeleton width={80} />
-                          
             </div>
-                        
             <div className="info-item">
-                            
               <Skeleton width={100} />
-                            
               <Skeleton width={80} />
-                          
             </div>
-                      
           </>
         ) : (
           <>
-                        
             {recipe.cookTime && (
               <div className="info-item">
-                                <dt className="info-label">Cook Time:</dt>
-                                
+                <dt className="info-label">Cook Time:</dt>
+
                 <dd className="info-value">{recipe.cookTime} mins</dd>
-                              
               </div>
             )}
-                        
             {recipe.difficulty && (
               <div className="info-item">
-                                <dt className="info-label">Difficulty:</dt>
-                                
+                <dt className="info-label">Difficulty:</dt>
+
                 <dd className="info-value">{recipe.difficulty}</dd>
-                              
               </div>
             )}
-                      
           </>
         )}
-              
       </div>
-            
       <section className="ingredients-section">
-                <h2>{isLoading ? <Skeleton width={200} /> : "Ingredients"}</h2>
-                
+        <h2>{isLoading ? <Skeleton width={200} /> : "Ingredients"}</h2>
         <ul className="ingredients-list">
-                    
           {isLoading
             ? [...Array(8)].map((_, index) => (
                 <li key={index}>
-                                    
                   <Skeleton width="80%" />
-                                  
                 </li>
               ))
             : recipe.ingredients?.map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}
-                  
         </ul>
-              
       </section>
-            
       <section className="instructions-section">
-                <h2>{isLoading ? <Skeleton width={200} /> : "Instructions"}</h2>
-                
+        <h2>{isLoading ? <Skeleton width={200} /> : "Instructions"}</h2>
         <ol className="instructions-list">
-                    
           {isLoading
             ? [...Array(6)].map((_, index) => (
                 <li key={index} className="instruction-step">
-                                    
                   <Skeleton width="95%" count={2} />
-                                  
                 </li>
               ))
             : recipe.instructions?.split("\n").map((step, index) => (
                 <li key={index} className="instruction-step">
-                                    {step}
-                                  
+                  {step}
                 </li>
               ))}
-                  
         </ol>
-              
       </section>
-          
     </div>
   );
 }
