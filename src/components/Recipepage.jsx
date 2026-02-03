@@ -30,8 +30,8 @@ function IndividualRecipePage() {
 
     fetchRecipeById(id)
       .then((data) => {
-        console.log(data);
-        //Validation malformed or missing recipe data
+        console.log("Recipe data:", data);
+        console.log("Dietary restrictions:", data.dietaryRestrictions); //Validation malformed or missing recipe data
         if (!data || typeof data !== "object" || !data.recipeId) {
           setError({
             type: "404",
@@ -114,6 +114,7 @@ function IndividualRecipePage() {
         ) : (
           <img src={recipe.img} alt={recipe.name} className="recipe-image" />
         )}
+
         {!isLoading && (
           <FavouriteButton
             recipeId={recipe.recipeId}
@@ -121,9 +122,7 @@ function IndividualRecipePage() {
           />
         )}
       </div>
-
-      <h1>{isLoading ? <Skeleton width="60%" /> : recipe.Name}</h1>
-
+      <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
       {isLoading ? (
         <div style={{ marginBottom: "24px" }}>
           <Skeleton
@@ -141,10 +140,10 @@ function IndividualRecipePage() {
           <Skeleton width={75} height={28} inline />
         </div>
       ) : (
-        recipe.DietaryRestrictions &&
-        recipe.DietaryRestrictions.length > 0 && (
+        recipe.dietaryRestrictions &&
+        recipe.dietaryRestrictions.length > 0 && (
           <div className="dietary-restrictions-section">
-            <DietaryBadges dietaryRestrictions={recipe.DietaryRestrictions} />
+            <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
           </div>
         )
       )}
@@ -155,7 +154,6 @@ function IndividualRecipePage() {
           <p className="recipe-description">{recipe.description}</p>
         )
       )}
-
       <div className="recipe-info">
         {isLoading ? (
           <>
@@ -173,19 +171,20 @@ function IndividualRecipePage() {
             {recipe.cookTime && (
               <div className="info-item">
                 <dt className="info-label">Cook Time:</dt>
+
                 <dd className="info-value">{recipe.cookTime} mins</dd>
               </div>
             )}
             {recipe.difficulty && (
               <div className="info-item">
                 <dt className="info-label">Difficulty:</dt>
+
                 <dd className="info-value">{recipe.difficulty}</dd>
               </div>
             )}
           </>
         )}
       </div>
-
       <section className="ingredients-section">
         <h2>{isLoading ? <Skeleton width={200} /> : "Ingredients"}</h2>
         <ul className="ingredients-list">
@@ -200,7 +199,6 @@ function IndividualRecipePage() {
               ))}
         </ul>
       </section>
-
       <section className="instructions-section">
         <h2>{isLoading ? <Skeleton width={200} /> : "Instructions"}</h2>
         <ol className="instructions-list">

@@ -49,6 +49,10 @@ const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
         </div>
       )}
 
+      {recipe.dietaryRestrictions && recipe.dietaryRestrictions.length > 0 && (
+        <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
+      )}
+
       {recipe.missingIngredients && recipe.missingIngredients.length > 0 && (
         <div className="missing-ingredients">
           <p className="missing-label">Missing Ingredients:</p>

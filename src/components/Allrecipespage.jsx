@@ -14,11 +14,10 @@ const AllRecipesPage = () => {
   const [searchParams] = useSearchParams();
 
   const sortBy = searchParams.get("sortBy");
-  const sortOrder = searchParams.get("order");
+  const sortOrder = searchParams.get("sortOrder");
 
   useEffect(() => {
     console.log("Fetching recipes with:", { sortBy, sortOrder });
-
     setError(null);
     setIsLoading(true);
 
