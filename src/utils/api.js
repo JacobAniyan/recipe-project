@@ -7,7 +7,7 @@ export const fetchRecipes = (sortBy, sortOrder) => {
   //GET all recipes
   const params = {};
   if (sortBy) params.sortBy = sortBy;
-  if (sortOrder) params.sortorder = sortOrder;
+  if (sortOrder) params.sortOrder = sortOrder;
 
   return axios
     .get(BASE_URL + "/recipes", { params })
@@ -37,7 +37,7 @@ export const searchRecipes = (
   ingredientIds,
   dietaryRestrictionIds = [],
   sortBy,
-  order,
+  sortOrder,
 ) => {
   //POST recipes by ingredient IDs and dietary restriction IDs
   const body = {
@@ -48,8 +48,8 @@ export const searchRecipes = (
   console.log('Search Request Body:', body);
 
   const params = new URLSearchParams();
-  if (sortBy) params.append("sort_by", sortBy);
-  if (order) params.append("order", order);
+  if (sortBy) params.append("sortBy", sortBy);
+  if (sortOrder) params.append("sortOrder", sortOrder);
 
   const url = params.toString()
     ? `${BASE_URL}/recipes/match?${params.toString()}`

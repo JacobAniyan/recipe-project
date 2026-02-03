@@ -130,14 +130,18 @@ const Homepage = () => {
     console.log("Dietary Restriction IDs:", dietaryRestrictionIds);
     console.log("Ingredient IDs:", ingredientIds);
 
-    navigate(`/results`, {
-      state: {
-        ingredientIds,
-        dietaryRestrictionIds,
-        ingredientNames: selectedIngredients,
-        filterNames: activeFilterKeys,
-      },
-    });
+    // Use URL params to persist data across navigation
+    const params = new URLSearchParams();
+    if (ingredientIds.length > 0) {
+      params.set('ingredientIds', ingredientIds.join(','));
+      params.set('ingredientNames', selectedIngredients.join(','));
+    }
+    if (dietaryRestrictionIds.length > 0) {
+      params.set('dietaryRestrictionIds', dietaryRestrictionIds.join(','));
+      params.set('filterNames', activeFilterKeys.join(','));
+    }
+
+    navigate(`/results?${params.toString()}`);
   };
 
   if (error) {
