@@ -107,11 +107,6 @@ const Homepage = () => {
   const handleFindClick = () => {
     const activeFilterKeys = Object.keys(filters).filter((key) => filters[key]);
 
-    // Require at least one ingredient OR one dietary filter
-    if (selectedIngredients.length === 0 && activeFilterKeys.length === 0) {
-      return;
-    }
-
     const ingredientIds = selectedIngredients
       .map((name) => {
         const ingredient = availableIngredients.find(

@@ -1,18 +1,13 @@
-function DietaryFilters({ filters, availableFilters = [], onToggle, onClearAll }) {
-  // Generate filter options from API data or use default
-  const filterOptions = availableFilters.length > 0
-    ? availableFilters.map((filter) => ({
-        key: filter.DietaryRestrictionName.toLowerCase().replace(/\s+/g, '-'),
-        label: filter.DietaryRestrictionName,
-      }))
-    : [
-        { key: "vegan", label: "Vegan" },
-        { key: "vegetarian", label: "Vegetarian" },
-        { key: "gluten-free", label: "Gluten-Free" },
-        { key: "dairy-free", label: "Dairy-Free" },
-        { key: "keto", label: "Keto" },
-        { key: "paleo", label: "Paleo" },
-      ];
+function DietaryFilters({
+  filters,
+  availableFilters = [],
+  onToggle,
+  onClearAll,
+}) {
+  const filterOptions = availableFilters.map((filter) => ({
+    key: filter.DietaryRestrictionName.toLowerCase().replace(/\s+/g, "-"),
+    label: filter.DietaryRestrictionName,
+  }));
 
   return (
     <div className="dietary-filters">
