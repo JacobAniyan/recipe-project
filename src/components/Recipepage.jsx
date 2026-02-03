@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import FavouriteButton from "./Favouritebutton";
 import InlineError from "./Inlineerror";
 import DietaryBadges from "./Dietarybatch";
+import RelatedRecipes from "./Relatedrecipe";
 
 import { fetchRecipeById } from "../utils/api";
 
@@ -214,6 +215,12 @@ function IndividualRecipePage() {
               ))}
         </ol>
       </section>
+      {!isLoading && recipe && (
+        <RelatedRecipes
+          currentRecipeId={recipe.recipeId}
+          currentRecipeIngredients={recipe.ingredients}
+        />
+      )}
     </div>
   );
 }

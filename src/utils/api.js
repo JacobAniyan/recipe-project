@@ -26,13 +26,13 @@ export const fetchDietaryFilters = () => {
   return axios
     .get(`${BASE_URL}/recipes/dietary-restrictions`)
     .then((response) => response.data);
-}
+};
 export const fetchIngredients = () => {
   //GET all ingredients
   return axios
     .get(`${BASE_URL}/recipes/ingredients`)
     .then((response) => response.data);
-}
+};
 export const searchRecipes = (
   ingredientIds,
   dietaryRestrictionIds = [],
@@ -85,4 +85,43 @@ export const removeFavourite = (recipeId) => {
   return axios
     .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
     .then((response) => response.data);
+};
+
+export const fetchRelatedRecipes = (
+  currentRecipeId,
+  currentRecipeIngredients,
+) => {
+  // Fetch all recipes and find similar ones based on shared ingredients
+  return fetchRecipes().then((allRecipes) => {
+    // Filter out current recipe
+    const otherRecipes = allRecipes.filter(
+      (recipe) => recipe.recipeId !== currentRecipeId,
+    );
+
+    // Calculate similarity score for each recipe based on shared ingredients
+    const recipesWithScore = otherRecipes.map((recipe) => {
+      // Count how many ingredients are shared (case-insensitive comparison)
+      const sharedIngredients = recipe.ingredients.filter((ingredient) =>
+        currentRecipeIngredients.some(
+          (currentIng) =>
+            currentIng.toLowerCase().trim() === ingredient.toLowerCase().trim(),
+        ),
+      );
+
+      const similarityScore = sharedIngredients.length;
+
+      return {
+        ...recipe,
+        similarityScore: similarityScore,
+      };
+    });
+
+    // Sort by similarity score (highest first) and take top 6
+    const relatedRecipes = recipesWithScore
+      .filter((recipe) => recipe.similarityScore > 0) // Only include recipes with at least 1 shared ingredient
+      .sort((a, b) => b.similarityScore - a.similarityScore)
+      .slice(0, 3);
+
+    return relatedRecipes;
+  });
 };
