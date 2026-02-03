@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import InlineError from "./Inlineerror";
-import RecipeCard from "./Recipecard";
+import RecipeCard from "./RecipeCard";
 
 import { fetchFavourites } from "../utils/api";
 

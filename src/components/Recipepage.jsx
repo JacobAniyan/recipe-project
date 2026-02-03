@@ -5,6 +5,7 @@ import Skeleton from "react-loading-skeleton";
 import FavouriteButton from "./Favouritebutton";
 import InlineError from "./Inlineerror";
 import DietaryBadges from "./Dietarybatch";
+import RelatedRecipes from "./Relatedrecipe";
 
 import { fetchRecipeById } from "../utils/api";
 
@@ -29,8 +30,8 @@ function IndividualRecipePage() {
 
     fetchRecipeById(id)
       .then((data) => {
-        console.log(data)
-         //Validation malformed or missing recipe data
+        console.log(data);
+        //Validation malformed or missing recipe data
         if (!data || typeof data !== "object" || !data.recipeId) {
           setError({
             type: "404",
@@ -52,14 +53,15 @@ function IndividualRecipePage() {
           return;
         }
 
-          setRecipe({
+        setRecipe({
           ...data,
           instructions:
             typeof data.instructions === "object" &&
             data.instructions.instruction
               ? data.instructions.instruction
               : "",
-        });         setIsLoading(false);
+        });
+        setIsLoading(false);
         setError(null);
       })
       .catch((error) => {
@@ -110,11 +112,7 @@ function IndividualRecipePage() {
         {isLoading ? (
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         ) : (
-          <img
-            src={recipe.img}
-            alt={recipe.name}
-            className="recipe-image"
-          />
+          <img src={recipe.img} alt={recipe.name} className="recipe-image" />
         )}
         {!isLoading && (
           <FavouriteButton
@@ -219,6 +217,12 @@ function IndividualRecipePage() {
               ))}
         </ol>
       </section>
+      {!isLoading && recipe && (
+        <RelatedRecipes
+          currentRecipeId={recipe.recipeId}
+          currentRecipeIngredients={recipe.ingredients}
+        />
+      )}
     </div>
   );
 }
