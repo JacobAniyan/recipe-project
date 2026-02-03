@@ -3,7 +3,11 @@ import OutsideClickHandler from "react-outside-click-handler";
 
 import InlineError from "./Inlineerror";
 
-const SearchBar = ({ onIngredientsChange, availableIngredients = [], loading = false }) => {
+const SearchBar = ({
+  onIngredientsChange,
+  availableIngredients = [],
+  loading = false,
+}) => {
   const [searchInput, setSearchInput] = useState("");
   const [selectedIngredients, setSelectedIngredients] = useState([]);
   const [error, setError] = useState(null);
@@ -13,7 +17,7 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [], loading = f
 
   const dropdownIngredients = searchInput.trim()
     ? availableIngredients.filter((ingredient) =>
-        ingredient.toLowerCase().includes(searchInput.toLowerCase())
+        ingredient.toLowerCase().startsWith(searchInput.toLowerCase()),
       )
     : [];
 
@@ -79,7 +83,11 @@ const SearchBar = ({ onIngredientsChange, availableIngredients = [], loading = f
           type="text"
           placeholder="Loading ingredients..."
           disabled
-          style={{ width: '100%', padding: '0.875rem 1.25rem', fontSize: '1rem' }}
+          style={{
+            width: "100%",
+            padding: "0.875rem 1.25rem",
+            fontSize: "1rem",
+          }}
         />
       </div>
     );
