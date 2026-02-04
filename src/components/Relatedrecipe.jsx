@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import RecipeCard from "./RecipeCard";
+import RecipeCard from "./Recipecard";
 
 import InlineError from "./Inlineerror";
 
