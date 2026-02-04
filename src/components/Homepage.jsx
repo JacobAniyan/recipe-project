@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import DietaryFilters from "./Dietaryfilters";
 import InlineError from "./Inlineerror";
-import SearchBar from "./Searchbar";
+import SearchBar from "./SearchBar";
 
 import { fetchIngredients, fetchDietaryFilters } from "../utils/api";
 
@@ -133,12 +133,12 @@ const Homepage = () => {
     // Use URL params to persist data across navigation
     const params = new URLSearchParams();
     if (ingredientIds.length > 0) {
-      params.set('ingredientIds', ingredientIds.join(','));
-      params.set('ingredientNames', selectedIngredients.join(','));
+      params.set("ingredientIds", ingredientIds.join(","));
+      params.set("ingredientNames", selectedIngredients.join(","));
     }
     if (dietaryRestrictionIds.length > 0) {
-      params.set('dietaryRestrictionIds', dietaryRestrictionIds.join(','));
-      params.set('filterNames', activeFilterKeys.join(','));
+      params.set("dietaryRestrictionIds", dietaryRestrictionIds.join(","));
+      params.set("filterNames", activeFilterKeys.join(","));
     }
 
     navigate(`/results?${params.toString()}`);

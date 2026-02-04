@@ -45,7 +45,7 @@ export const searchRecipes = (
     DietaryRestrictionIds: dietaryRestrictionIds,
   };
 
-  console.log('Search Request Body:', body);
+  console.log("Search Request Body:", body);
 
   const params = new URLSearchParams();
   if (sortBy) params.append("sortBy", sortBy);
@@ -55,10 +55,10 @@ export const searchRecipes = (
     ? `${BASE_URL}/recipes/match?${params.toString()}`
     : `${BASE_URL}/recipes/match`;
 
-  console.log('Search URL:', url);
+  console.log("Search URL:", url);
 
   return axios.post(url, body).then((response) => {
-    console.log('Search Response:', response.data);
+    console.log("Search Response:", response.data);
     return response.data;
   });
 };
@@ -85,43 +85,4 @@ export const removeFavourite = (recipeId) => {
   return axios
     .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
     .then((response) => response.data);
-};
-
-export const fetchRelatedRecipes = (
-  currentRecipeId,
-  currentRecipeIngredients,
-) => {
-  // Fetch all recipes and find similar ones based on shared ingredients
-  return fetchRecipes().then((allRecipes) => {
-    // Filter out current recipe
-    const otherRecipes = allRecipes.filter(
-      (recipe) => recipe.recipeId !== currentRecipeId,
-    );
-
-    // Calculate similarity score for each recipe based on shared ingredients
-    const recipesWithScore = otherRecipes.map((recipe) => {
-      // Count how many ingredients are shared (case-insensitive comparison)
-      const sharedIngredients = recipe.ingredients.filter((ingredient) =>
-        currentRecipeIngredients.some(
-          (currentIng) =>
-            currentIng.toLowerCase().trim() === ingredient.toLowerCase().trim(),
-        ),
-      );
-
-      const similarityScore = sharedIngredients.length;
-
-      return {
-        ...recipe,
-        similarityScore: similarityScore,
-      };
-    });
-
-    // Sort by similarity score (highest first) and take top 6
-    const relatedRecipes = recipesWithScore
-      .filter((recipe) => recipe.similarityScore > 0) // Only include recipes with at least 1 shared ingredient
-      .sort((a, b) => b.similarityScore - a.similarityScore)
-      .slice(0, 3);
-
-    return relatedRecipes;
-  });
 };
