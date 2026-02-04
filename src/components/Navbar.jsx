@@ -12,6 +12,7 @@ const NavBar = ({ themeToggleButton }) => {
         <Link to="/recipes">All Recipes</Link>
         <Link to="/favourites">Favourites</Link>
         <Link to="/">Search</Link>
+        <Link to="/ai-recipe">AI Recipe</Link>
         {themeToggleButton}
       </div>
     </nav>

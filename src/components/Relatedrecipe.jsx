@@ -4,7 +4,7 @@ import RecipeCard from "./Recipecard";
 
 import InlineError from "./Inlineerror";
 
-import { fetchRelatedRecipes } from "../utils/api";
+import { fetchRecipes } from "../utils/api";
 
 const RelatedRecipes = ({ currentRecipeId, currentRecipeIngredients }) => {
   const [relatedRecipes, setRelatedRecipes] = useState([]);
@@ -25,9 +25,37 @@ const RelatedRecipes = ({ currentRecipeId, currentRecipeIngredients }) => {
     setIsLoading(true);
     setError(null);
 
-    fetchRelatedRecipes(currentRecipeId, currentRecipeIngredients)
-      .then((data) => {
-        setRelatedRecipes(Array.isArray(data) ? data : []);
+    // Fetch all recipes and filter for related ones
+    fetchRecipes()
+      .then((allRecipes) => {
+        // Filter out current recipe
+        const otherRecipes = allRecipes.filter(
+          (recipe) => recipe.recipeId !== currentRecipeId,
+        );
+
+        // Calculate similarity score based on shared ingredients
+        const recipesWithScore = otherRecipes.map((recipe) => {
+          const sharedIngredients = recipe.ingredients.filter((ingredient) =>
+            currentRecipeIngredients.some(
+              (currentIng) =>
+                currentIng.toLowerCase().trim() ===
+                ingredient.toLowerCase().trim(),
+            ),
+          );
+
+          return {
+            ...recipe,
+            similarityScore: sharedIngredients.length,
+          };
+        });
+
+        // Sort by similarity and take top 3
+        const related = recipesWithScore
+          .filter((recipe) => recipe.similarityScore > 0)
+          .sort((a, b) => b.similarityScore - a.similarityScore)
+          .slice(0, 3);
+
+        setRelatedRecipes(related);
         setIsLoading(false);
       })
       .catch((err) => {
