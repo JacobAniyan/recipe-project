@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 import DietaryBadges from "./Dietarybatch";
@@ -32,7 +31,7 @@ const RecipeCard = ({ recipe, loading = false }) => {
   }
 
   return (
-    <Link to={`/recipes/${recipe.recipeId}`} className="recipe-card">
+    <div className="recipe-card">
       <h3>{recipe.name}</h3>
 
       <DietaryBadges dietaryRestrictions={recipe.dietaryRestrictions} />
@@ -49,7 +48,7 @@ const RecipeCard = ({ recipe, loading = false }) => {
           isFavourite={recipe.isFavourite}
         />
       </div>
-    </Link>
+    </div>
   );
 };
 

@@ -19,6 +19,10 @@ const RecipePage = () => {
   // Get the recipes from location state (passed from All Recipes or Search Results)
   const availableRecipes = location.state?.recipes || [];
 
+  console.log("Location state:", location.state);
+  console.log("Available recipes for related:", availableRecipes.length);
+  console.log("Available recipes array:", availableRecipes);
+
   useEffect(() => {
     if (!id || isNaN(id) || Number(id) <= 0) {
       setError({
