@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import RecipeCard from "./Recipecard";
 import { fetchTrendingRecipes } from "../utils/api";
 
@@ -6,7 +7,6 @@ export default function Trendingrecipes() {
   const [trendingRecipes, setTrendingRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  //   const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadTrendingRecipes = async () => {
@@ -31,7 +31,13 @@ export default function Trendingrecipes() {
       <h2>Trending Recipes</h2>
       <div className="recipe-grid">
         {trendingRecipes.map((recipe) => (
-          <RecipeCard key={recipe.recipeId} recipe={recipe} />
+          <Link
+            key={recipe.recipeId}
+            to={`/recipes/${recipe.recipeId}`}
+            state={{ recipes: trendingRecipes }}
+          >
+            <RecipeCard recipe={recipe} />
+          </Link>
         ))}
       </div>
     </section>
