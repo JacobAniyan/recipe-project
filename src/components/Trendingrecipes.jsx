@@ -5,14 +5,15 @@ import { fetchTrendingRecipes } from "../utils/api";
 export default function Trendingrecipes() {
   const [trendingRecipes, setTrendingRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   //   const [error, setError] = useState(null);
 
   useEffect(() => {
     const loadTrendingRecipes = async () => {
       try {
-        setIsLoading(true);
         const recipes = await fetchTrendingRecipes();
         setTrendingRecipes(recipes);
+        setIsLoading(false);
       } catch (err) {
         console.log(err.message);
       }
