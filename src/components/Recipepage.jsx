@@ -120,7 +120,13 @@ const RecipePage = () => {
         {loading ? (
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         ) : (
-          <img src={recipe.img} alt={recipe.name} className="recipe-image" />
+          <img
+            src={recipe.img}
+            alt={recipe.name}
+            className="recipe-image"
+            crossOrigin="anonymous"
+            referrerPolicy="no-referrer"
+          />
         )}
         {!loading && (
           <FavouriteButton
