@@ -33,34 +33,53 @@ export const fetchIngredients = () => {
     .get(`${BASE_URL}/recipes/ingredients`)
     .then((response) => response.data);
 };
-export const searchRecipes = (
+export const searchRecipes = async (
   ingredientIds,
-  dietaryRestrictionIds = [],
-  sortBy,
-  sortOrder,
+  dietaryRestrictionIds,
+  sortBy = null,
+  sortOrder = null
 ) => {
-  //POST recipes by ingredient IDs and dietary restriction IDs
-  const body = {
-    IngredientIds: ingredientIds,
-    DietaryRestrictionIds: dietaryRestrictionIds,
+  const requestBody = {
+    IngredientIds: ingredientIds || [],
+    DietaryRestrictionIds: dietaryRestrictionIds || [],
   };
 
-  console.log("Search Request Body:", body);
+  const params = {};
+  if (sortBy) params.sortBy = sortBy;
+  if (sortOrder) params.sortOrder = sortOrder;
 
-  const params = new URLSearchParams();
-  if (sortBy) params.append("sortBy", sortBy);
-  if (sortOrder) params.append("sortOrder", sortOrder);
+  console.log("Search Request Body:", requestBody);
+  console.log("Search Request Params:", params);
+  console.log("Search URL:", `${BASE_URL}/recipes/match`);
+  console.log("Full request details:", {
+    url: `${BASE_URL}/recipes/match`,
+    params,
+    data: requestBody,
+  });
 
-  const url = params.toString()
-    ? `${BASE_URL}/recipes/match?${params.toString()}`
-    : `${BASE_URL}/recipes/match`;
-
-  console.log("Search URL:", url);
-
-  return axios.post(url, body).then((response) => {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/recipes/match`,
+      requestBody,
+      {
+        params,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     console.log("Search Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    console.error("Search API Error:", {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      requestBody,
+      params,
+    });
+    throw error;
+  }
 };
 
 export const fetchFavourites = () => {
