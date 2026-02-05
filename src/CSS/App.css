@@ -990,3 +990,16 @@ body.dark-mode .dietary-badge {
   );
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
+.trending-recipes {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
+import axios from "axios";
 
 import FavouriteButton from "./Favouritebutton";
 import InlineError from "./Inlineerror";
