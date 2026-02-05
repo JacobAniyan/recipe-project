@@ -16,35 +16,41 @@ const ResultsPage = () => {
   const [error, setError] = useState(null);
 
   // Get IDs from URL params (if available) or fallback to location.state
-  const ingredientIdsParam = searchParams.get('ingredientIds');
-  const dietaryIdsParam = searchParams.get('dietaryRestrictionIds');
-  const ingredientNamesParam = searchParams.get('ingredientNames');
-  const filterNamesParam = searchParams.get('filterNames');
+  const ingredientIdsParam = searchParams.get("ingredientIds");
+  const dietaryIdsParam = searchParams.get("dietaryRestrictionIds");
+  const ingredientNamesParam = searchParams.get("ingredientNames");
+  const filterNamesParam = searchParams.get("filterNames");
 
-  const ingredientIds = ingredientIdsParam 
-    ? ingredientIdsParam.split(',').map(Number)
-    : (location.state?.ingredientIds || []);
-  
+  const ingredientIds = ingredientIdsParam
+    ? ingredientIdsParam.split(",").map(Number)
+    : location.state?.ingredientIds || [];
+
   const dietaryRestrictionIds = dietaryIdsParam
-    ? dietaryIdsParam.split(',').map(Number)
-    : (location.state?.dietaryRestrictionIds || []);
+    ? dietaryIdsParam.split(",").map(Number)
+    : location.state?.dietaryRestrictionIds || [];
 
   const ingredientNames = ingredientNamesParam
-    ? ingredientNamesParam.split(',')
-    : (location.state?.ingredientNames || []);
+    ? ingredientNamesParam.split(",")
+    : location.state?.ingredientNames || [];
 
   const filterNames = filterNamesParam
-    ? filterNamesParam.split(',')
-    : (location.state?.filterNames || []);
+    ? filterNamesParam.split(",")
+    : location.state?.filterNames || [];
 
   // Memoize the IDs to prevent infinite loops
-  const memoizedIngredientIds = useMemo(() => ingredientIds, [JSON.stringify(ingredientIds)]);
-  const memoizedDietaryIds = useMemo(() => dietaryRestrictionIds, [JSON.stringify(dietaryRestrictionIds)]);
+  const memoizedIngredientIds = useMemo(
+    () => ingredientIds,
+    [JSON.stringify(ingredientIds)],
+  );
+  const memoizedDietaryIds = useMemo(
+    () => dietaryRestrictionIds,
+    [JSON.stringify(dietaryRestrictionIds)],
+  );
 
   let sortBy = searchParams.get("sortBy");
   let sortOrder = searchParams.get("sortOrder");
 
-  console.log('Sort params:', { sortBy, sortOrder });
+  console.log("Sort params:", { sortBy, sortOrder });
 
   useEffect(() => {
     // Allow search with either ingredients OR dietary filters
@@ -59,15 +65,15 @@ const ResultsPage = () => {
 
     searchRecipes(memoizedIngredientIds, memoizedDietaryIds, sortBy, sortOrder)
       .then((data) => {
-        console.log('Search results data:', data);
+        console.log("Search results data:", data);
         // Only filter out 0% match when searching with ingredients
         // For filter-only searches, keep all results
-        const filteredRecipes = Array.isArray(data) 
-          ? (memoizedIngredientIds.length > 0 
-              ? data.filter(recipe => recipe.matchPercentage !== 0)
-              : data)
+        const filteredRecipes = Array.isArray(data)
+          ? memoizedIngredientIds.length > 0
+            ? data.filter((recipe) => recipe.matchPercentage !== 0)
+            : data
           : [];
-        console.log('Filtered recipes:', filteredRecipes);
+        console.log("Filtered recipes:", filteredRecipes);
         setRecipes(filteredRecipes);
         setIsLoading(false);
       })

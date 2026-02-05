@@ -6,6 +6,7 @@ import InlineError from "./Inlineerror";
 import SearchBar from "./SearchBar";
 
 import { fetchIngredients, fetchDietaryFilters } from "../utils/api";
+import Trendingrecipes from "./Trendingrecipes";
 
 const Homepage = () => {
   const navigate = useNavigate();
@@ -177,6 +178,7 @@ const Homepage = () => {
           Find
         </button>
       </div>
+      <Trendingrecipes />
     </div>
   );
 };

@@ -44,30 +44,19 @@ export const searchRecipes = async (
     DietaryRestrictionIds: dietaryRestrictionIds || [],
   };
 
-  const params = {};
-  if (sortBy) params.sortBy = sortBy;
-  if (sortOrder) params.sortOrder = sortOrder;
+  console.log("Search Request Body:", body);
 
-  console.log("Search Request Body:", requestBody);
-  console.log("Search Request Params:", params);
-  console.log("Search URL:", `${BASE_URL}/recipes/match`);
-  console.log("Full request details:", {
-    url: `${BASE_URL}/recipes/match`,
-    params,
-    data: requestBody,
-  });
+  const params = new URLSearchParams();
+  if (sortBy) params.append("sortBy", sortBy);
+  if (sortOrder) params.append("sortOrder", sortOrder);
 
-  try {
-    const response = await axios.post(
-      `${BASE_URL}/recipes/match`,
-      requestBody,
-      {
-        params,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  const url = params.toString()
+    ? `${BASE_URL}/recipes/match?${params.toString()}`
+    : `${BASE_URL}/recipes/match`;
+
+  console.log("Search URL:", url);
+
+  return axios.post(url, body).then((response) => {
     console.log("Search Response:", response.data);
     return response.data;
   } catch (error) {
@@ -103,5 +92,53 @@ export const removeFavourite = (recipeId) => {
   //DELETE recipe from Favourited
   return axios
     .delete(`${BASE_URL}/favourites/${userId}/recipes/${recipeId}`)
+    .then((response) => response.data);
+};
+
+export const fetchRelatedRecipes = (
+  currentRecipeId,
+  currentRecipeIngredients,
+) => {
+  // Fetch all recipes and find similar ones based on shared ingredients
+  return fetchRecipes().then((allRecipes) => {
+    // Filter out current recipe
+    const otherRecipes = allRecipes.filter(
+      (recipe) => recipe.recipeId !== currentRecipeId,
+    );
+
+    // Calculate similarity score for each recipe based on shared ingredients
+    const recipesWithScore = otherRecipes.map((recipe) => {
+      // Count how many ingredients are shared (case-insensitive comparison)
+      const sharedIngredients = recipe.ingredients.filter((ingredient) =>
+        currentRecipeIngredients.some(
+          (currentIng) =>
+            currentIng.toLowerCase().trim() === ingredient.toLowerCase().trim(),
+        ),
+      );
+
+      const similarityScore = sharedIngredients.length;
+
+      return {
+        ...recipe,
+        similarityScore: similarityScore,
+      };
+    });
+
+    // Sort by similarity score (highest first) and take top 6
+    const relatedRecipes = recipesWithScore
+      .filter((recipe) => recipe.similarityScore > 0) // Only include recipes with at least 1 shared ingredient
+      .sort((a, b) => b.similarityScore - a.similarityScore)
+      .slice(0, 3);
+
+    return relatedRecipes;
+  });
+};
+
+//GET trending recipes based on fetch count
+export const fetchTrendingRecipes = (count = 4) => {
+  return axios
+    .get(`${BASE_URL}/recipes/trending`, {
+      params: { count },
+    })
     .then((response) => response.data);
 };
