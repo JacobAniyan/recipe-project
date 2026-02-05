@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import InlineError from "./Inlineerror";
 import RecipeCard from "./Recipecard";
@@ -53,8 +54,13 @@ function FavouritesPage() {
           ) : (
             <div className="recipe-grid">
               {favourites.map((recipe) => (
-                <RecipeCard key={recipe.recipeId} recipe={recipe} />
-              ))}
+   <Link
+            key={recipe.recipeId}
+            to={`/recipes/${recipe.recipeId}`}
+            state={{ recipes: favourites }}
+          >
+            <RecipeCard recipe={recipe} />
+          </Link>              ))}
             </div>
           )}
         </>
