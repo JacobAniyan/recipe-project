@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 import DietaryBadges from "./Dietarybatch";
@@ -40,7 +39,7 @@ const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
   }
 
   return (
-    <Link to={`/recipes/${recipe.recipeId}`} className="recipe-card">
+    <div className="recipe-card">
       <h3>{recipe.name}</h3>
 
       {recipe.matchPercentage !== undefined && (
@@ -80,7 +79,7 @@ const SearchResultsRecipeCard = ({ recipe, loading = false }) => {
           isFavourite={recipe.isFavourite}
         />
       </div>
-    </Link>
+    </div>
   );
 };
 

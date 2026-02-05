@@ -110,24 +110,15 @@ const ResultsPage = () => {
           </div>
 
           <div className="recipe-grid">
-            {isLoading ? (
-              [...Array(6)].map((_, index) => (
-                <SearchResultsRecipeCard key={index} loading={true} />
-              ))
-            ) : recipes.length > 0 ? (
-              // Update the RecipeCard to pass recipes in navigation state
-              recipes.map((recipe) => (
-                <Link 
-                  to={`/recipes/${recipe.recipeId}`}
-                  state={{ recipes: recipes }}
-                  key={recipe.recipeId}
-                >
-                  <SearchResultsRecipeCard recipe={recipe} />
-                </Link>
-              ))
-            ) : (
-              <p>No recipes found matching your ingredients.</p>
-            )}
+            {recipes.map((recipe) => (
+              <Link
+                key={recipe.recipeId}
+                to={`/recipes/${recipe.recipeId}`}
+                state={{ recipes: recipes }}
+              >
+                <SearchResultsRecipeCard recipe={recipe} />
+              </Link>
+            ))}
           </div>
         </>
       )}

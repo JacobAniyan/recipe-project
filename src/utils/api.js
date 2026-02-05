@@ -44,7 +44,7 @@ export const searchRecipes = async (
     DietaryRestrictionIds: dietaryRestrictionIds || [],
   };
 
-  console.log("Search Request Body:", body);
+  console.log("Search Request Body:", requestBody); // Fixed: was 'body'
 
   const params = new URLSearchParams();
   if (sortBy) params.append("sortBy", sortBy);
@@ -56,19 +56,19 @@ export const searchRecipes = async (
 
   console.log("Search URL:", url);
 
-  return axios.post(url, body).then((response) => {
+  return axios.post(url, requestBody).then((response) => {
     console.log("Search Response:", response.data);
     return response.data;
-  } catch (error) {
+  }).catch((error) => {
     console.error("Search API Error:", {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
       requestBody,
-      params,
+      params: params.toString(),
     });
     throw error;
-  }
+  });
 };
 
 export const fetchFavourites = () => {
