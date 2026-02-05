@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import DietaryFilters from "./Dietaryfilters";
 import InlineError from "./Inlineerror";
-import SearchBar from "./SearchBar";
+import SearchBar from "./Searchbar";
 
 import { fetchIngredients, fetchDietaryFilters } from "../utils/api";
 import Trendingrecipes from "./Trendingrecipes";
