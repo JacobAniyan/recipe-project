@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 
 import FavouriteButton from "./Favouritebutton";
@@ -9,11 +9,15 @@ import RelatedRecipes from "./Relatedrecipe";
 
 import { fetchRecipeById } from "../utils/api";
 
-function IndividualRecipePage() {
+const RecipePage = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [recipe, setRecipe] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Get the recipes from location state (passed from All Recipes or Search Results)
+  const availableRecipes = location.state?.recipes || [];
 
   useEffect(() => {
     if (!id || isNaN(id) || Number(id) <= 0) {
@@ -21,24 +25,24 @@ function IndividualRecipePage() {
         type: "400",
         message: "Invalid recipe ID format.",
       });
-      setIsLoading(false);
+      setLoading(false);
       return;
     }
 
-    setIsLoading(true);
+    setLoading(true);
     setError(null);
 
     fetchRecipeById(id)
       .then((data) => {
         console.log("Recipe data:", data);
-        console.log("Dietary restrictions:", data.dietaryRestrictions); //Validation malformed or missing recipe data
+        //Validation malformed or missing recipe data
         if (!data || typeof data !== "object" || !data.recipeId) {
           setError({
             type: "404",
             message:
               "Recipe not found. The recipe you're looking for doesn't exist.",
           });
-          setIsLoading(false);
+          setLoading(false);
           setRecipe(null);
           return;
         }
@@ -48,7 +52,7 @@ function IndividualRecipePage() {
             type: "500",
             message: "Recipe data is incomplete. Please try again later.",
           });
-          setIsLoading(false);
+          setLoading(false);
           setRecipe(null);
           return;
         }
@@ -59,9 +63,9 @@ function IndividualRecipePage() {
             typeof data.instructions === "object" &&
             data.instructions.instruction
               ? data.instructions.instruction
-              : "",
+              : data.instructions || "",
         });
-        setIsLoading(false);
+        setLoading(false);
         setError(null);
       })
       .catch((error) => {
@@ -83,7 +87,7 @@ function IndividualRecipePage() {
             message: "Recipe not found.",
           });
         }
-        setIsLoading(false);
+        setLoading(false);
       });
   }, [id]);
 
@@ -95,7 +99,7 @@ function IndividualRecipePage() {
     );
   }
 
-  if (!recipe && !isLoading) {
+  if (!recipe && !loading) {
     return (
       <div className="page-container">
         <InlineError
@@ -109,21 +113,23 @@ function IndividualRecipePage() {
   return (
     <div className="individual-recipe-page">
       <div className="recipe-header">
-        {isLoading ? (
+        {loading ? (
           <Skeleton height={400} style={{ marginBottom: "16px" }} />
         ) : (
           <img src={recipe.img} alt={recipe.name} className="recipe-image" />
         )}
-
-        {!isLoading && (
+        {!loading && (
           <FavouriteButton
             recipeId={recipe.recipeId}
-            isFavourite={recipe.IsFavourite}
+            isFavourite={recipe.isFavourite}
           />
         )}
       </div>
-      <h1>{isLoading ? <Skeleton width="60%" /> : recipe.name}</h1>
-      {isLoading ? (
+
+      <h1>{loading ? <Skeleton width="60%" /> : recipe.name}</h1>
+
+      {/* Dietary Restrictions Section */}
+      {loading ? (
         <div style={{ marginBottom: "24px" }}>
           <Skeleton
             width={70}
@@ -147,15 +153,17 @@ function IndividualRecipePage() {
           </div>
         )
       )}
-      {isLoading ? (
+
+      {loading ? (
         <Skeleton width="90%" style={{ marginBottom: "24px" }} />
       ) : (
         recipe.description && (
           <p className="recipe-description">{recipe.description}</p>
         )
       )}
+
       <div className="recipe-info">
-        {isLoading ? (
+        {loading ? (
           <>
             <div className="info-item">
               <Skeleton width={100} />
@@ -171,24 +179,23 @@ function IndividualRecipePage() {
             {recipe.cookTime && (
               <div className="info-item">
                 <dt className="info-label">Cook Time:</dt>
-
                 <dd className="info-value">{recipe.cookTime} mins</dd>
               </div>
             )}
             {recipe.difficulty && (
               <div className="info-item">
                 <dt className="info-label">Difficulty:</dt>
-
                 <dd className="info-value">{recipe.difficulty}</dd>
               </div>
             )}
           </>
         )}
       </div>
+
       <section className="ingredients-section">
-        <h2>{isLoading ? <Skeleton width={200} /> : "Ingredients"}</h2>
+        <h2>{loading ? <Skeleton width={200} /> : "Ingredients"}</h2>
         <ul className="ingredients-list">
-          {isLoading
+          {loading
             ? [...Array(8)].map((_, index) => (
                 <li key={index}>
                   <Skeleton width="80%" />
@@ -199,10 +206,11 @@ function IndividualRecipePage() {
               ))}
         </ul>
       </section>
+
       <section className="instructions-section">
-        <h2>{isLoading ? <Skeleton width={200} /> : "Instructions"}</h2>
+        <h2>{loading ? <Skeleton width={200} /> : "Instructions"}</h2>
         <ol className="instructions-list">
-          {isLoading
+          {loading
             ? [...Array(6)].map((_, index) => (
                 <li key={index} className="instruction-step">
                   <Skeleton width="95%" count={2} />
@@ -215,14 +223,16 @@ function IndividualRecipePage() {
               ))}
         </ol>
       </section>
-      {!isLoading && recipe && (
+
+      {/* Related Recipes Section - Component handles all logic */}
+      {!loading && recipe && (
         <RelatedRecipes
           currentRecipeId={recipe.recipeId}
-          currentRecipeIngredients={recipe.ingredients}
+          availableRecipes={availableRecipes}
         />
       )}
     </div>
   );
-}
+};
 
-export default IndividualRecipePage;
+export default RecipePage;

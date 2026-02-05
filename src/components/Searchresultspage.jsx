@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation, Link } from "react-router-dom";
 
 import InlineError from "./Inlineerror";
 import SearchResultsRecipeCard from "./Searchresultsrecipecard";
@@ -115,11 +115,15 @@ const ResultsPage = () => {
                 <SearchResultsRecipeCard key={index} loading={true} />
               ))
             ) : recipes.length > 0 ? (
+              // Update the RecipeCard to pass recipes in navigation state
               recipes.map((recipe) => (
-                <SearchResultsRecipeCard
+                <Link 
+                  to={`/recipes/${recipe.recipeId}`}
+                  state={{ recipes: recipes }}
                   key={recipe.recipeId}
-                  recipe={recipe}
-                />
+                >
+                  <SearchResultsRecipeCard recipe={recipe} />
+                </Link>
               ))
             ) : (
               <p>No recipes found matching your ingredients.</p>

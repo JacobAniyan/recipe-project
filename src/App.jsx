@@ -4,6 +4,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import "./CSS/App.css";
 
+import AIRecipePage from "./components/AIRecipePage";
 import AllRecipesPage from "./components/Allrecipespage";
 import FavouritesPage from "./components/Favouritespage";
 import Header from "./components/Header";
@@ -29,6 +30,7 @@ function App() {
             <Route path="/favourites" element={<FavouritesPage />} />
             <Route path="/recipes" element={<AllRecipesPage />} />
             <Route path="/recipes/:id" element={<RecipePage />} />
+            <Route path="/ai-recipe" element={<AIRecipePage />} />
             <Route path="*" element={<InlineError type="404" />} />
           </Routes>
         </div>

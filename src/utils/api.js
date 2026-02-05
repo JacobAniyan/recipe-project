@@ -33,16 +33,15 @@ export const fetchIngredients = () => {
     .get(`${BASE_URL}/recipes/ingredients`)
     .then((response) => response.data);
 };
-export const searchRecipes = (
+export const searchRecipes = async (
   ingredientIds,
-  dietaryRestrictionIds = [],
-  sortBy,
-  sortOrder,
+  dietaryRestrictionIds,
+  sortBy = null,
+  sortOrder = null
 ) => {
-  //POST recipes by ingredient IDs and dietary restriction IDs
-  const body = {
-    IngredientIds: ingredientIds,
-    DietaryRestrictionIds: dietaryRestrictionIds,
+  const requestBody = {
+    IngredientIds: ingredientIds || [],
+    DietaryRestrictionIds: dietaryRestrictionIds || [],
   };
 
   console.log("Search Request Body:", body);
@@ -60,7 +59,16 @@ export const searchRecipes = (
   return axios.post(url, body).then((response) => {
     console.log("Search Response:", response.data);
     return response.data;
-  });
+  } catch (error) {
+    console.error("Search API Error:", {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status,
+      requestBody,
+      params,
+    });
+    throw error;
+  }
 };
 
 export const fetchFavourites = () => {
