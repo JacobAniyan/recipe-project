@@ -16,55 +16,12 @@ export default function Trendingrecipes() {
         setIsLoading(false);
       } catch (err) {
         console.log(err.message);
+        setIsLoading(false);
       }
     };
 
     loadTrendingRecipes();
   }, []);
-
-  //   useEffect(() => {
-  //     const loadTrendingRecipes = async () => {
-  //       try {
-  //         setIsLoading(true);
-
-  //         // Hardcoded recipes for testing
-  //         const recipes = [
-  //           {
-  //             recipeId: 1,
-  //             name: "Spaghetti Carbonara",
-  //             description: "Classic Italian pasta dish",
-  //             img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400",
-  //             cookTime: 20,
-  //             difficulty: "Easy",
-  //           },
-  //           {
-  //             recipeId: 2,
-  //             name: "Chicken Tikka Masala",
-  //             description: "Creamy Indian curry",
-  //             img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
-  //             cookTime: 45,
-  //             difficulty: "Medium",
-  //           },
-  //           {
-  //             recipeId: 3,
-  //             name: "Caesar Salad",
-  //             description: "Fresh and crispy salad",
-  //             img: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400",
-  //             cookTime: 15,
-  //             difficulty: "Easy",
-  //           },
-  //         ];
-
-  //         setTrendingRecipes(recipes);
-  //         setIsLoading(false);
-  //       } catch (err) {
-  //         setError(err.message);
-  //         setIsLoading(false);
-  //       }
-  //     };
-
-  //     loadTrendingRecipes();
-  //   }, []);
 
   if (isLoading) return <div>Loading trending recipes...</div>;
   if (error) return <div>Error: {error}</div>;
